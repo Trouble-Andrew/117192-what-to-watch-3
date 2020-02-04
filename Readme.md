@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть» [![Build status][travis-image]][travis-url]
 
 * Студент: [Андрей Терехов](https://up.htmlacademy.ru/react/3/user/117192).
-* Наставник: `Неизвестно`.
+* Наставник: [Евгений Щеколдин](https://htmlacademy.ru/profile/id861059).
 
 ---
 
