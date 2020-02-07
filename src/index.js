@@ -8,9 +8,15 @@ const PromoMovie = {
   genre: `Drama`
 };
 
+const movies = [
+  {title: `Fantastic Beasts: The Crimes of Grindelwald`},
+  {title: `Bohemian Rhapsody`},
+  {title: `Macbeth`}
+];
+
 ReactDOM.render(
     <App
-      movieData={PromoMovie}
+      movieData={PromoMovie} movies={movies}
     />,
     document.querySelector(`#root`)
 );
