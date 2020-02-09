@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 
 const Main = (props) => {
-  const {movieData, movies} = props;
+  const {movieData, movies, onHeaderClick} = props;
 
   return <React.Fragment>
     <section className="movie-card">
@@ -105,7 +105,7 @@ const Main = (props) => {
                 <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
               </div>
               <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">{movie.title}</a>
+                <a className="small-movie-card__link" href="movie-page.html" onClick={onHeaderClick}>{movie.title}</a>
               </h3>
             </article>
           ))}
@@ -133,6 +133,7 @@ const Main = (props) => {
   </React.Fragment>;
 };
 
+
 Main.propTypes = {
   movieData: PropTypes.shape({
     title: PropTypes.string.isRequired,
@@ -143,7 +144,8 @@ Main.propTypes = {
       PropTypes.shape({
         title: PropTypes.string.isRequired
       })
-  ).isRequired
+  ).isRequired,
+  onHeaderClick: PropTypes.func.isRequired,
 };
 
 export default Main;
