@@ -2,12 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import Main from "../main/main.jsx";
 
+const movieHeaderHandler = () => {};
 
 const App = (props) => {
   const {movieData, movies} = props;
 
   return (
-    <Main movieData={movieData} movies={movies} />
+    <Main movieData={movieData} movies={movies} onHeaderClick={movieHeaderHandler} />
   );
 };
 
