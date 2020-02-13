@@ -1,12 +1,7 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import Main from "./main.jsx";
+import React from 'react';
+import renderer from 'react-test-renderer';
+import MovieList from "../movie-list/movie-list.jsx";
 
-const PromoMovie = {
-  title: `The Grand Budapest Hotel`,
-  date: 2014,
-  genre: `Drama`
-};
 
 const films = [
   {
@@ -75,25 +70,10 @@ const films = [
   },
 ];
 
-describe(`Render Main`, () => {
+it(`ArtistQuestionScreen is rendered correctly`, () => {
+  const tree = renderer.create(
+      <MovieList films={films} handleMouseEnterCard={() => {}} />
+  ).toJSON();
 
-  it(`<Main /> should render movies`, () => {
-    const tree = renderer
-    .create(<Main
-      movieData={PromoMovie} films={films} handleMouseEnterCard={() => {}}
-    />)
-      .toJSON();
-
-    expect(tree).toMatchSnapshot();
-  });
-
-  it(`<Main /> should render empthy list`, () => {
-    const tree = renderer
-    .create(<Main
-      movieData={PromoMovie} films={[]} handleMouseEnterCard={() => {}}
-    />)
-    .toJSON();
-
-    expect(tree).toMatchSnapshot();
-  });
+  expect(tree).toMatchSnapshot();
 });

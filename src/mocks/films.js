@@ -1,14 +1,4 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import Main from "./main.jsx";
-
-const PromoMovie = {
-  title: `The Grand Budapest Hotel`,
-  date: 2014,
-  genre: `Drama`
-};
-
-const films = [
+export default [
   {
     title: `Parasite`,
     date: `04.07.2019`,
@@ -74,26 +64,3 @@ const films = [
     preview: `American car designer Carroll Shelby and driver Ken Miles battle corporate interference and the laws of physics to build a revolutionary race car for Ford in order to defeat Ferrari at the 24 Hours of Le Mans in 1966.`
   },
 ];
-
-describe(`Render Main`, () => {
-
-  it(`<Main /> should render movies`, () => {
-    const tree = renderer
-    .create(<Main
-      movieData={PromoMovie} films={films} handleMouseEnterCard={() => {}}
-    />)
-      .toJSON();
-
-    expect(tree).toMatchSnapshot();
-  });
-
-  it(`<Main /> should render empthy list`, () => {
-    const tree = renderer
-    .create(<Main
-      movieData={PromoMovie} films={[]} handleMouseEnterCard={() => {}}
-    />)
-    .toJSON();
-
-    expect(tree).toMatchSnapshot();
-  });
-});
