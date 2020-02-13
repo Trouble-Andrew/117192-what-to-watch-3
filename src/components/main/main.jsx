@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import MovieList from "../movie-list/movie-list.jsx";
 
 
 const Main = (props) => {
-  const {movieData, movies, onHeaderClick} = props;
+  const {movieData, films, handleMouseEnterCard} = props;
 
   return <React.Fragment>
     <section className="movie-card">
@@ -98,18 +99,7 @@ const Main = (props) => {
           </li>
         </ul>
 
-        <div className="catalog__movies-list">
-          {movies.map((movie, index) => (
-            <article className="small-movie-card catalog__movies-card" key={index}>
-              <div className="small-movie-card__image">
-                <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
-              </div>
-              <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html" onClick={onHeaderClick}>{movie.title}</a>
-              </h3>
-            </article>
-          ))}
-        </div>
+        <MovieList films={films} handleMouseEnterCard={handleMouseEnterCard} />
 
         <div className="catalog__more">
           <button className="catalog__button" type="button">Show more</button>
@@ -140,12 +130,17 @@ Main.propTypes = {
     date: PropTypes.number.isRequired,
     genre: PropTypes.string.isRequired,
   }).isRequired,
-  movies: PropTypes.arrayOf(
+  handleMouseEnterCard: PropTypes.func.isRequired,
+  films: PropTypes.arrayOf(
       PropTypes.shape({
-        title: PropTypes.string.isRequired
+        title: PropTypes.string.isRequired,
+        date: PropTypes.string.isRequired,
+        genre: PropTypes.string.isRequired,
+        poster: PropTypes.string.isRequired,
+        rating: PropTypes.number.isRequired,
+        preview: PropTypes.string.isRequired,
       })
-  ).isRequired,
-  onHeaderClick: PropTypes.func.isRequired,
+  ).isRequired
 };
 
 export default Main;

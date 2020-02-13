@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/app/app.jsx";
+import films from "./mocks/films.js";
 
 const PromoMovie = {
   title: `The Grand Budapest Hotel`,
@@ -8,15 +9,9 @@ const PromoMovie = {
   genre: `Drama`
 };
 
-const movies = [
-  {title: `Fantastic Beasts: The Crimes of Grindelwald`},
-  {title: `Bohemian Rhapsody`},
-  {title: `Macbeth`}
-];
-
 ReactDOM.render(
     <App
-      movieData={PromoMovie} movies={movies}
+      movieData={PromoMovie} films={films}
     />,
     document.querySelector(`#root`)
 );
