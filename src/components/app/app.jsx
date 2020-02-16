@@ -4,17 +4,11 @@ import PropTypes from "prop-types";
 import Main from "../main/main.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
 
-// const handleMouseEnterCard = (item) => {
-//   console.log(item);
-//   this.setState({
-//     screen: item,
-//   });
-//   console.log(this.state.screen);
-// };
-
 class App extends PureComponent {
   constructor(props) {
     super(props);
+
+    this._handleMouseEnterCard = this._handleMouseEnterCard.bind(this);
 
     this.state = {
       screen: {},
@@ -22,11 +16,10 @@ class App extends PureComponent {
   }
 
   _handleMouseEnterCard(item) {
-    console.log(item);
 
-    // this.setState({
-    //   screen: 0,
-    // });
+    this.setState({
+      screen: item,
+    });
   }
 
   _renderScreen() {
@@ -38,7 +31,7 @@ class App extends PureComponent {
       );
     } else {
       return (
-        <MoviePage film={films[0]} />
+        <MoviePage film={this.state.screen} />
       );
     }
   }
