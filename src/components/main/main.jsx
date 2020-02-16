@@ -135,9 +135,13 @@ Main.propTypes = {
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
-        genre: PropTypes.string.isRequired,
+        genre: PropTypes.array.isRequired,
         poster: PropTypes.string.isRequired,
+        posterBig: PropTypes.string.isRequired,
         rating: PropTypes.number.isRequired,
+        ratingCount: PropTypes.number.isRequired,
+        director: PropTypes.array.isRequired,
+        stars: PropTypes.array.isRequired,
         preview: PropTypes.string.isRequired,
       })
   ).isRequired

@@ -6,7 +6,7 @@ const SmallMovieCard = (props) => {
   const {movie, handleMouseEnterCard} = props;
 
   return (
-    <article className="small-movie-card catalog__movies-card" onMouseEnter={(evt) => {
+    <article className="small-movie-card catalog__movies-card" onClick={(evt) => {
       evt.preventDefault();
       handleMouseEnterCard(movie);
     }}>
@@ -24,9 +24,13 @@ SmallMovieCard.propTypes = {
   movie: PropTypes.shape({
     title: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
+    genre: PropTypes.array.isRequired,
     poster: PropTypes.string.isRequired,
+    posterBig: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
+    ratingCount: PropTypes.number.isRequired,
+    director: PropTypes.array.isRequired,
+    stars: PropTypes.array.isRequired,
     preview: PropTypes.string.isRequired,
   }).isRequired,
   handleMouseEnterCard: PropTypes.func.isRequired,
