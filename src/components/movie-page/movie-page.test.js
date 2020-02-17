@@ -1,11 +1,6 @@
-import React from "react";
-import Enzyme, {shallow} from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
-import SmallMovieCard from "../small-movie-card/small-movie-card.jsx";
-
-Enzyme.configure({
-  adapter: new Adapter(),
-});
+import React from 'react';
+import renderer from 'react-test-renderer';
+import MoviePage from "../movie-page/movie-page.jsx";
 
 const film = {
   title: `Joker`,
@@ -20,16 +15,10 @@ const film = {
   preview: `In Gotham City, mentally troubled comedian Arthur Fleck is disregarded and mistreated by society. He then embarks on a downward spiral of revolution and bloody crime. This path brings him face-to-face with his alter-ego: the Joker.`
 };
 
-it(`Movie information gets into the handler`, () => {
-  const onMouseClick = jest.fn();
+it(`MoviePage is rendered correctly`, () => {
+  const tree = renderer.create(
+      <MoviePage film={film} handleMouseEnterCard={() => {}} />
+  ).toJSON();
 
-  const main = shallow(
-      <SmallMovieCard movie={film} handleMouseEnterCard={onMouseClick} />
-  );
-
-  const movieCard = main.find(`article.small-movie-card`);
-
-  movieCard.simulate(`click`, {preventDefault() {}});
-
-  expect(onMouseClick).toBeCalledWith(film);
+  expect(tree).toMatchSnapshot();
 });

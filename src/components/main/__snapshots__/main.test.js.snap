@@ -565,7 +565,7 @@ Array [
       >
         <article
           className="small-movie-card catalog__movies-card"
-          onMouseEnter={[Function]}
+          onClick={[Function]}
         >
           <div
             className="small-movie-card__image"
@@ -590,7 +590,7 @@ Array [
         </article>
         <article
           className="small-movie-card catalog__movies-card"
-          onMouseEnter={[Function]}
+          onClick={[Function]}
         >
           <div
             className="small-movie-card__image"
@@ -615,7 +615,7 @@ Array [
         </article>
         <article
           className="small-movie-card catalog__movies-card"
-          onMouseEnter={[Function]}
+          onClick={[Function]}
         >
           <div
             className="small-movie-card__image"
@@ -640,7 +640,7 @@ Array [
         </article>
         <article
           className="small-movie-card catalog__movies-card"
-          onMouseEnter={[Function]}
+          onClick={[Function]}
         >
           <div
             className="small-movie-card__image"
@@ -665,7 +665,7 @@ Array [
         </article>
         <article
           className="small-movie-card catalog__movies-card"
-          onMouseEnter={[Function]}
+          onClick={[Function]}
         >
           <div
             className="small-movie-card__image"
@@ -690,7 +690,7 @@ Array [
         </article>
         <article
           className="small-movie-card catalog__movies-card"
-          onMouseEnter={[Function]}
+          onClick={[Function]}
         >
           <div
             className="small-movie-card__image"
@@ -715,7 +715,7 @@ Array [
         </article>
         <article
           className="small-movie-card catalog__movies-card"
-          onMouseEnter={[Function]}
+          onClick={[Function]}
         >
           <div
             className="small-movie-card__image"
@@ -740,7 +740,7 @@ Array [
         </article>
         <article
           className="small-movie-card catalog__movies-card"
-          onMouseEnter={[Function]}
+          onClick={[Function]}
         >
           <div
             className="small-movie-card__image"
