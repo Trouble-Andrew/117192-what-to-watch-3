@@ -9,6 +9,7 @@ const film = {
   genre: [`Crime`, `Drama`, `Comedy`],
   poster: `https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SY1000_CR0,0,674,1000_AL_.jpg`,
   posterBig: `https://m.media-amazon.com/images/M/MV5BNGVmNzE2ZmEtNTBmNC00MjVjLWE2ZjgtNmNhYjJlYTIzYjQ5XkEyXkFqcGdeQXVyNzgxMzc3OTc@._V1_SX1777_CR0,0,1777,999_AL_.jpg`,
+  video: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
   rating: 8.6,
   ratingCount: 227900,
   director: [`Bong Joon Ho`],
