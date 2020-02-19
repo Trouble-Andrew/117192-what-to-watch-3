@@ -1,5 +1,5 @@
 import React from "react";
-import Enzyme, {shallow} from "enzyme";
+import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import VideoPlayer from "../video-player/video-player.jsx";
 
@@ -13,18 +13,24 @@ const mock = {
   }
 };
 
-it(`VideoPlayer state contain true and false`, () => {
+it(`VideoPlayer state contain true`, () => {
   const {movie} = mock;
-  const ref = React.createRef();
 
-  const main = shallow(
-      <VideoPlayer ref={ref} isPlaying={true}
+  const main = mount(
+      <VideoPlayer isPlaying={true}
         src={movie.video} />
   );
 
-  const video = main.find(`video.player__video`);
+  expect(main.state(`isPlaying`)).toEqual(true);
+});
 
-  video.simulate(`onMouseEnter`, {preventDefault() {}});
+it(`VideoPlayer state contain false`, () => {
+  const {movie} = mock;
 
-  expect(main.state(`isPlaying`)).toBe(true);
+  const main = mount(
+      <VideoPlayer isPlaying={false}
+        src={movie.video} />
+  );
+
+  expect(main.state(`isPlaying`)).toEqual(false);
 });
