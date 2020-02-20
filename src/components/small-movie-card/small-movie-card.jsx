@@ -1,23 +1,77 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+import VideoPlayer from "../video-player/video-player.jsx";
 
-const SmallMovieCard = (props) => {
-  const {movie, handleMouseEnterCard} = props;
+class SmallMovieCard extends PureComponent {
+  constructor(props) {
+    super(props);
 
-  return (
-    <article className="small-movie-card catalog__movies-card" onClick={(evt) => {
-      evt.preventDefault();
-      handleMouseEnterCard(movie);
-    }}>
-      <div className="small-movie-card__image">
-        <img src={movie.poster} alt={movie.title} width={280} height={175} />
-      </div>
-      <h3 className="small-movie-card__title">
-        <a className="small-movie-card__link" href="movie-page.html">{movie.title}</a>
-      </h3>
-    </article>
-  );
-};
+    this._setTimer = this._setTimer.bind(this);
+
+    this.timer = null;
+
+    this.state = {
+      isVideo: false,
+      isPlaying: true,
+    };
+  }
+
+  _setTimer() {
+    this.timer = setTimeout(() => {
+      this.setState({isVideo: !this.state.isVideo});
+    }, 1000);
+  }
+
+  _clearTimer() {
+    this.setState({isVideo: false});
+    clearTimeout(this.timer);
+  }
+
+  render() {
+    const {movie, handleMouseEnterCard} = this.props;
+
+    const {isVideo} = this.state;
+
+    if (isVideo) {
+      return <article className="small-movie-card catalog__movies-card" onClick={(evt) => {
+        evt.preventDefault();
+        handleMouseEnterCard(movie);
+        this._clearTimer();
+      }}
+      onMouseLeave={() => {
+        this.setState({isVideo: false});
+        this._clearTimer();
+      }}
+      >
+        <VideoPlayer
+          isPlaying={true}
+          src={movie.video}
+        />
+      </article>;
+    }
+
+    return (
+      <article className="small-movie-card catalog__movies-card" onClick={(evt) => {
+        evt.preventDefault();
+        handleMouseEnterCard(movie);
+        this._clearTimer();
+      }}
+      onMouseEnter = {this._setTimer}
+
+      onMouseLeave={() => {
+        this._clearTimer();
+      }}
+      >
+        <div className="small-movie-card__image">
+          <img src={movie.poster} alt={movie.title} width={280} height={175} />
+        </div>
+        <h3 className="small-movie-card__title">
+          <a className="small-movie-card__link" href="movie-page.html">{movie.title}</a>
+        </h3>
+      </article>
+    );
+  }
+}
 
 SmallMovieCard.propTypes = {
   movie: PropTypes.shape({
@@ -26,6 +80,7 @@ SmallMovieCard.propTypes = {
     genre: PropTypes.array.isRequired,
     poster: PropTypes.string.isRequired,
     posterBig: PropTypes.string.isRequired,
+    video: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
     ratingCount: PropTypes.number.isRequired,
     director: PropTypes.array.isRequired,

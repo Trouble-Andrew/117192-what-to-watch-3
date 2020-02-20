@@ -39,6 +39,7 @@ MovieList.propTypes = {
         genre: PropTypes.array.isRequired,
         poster: PropTypes.string.isRequired,
         posterBig: PropTypes.string.isRequired,
+        video: PropTypes.string.isRequired,
         rating: PropTypes.number.isRequired,
         ratingCount: PropTypes.number.isRequired,
         director: PropTypes.array.isRequired,

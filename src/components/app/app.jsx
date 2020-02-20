@@ -25,7 +25,7 @@ class App extends PureComponent {
   _renderScreen() {
     const {movieData, films} = this.props;
 
-    if ((Object.entries(this.state.screen)).length === 0) {
+    if (Object.keys(this.state.screen).length === 0) {
       return (
         <Main movieData={movieData} films={films} handleMouseEnterCard={this._handleMouseEnterCard} />
       );
@@ -66,6 +66,7 @@ App.propTypes = {
         genre: PropTypes.array.isRequired,
         poster: PropTypes.string.isRequired,
         posterBig: PropTypes.string.isRequired,
+        video: PropTypes.string.isRequired,
         rating: PropTypes.number.isRequired,
         ratingCount: PropTypes.number.isRequired,
         director: PropTypes.array.isRequired,
