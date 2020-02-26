@@ -120,7 +120,6 @@ class MoviePage extends PureComponent {
               <div className="movie-card__desc">
                 <nav className="movie-nav movie-card__nav">
                   <Tabs tab={this.state.tab} handleClickTab={(tab) => {
-                    console.log(tab.innerHTML);
                     this._toggleTab(tab);
                   }} />
                 </nav>
