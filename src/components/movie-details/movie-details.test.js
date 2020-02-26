@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import MoviePage from "../movie-page/movie-page.jsx";
+import MovieDetails from "../movie-details/movie-details.jsx";
 
 const film = {
   title: `Parasite`,
@@ -31,9 +31,9 @@ const film = {
   ],
 };
 
-it(`MoviePage is rendered correctly`, () => {
+it(`MovieDetails is rendered correctly`, () => {
   const tree = renderer.create(
-      <MoviePage film={film} handleMouseEnterCard={() => {}} />
+      <MovieDetails film={film} />
   ).toJSON();
 
   expect(tree).toMatchSnapshot();
