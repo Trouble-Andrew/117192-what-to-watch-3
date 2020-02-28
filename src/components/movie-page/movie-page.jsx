@@ -37,13 +37,13 @@ class MoviePage extends PureComponent {
 
   _toggleTab(currentTab) {
     switch (true) {
-      case currentTab.innerHTML === `Overview`:
+      case currentTab === `Overview`:
         this.setState({tab: `Overview`});
         break;
-      case currentTab.innerHTML === `Details`:
+      case currentTab === `Details`:
         this.setState({tab: `Details`});
         break;
-      case currentTab.innerHTML === `Reviews`:
+      case currentTab === `Reviews`:
         this.setState({tab: `Reviews`});
         break;
     }

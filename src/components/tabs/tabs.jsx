@@ -11,7 +11,7 @@ const Tabs = (props) => {
       <li key={index} className={tab === element ? `movie-nav__item movie-nav__item--active` : `movie-nav__item`}>
         <a href="#" className="movie-nav__link" onClick={(evt) => {
           evt.preventDefault();
-          handleClickTab(evt.target);
+          handleClickTab(element);
         }}>{element}</a>
       </li>
     )}
