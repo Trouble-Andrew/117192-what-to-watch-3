@@ -72,7 +72,7 @@ Array [
           <h2
             className="movie-card__title"
           >
-            Joker
+            Parasite
           </h2>
           <p
             className="movie-card__meta"
@@ -80,12 +80,12 @@ Array [
             <span
               className="movie-card__genre"
             >
-              Crime, Drama, Thriller
+              Crime, Drama, Comedy
             </span>
             <span
               className="movie-card__year"
             >
-              3.10.2019
+              04.07.2019
             </span>
           </p>
           <div
@@ -147,7 +147,7 @@ Array [
           <img
             alt="The Grand Budapest Hotel poster"
             height={327}
-            src="https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SY1000_CR0,0,674,1000_AL_.jpg"
+            src="https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SY1000_CR0,0,674,1000_AL_.jpg"
             width={218}
           />
         </div>
@@ -166,6 +166,7 @@ Array [
                 <a
                   className="movie-nav__link"
                   href="#"
+                  onClick={[Function]}
                 >
                   Overview
                 </a>
@@ -176,6 +177,7 @@ Array [
                 <a
                   className="movie-nav__link"
                   href="#"
+                  onClick={[Function]}
                 >
                   Details
                 </a>
@@ -186,12 +188,15 @@ Array [
                 <a
                   className="movie-nav__link"
                   href="#"
+                  onClick={[Function]}
                 >
                   Reviews
                 </a>
               </li>
             </ul>
           </nav>
+          
+          
           <div
             className="movie-rating"
           >
@@ -211,7 +216,7 @@ Array [
               <span
                 className="movie-rating__count"
               >
-                56900
+                227900
                  ratings
               </span>
             </p>
@@ -220,7 +225,7 @@ Array [
             className="movie-card__text"
           >
             <p>
-              In Gotham City, mentally troubled comedian Arthur Fleck is disregarded and mistreated by society. He then embarks on a downward spiral of revolution and bloody crime. This path brings him face-to-face with his alter-ego: the Joker.
+              A poor family, the Kims, con their way into becoming the servants of a rich family, the Parks. But their easy life gets complicated when their deception is threatened with exposure.
             </p>
             <p
               className="movie-card__director"
@@ -235,7 +240,7 @@ Array [
             >
               <strong>
                 Starring: 
-                Roman Griffin Davis, Thomasin McKenzie, Scarlett Johansson
+                Kang-ho Song, Sun-kyun Lee, Yeo-jeong Jo
                  and other
               </strong>
             </p>

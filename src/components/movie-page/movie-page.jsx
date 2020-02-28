@@ -1,9 +1,16 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+import Tabs from "../tabs/tabs.jsx";
+import MovieDetails from "../movie-details/movie-details.jsx";
+import MovieReviews from "../movie-reviews/movie-reviews.jsx";
 
 class MoviePage extends PureComponent {
   constructor(props) {
     super(props);
+
+    this.state = {
+      tab: `Overview`,
+    };
   }
 
   _ratingToText(rating) {
@@ -26,6 +33,20 @@ class MoviePage extends PureComponent {
         break;
     }
     return text;
+  }
+
+  _toggleTab(currentTab) {
+    switch (true) {
+      case currentTab === `Overview`:
+        this.setState({tab: `Overview`});
+        break;
+      case currentTab === `Details`:
+        this.setState({tab: `Details`});
+        break;
+      case currentTab === `Reviews`:
+        this.setState({tab: `Reviews`});
+        break;
+    }
   }
 
   render() {
@@ -98,26 +119,23 @@ class MoviePage extends PureComponent {
               </div>
               <div className="movie-card__desc">
                 <nav className="movie-nav movie-card__nav">
-                  <ul className="movie-nav__list">
-                    <li className="movie-nav__item movie-nav__item--active">
-                      <a href="#" className="movie-nav__link">Overview</a>
-                    </li>
-                    <li className="movie-nav__item">
-                      <a href="#" className="movie-nav__link">Details</a>
-                    </li>
-                    <li className="movie-nav__item">
-                      <a href="#" className="movie-nav__link">Reviews</a>
-                    </li>
-                  </ul>
+                  <Tabs tab={this.state.tab} handleClickTab={(tab) => {
+                    this._toggleTab(tab);
+                  }} />
                 </nav>
-                <div className="movie-rating">
+
+                {this.state.tab === `Details` ? <MovieDetails film={film} /> : ``}
+
+                {this.state.tab === `Reviews` ? <MovieReviews film={film} /> : ``}
+
+                <div className={this.state.tab === `Overview` ? `movie-rating` : `movie-rating visually-hidden`}>
                   <div className="movie-rating__score">{rating}</div>
                   <p className="movie-rating__meta">
                     <span className="movie-rating__level">{this._ratingToText(rating)}</span>
                     <span className="movie-rating__count">{ratingCount} ratings</span>
                   </p>
                 </div>
-                <div className="movie-card__text">
+                <div className={this.state.tab === `Overview` ? `movie-card__text` : `movie-card__text visually-hidden`}>
                   <p>{preview}</p>
                   <p className="movie-card__director"><strong>Director: {director}</strong></p>
                   <p className="movie-card__starring"><strong>Starring: {stars.join(`, `)} and other</strong></p>
@@ -191,10 +209,17 @@ MoviePage.propTypes = {
     posterBig: PropTypes.string.isRequired,
     video: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
+    time: PropTypes.string.isRequired,
     ratingCount: PropTypes.number.isRequired,
     director: PropTypes.array.isRequired,
     stars: PropTypes.array.isRequired,
     preview: PropTypes.string.isRequired,
+    reviews: PropTypes.arrayOf(PropTypes.shape({
+      author: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      date: PropTypes.string.isRequired,
+    })).isRequired,
   }).isRequired,
 };
 
