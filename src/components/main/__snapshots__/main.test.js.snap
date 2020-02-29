@@ -159,6 +159,7 @@ Array [
           <a
             className="catalog__genres-link"
             href="#"
+            onClick={[Function]}
           >
             All genres
           </a>
@@ -169,16 +170,7 @@ Array [
           <a
             className="catalog__genres-link"
             href="#"
-          >
-            Comedies
-          </a>
-        </li>
-        <li
-          className="catalog__genres-item"
-        >
-          <a
-            className="catalog__genres-link"
-            href="#"
+            onClick={[Function]}
           >
             Crime
           </a>
@@ -189,8 +181,9 @@ Array [
           <a
             className="catalog__genres-link"
             href="#"
+            onClick={[Function]}
           >
-            Documentary
+            Drama
           </a>
         </li>
         <li
@@ -199,8 +192,9 @@ Array [
           <a
             className="catalog__genres-link"
             href="#"
+            onClick={[Function]}
           >
-            Dramas
+            Comedy
           </a>
         </li>
         <li
@@ -209,8 +203,9 @@ Array [
           <a
             className="catalog__genres-link"
             href="#"
+            onClick={[Function]}
           >
-            Horror
+            War
           </a>
         </li>
         <li
@@ -219,8 +214,9 @@ Array [
           <a
             className="catalog__genres-link"
             href="#"
+            onClick={[Function]}
           >
-            Kids & Family
+            Thriller
           </a>
         </li>
         <li
@@ -229,8 +225,9 @@ Array [
           <a
             className="catalog__genres-link"
             href="#"
+            onClick={[Function]}
           >
-            Romance
+            Action
           </a>
         </li>
         <li
@@ -239,18 +236,9 @@ Array [
           <a
             className="catalog__genres-link"
             href="#"
+            onClick={[Function]}
           >
-            Sci-Fi
-          </a>
-        </li>
-        <li
-          className="catalog__genres-item"
-        >
-          <a
-            className="catalog__genres-link"
-            href="#"
-          >
-            Thrillers
+            Biography
           </a>
         </li>
       </ul>
@@ -465,6 +453,7 @@ Array [
           <a
             className="catalog__genres-link"
             href="#"
+            onClick={[Function]}
           >
             All genres
           </a>
@@ -475,16 +464,7 @@ Array [
           <a
             className="catalog__genres-link"
             href="#"
-          >
-            Comedies
-          </a>
-        </li>
-        <li
-          className="catalog__genres-item"
-        >
-          <a
-            className="catalog__genres-link"
-            href="#"
+            onClick={[Function]}
           >
             Crime
           </a>
@@ -495,8 +475,9 @@ Array [
           <a
             className="catalog__genres-link"
             href="#"
+            onClick={[Function]}
           >
-            Documentary
+            Drama
           </a>
         </li>
         <li
@@ -505,8 +486,9 @@ Array [
           <a
             className="catalog__genres-link"
             href="#"
+            onClick={[Function]}
           >
-            Dramas
+            Comedy
           </a>
         </li>
         <li
@@ -515,8 +497,9 @@ Array [
           <a
             className="catalog__genres-link"
             href="#"
+            onClick={[Function]}
           >
-            Horror
+            War
           </a>
         </li>
         <li
@@ -525,8 +508,9 @@ Array [
           <a
             className="catalog__genres-link"
             href="#"
+            onClick={[Function]}
           >
-            Kids & Family
+            Thriller
           </a>
         </li>
         <li
@@ -535,8 +519,9 @@ Array [
           <a
             className="catalog__genres-link"
             href="#"
+            onClick={[Function]}
           >
-            Romance
+            Action
           </a>
         </li>
         <li
@@ -545,18 +530,9 @@ Array [
           <a
             className="catalog__genres-link"
             href="#"
+            onClick={[Function]}
           >
-            Sci-Fi
-          </a>
-        </li>
-        <li
-          className="catalog__genres-item"
-        >
-          <a
-            className="catalog__genres-link"
-            href="#"
-          >
-            Thrillers
+            Biography
           </a>
         </li>
       </ul>
