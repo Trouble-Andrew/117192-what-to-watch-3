@@ -4,17 +4,7 @@ import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer.js";
 
 const Filter = (props) => {
-  const {films, genre, handleClickFilter} = props;
-
-  const getAllGenres = function () {
-    let newArray = [];
-    films.forEach((film) => newArray.push(...film.genre));
-
-    let unique = newArray.filter((v, i, a) => a.indexOf(v) === i);
-    return unique;
-  };
-
-  const allGenres = getAllGenres(films);
+  const {genre, allGenres, handleClickFilter} = props;
 
   return <ul className="catalog__genres-list">
     <li className={genre === `All genres` ? `catalog__genres-item catalog__genres-item--active` : `catalog__genres-item`}>
@@ -27,6 +17,14 @@ const Filter = (props) => {
       </li>
     )}
   </ul>;
+};
+
+const getAllGenres = function (films) {
+  let newArray = [];
+  films.forEach((film) => newArray.push(...film.genre));
+
+  let unique = newArray.filter((v, i, a) => a.indexOf(v) === i);
+  return unique;
 };
 
 Filter.propTypes = {
@@ -47,11 +45,13 @@ Filter.propTypes = {
   ).isRequired,
   genre: PropTypes.string.isRequired,
   handleClickFilter: PropTypes.func.isRequired,
+  allGenres: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   films: state.films,
   genre: state.genre,
+  allGenres: getAllGenres(state.films),
 });
 
 const mapDispatchToProps = (dispatch) => ({
