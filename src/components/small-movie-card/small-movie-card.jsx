@@ -1,6 +1,9 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import VideoPlayer from "../video-player/video-player.jsx";
+import withVideo from "../../hocs/with-video/with-video.js";
+
+const VideoPlayerWrapped = withVideo(VideoPlayer);
 
 class SmallMovieCard extends PureComponent {
   constructor(props) {
@@ -43,7 +46,7 @@ class SmallMovieCard extends PureComponent {
         this._clearTimer();
       }}
       >
-        <VideoPlayer
+        <VideoPlayerWrapped
           isPlaying={true}
           src={movie.video}
         />
