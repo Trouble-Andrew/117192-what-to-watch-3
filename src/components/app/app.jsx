@@ -1,5 +1,6 @@
 import React, {PureComponent} from "react";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Main from "../main/main.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
@@ -76,4 +77,9 @@ App.propTypes = {
   ).isRequired
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  films: state.filteredList,
+});
+
+export {App};
+export default connect(mapStateToProps, null)(App);

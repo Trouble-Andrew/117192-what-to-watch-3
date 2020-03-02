@@ -2,32 +2,23 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import App from "./app.jsx";
+import Filter from "./filter.jsx";
 import films from "../../mocks/films.js";
 
 const mockStore = configureStore([]);
 
-const PromoMovie = {
-  title: `The Grand Budapest Hotel`,
-  date: 2014,
-  genre: `Drama`
-};
-
-it(`Render App`, () => {
+it(`Filter is rendered correctly`, () => {
   const store = mockStore({
     genre: `All genres`,
     filteredList: films,
     films,
   });
 
-  const tree = renderer
-    .create(
-        <Provider store={store}>
-          <App
-            movieData={PromoMovie} films={films}
-          />
-        </Provider>)
-      .toJSON();
+  const tree = renderer.create(
+      <Provider store={store}>
+        <Filter films={films} genre={`All genres`} handleClickFilter={() => {}}/>
+      </Provider>
+  ).toJSON();
 
   expect(tree).toMatchSnapshot();
 });
