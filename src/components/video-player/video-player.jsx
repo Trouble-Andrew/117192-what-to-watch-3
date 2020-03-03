@@ -5,11 +5,11 @@ import PropTypes from "prop-types";
 class VideoPlayer extends PureComponent {
 
   render() {
-    const {ref} = this.props;
+    const {forwardedRef} = this.props;
 
     return (
       <Fragment>
-        <video ref={ref} className="player__video" poster="img/player-poster.jpg" muted />
+        <video ref={forwardedRef} className="player__video" poster="img/player-poster.jpg" muted />
       </Fragment>
     );
   }
@@ -18,7 +18,11 @@ class VideoPlayer extends PureComponent {
 VideoPlayer.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   src: PropTypes.string.isRequired,
-  ref: PropTypes.object.isRequired,
+  // ref: PropTypes.object.isRequired,
+  forwardedRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({current: PropTypes.any})
+  ]),
 };
 
 export default VideoPlayer;

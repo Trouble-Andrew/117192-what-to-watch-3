@@ -32,6 +32,8 @@ class SmallMovieCard extends PureComponent {
 
   render() {
     const {movie, handleMouseEnterCard} = this.props;
+    const videoRef = React.createRef();
+    console.log(videoRef);
 
     const {isVideo} = this.state;
 
@@ -49,6 +51,7 @@ class SmallMovieCard extends PureComponent {
         <VideoPlayerWrapped
           isPlaying={true}
           src={movie.video}
+          ref={videoRef}
         />
       </article>;
     }

@@ -6,7 +6,8 @@ const withVideo = (Component) => {
     constructor(props) {
       super(props);
 
-      this._videoRef = createRef();
+      // this._videoRef = createRef();
+      this._videoRef = props.ref;
 
       this.state = {
         progress: 0,
@@ -16,13 +17,10 @@ const withVideo = (Component) => {
 
     componentDidMount() {
       const {src} = this.props;
+
       const video = this._videoRef.current;
 
       video.src = src;
-
-      video.oncanplaythrough = () => this.setState({
-        isLoading: false,
-      });
 
       video.onplay = () => {
         this.setState({
@@ -61,12 +59,13 @@ const withVideo = (Component) => {
 
     render() {
       const {isPlaying} = this.state;
+      const {forwardedRef} = this.props;
 
       return (
         <Component
           {...this.props}
           isPlaying={isPlaying}
-          ref={this._videoRef}
+          ref={forwardedRef}
         >
         </Component>
       );
@@ -76,9 +75,20 @@ const withVideo = (Component) => {
   WithVideo.propTypes = {
     isPlaying: PropTypes.bool.isRequired,
     src: PropTypes.string.isRequired,
+    forwardedRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({current: PropTypes.any})
+    ]),
+    ref: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({current: PropTypes.any})
+    ]),
   };
 
-  return WithVideo;
+  // return WithVideo;
+  return React.forwardRef((props, ref) => {
+    return <WithVideo {...props} forwardedRef={ref} />;
+  });
 };
 
 export default withVideo;
