@@ -1,4 +1,6 @@
 import React, {createRef, PureComponent} from "react";
+import {connect} from "react-redux";
+import {ActionCreator} from "../../reducer.js";
 import PropTypes from "prop-types";
 import VideoPlayer from "../video-player/video-player.jsx";
 import withVideo from "../../hocs/with-video/with-video.js";
@@ -33,14 +35,13 @@ class SmallMovieCard extends PureComponent {
   }
 
   render() {
-    const {movie, handleMouseEnterCard} = this.props;
+    const {movie, handleClickCard} = this.props;
 
     const {isVideo} = this.state;
 
     if (isVideo) {
       return <article className="small-movie-card catalog__movies-card" onClick={(evt) => {
         evt.preventDefault();
-        handleMouseEnterCard(movie);
         this._clearTimer();
       }}
       onMouseLeave={() => {
@@ -59,7 +60,7 @@ class SmallMovieCard extends PureComponent {
     return (
       <article className="small-movie-card catalog__movies-card" onClick={(evt) => {
         evt.preventDefault();
-        handleMouseEnterCard(movie);
+        handleClickCard(movie);
         this._clearTimer();
       }}
       onMouseEnter = {this._setTimer}
@@ -93,8 +94,14 @@ SmallMovieCard.propTypes = {
     stars: PropTypes.array.isRequired,
     preview: PropTypes.string.isRequired,
   }).isRequired,
-  handleMouseEnterCard: PropTypes.func.isRequired,
+  handleClickCard: PropTypes.func.isRequired,
 };
 
+const mapDispatchToProps = (dispatch) => ({
+  handleClickCard(movie) {
+    dispatch(ActionCreator.getSelectedMovie(movie));
+  },
+});
 
-export default SmallMovieCard;
+export {SmallMovieCard};
+export default connect(null, mapDispatchToProps)(SmallMovieCard);

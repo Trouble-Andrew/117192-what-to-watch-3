@@ -1,23 +1,28 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer.js";
 
-const Filter = (props) => {
-  const {genre, allGenres, handleClickFilter} = props;
+class Filter extends PureComponent {
 
-  return <ul className="catalog__genres-list">
-    <li className={genre === `All genres` ? `catalog__genres-item catalog__genres-item--active` : `catalog__genres-item`}>
-      <a href="#" className="catalog__genres-link" onClick={handleClickFilter}>All genres</a>
-    </li>
+  render() {
+    const {genre, allGenres, handleClickFilter} = this.props;
 
-    {allGenres.map((element, index) =>
-      <li key={index} className={genre === element ? `catalog__genres-item catalog__genres-item--active` : `catalog__genres-item`}>
-        <a href="#" className="catalog__genres-link" onClick={handleClickFilter}>{element}</a>
-      </li>
-    )}
-  </ul>;
-};
+    return (
+      <ul className="catalog__genres-list">
+        <li className={genre === `All genres` ? `catalog__genres-item catalog__genres-item--active` : `catalog__genres-item`}>
+          <a href="#" className="catalog__genres-link" onClick={handleClickFilter}>All genres</a>
+        </li>
+
+        {allGenres.map((element, index) =>
+          <li key={index} className={genre === element ? `catalog__genres-item catalog__genres-item--active` : `catalog__genres-item`}>
+            <a href="#" className="catalog__genres-link" onClick={handleClickFilter}>{element}</a>
+          </li>
+        )}
+      </ul>
+    );
+  }
+}
 
 const getAllGenres = function (films) {
   let newArray = [];

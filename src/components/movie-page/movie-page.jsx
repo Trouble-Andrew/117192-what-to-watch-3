@@ -7,10 +7,6 @@ import MovieReviews from "../movie-reviews/movie-reviews.jsx";
 class MoviePage extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      tab: `Overview`,
-    };
   }
 
   _ratingToText(rating) {
@@ -35,23 +31,9 @@ class MoviePage extends PureComponent {
     return text;
   }
 
-  _toggleTab(currentTab) {
-    switch (true) {
-      case currentTab === `Overview`:
-        this.setState({tab: `Overview`});
-        break;
-      case currentTab === `Details`:
-        this.setState({tab: `Details`});
-        break;
-      case currentTab === `Reviews`:
-        this.setState({tab: `Reviews`});
-        break;
-    }
-  }
-
   render() {
 
-    const {film} = this.props;
+    const {film, tab, toggleTab} = this.props;
     const {
       title,
       date,
@@ -119,23 +101,23 @@ class MoviePage extends PureComponent {
               </div>
               <div className="movie-card__desc">
                 <nav className="movie-nav movie-card__nav">
-                  <Tabs tab={this.state.tab} handleClickTab={(tab) => {
-                    this._toggleTab(tab);
+                  <Tabs tab={tab} handleClickTab={(element) => {
+                    toggleTab(element);
                   }} />
                 </nav>
 
-                {this.state.tab === `Details` ? <MovieDetails film={film} /> : ``}
+                {tab === `Details` ? <MovieDetails film={film} /> : ``}
 
-                {this.state.tab === `Reviews` ? <MovieReviews film={film} /> : ``}
+                {tab === `Reviews` ? <MovieReviews film={film} /> : ``}
 
-                <div className={this.state.tab === `Overview` ? `movie-rating` : `movie-rating visually-hidden`}>
+                <div className={tab === `Overview` ? `movie-rating` : `movie-rating visually-hidden`}>
                   <div className="movie-rating__score">{rating}</div>
                   <p className="movie-rating__meta">
                     <span className="movie-rating__level">{this._ratingToText(rating)}</span>
                     <span className="movie-rating__count">{ratingCount} ratings</span>
                   </p>
                 </div>
-                <div className={this.state.tab === `Overview` ? `movie-card__text` : `movie-card__text visually-hidden`}>
+                <div className={tab === `Overview` ? `movie-card__text` : `movie-card__text visually-hidden`}>
                   <p>{preview}</p>
                   <p className="movie-card__director"><strong>Director: {director}</strong></p>
                   <p className="movie-card__starring"><strong>Starring: {stars.join(`, `)} and other</strong></p>
@@ -221,6 +203,8 @@ MoviePage.propTypes = {
       date: PropTypes.string.isRequired,
     })).isRequired,
   }).isRequired,
+  tab: PropTypes.string.isRequired,
+  toggleTab: PropTypes.func.isRequired,
 };
 
 export default MoviePage;

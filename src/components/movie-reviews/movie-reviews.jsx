@@ -1,18 +1,23 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import MovieReview from "../movie-review/movie-review.jsx";
 
-const MovieReviews = (props) => {
-  const {film} = props;
+class MovieReviews extends PureComponent {
 
-  return <div className="movie-card__reviews movie-card__row">
-    <div className="movie-card__reviews-col">
-      {film.reviews.map((review, index) =>
-        <MovieReview review={review} key={index}/>
-      )}
-    </div>
-  < /div>;
-};
+  render() {
+    const {film} = this.props;
+
+    return (
+      <div className="movie-card__reviews movie-card__row">
+        <div className="movie-card__reviews-col">
+          {film.reviews.map((review, index) =>
+            <MovieReview review={review} key={index}/>
+          )}
+        </div>
+      < /div>
+    );
+  }
+}
 
 MovieReviews.propTypes = {
   film: PropTypes.shape({
