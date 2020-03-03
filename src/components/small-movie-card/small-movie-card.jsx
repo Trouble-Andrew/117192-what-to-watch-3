@@ -1,4 +1,4 @@
-import React, {PureComponent} from "react";
+import React, {createRef, PureComponent} from "react";
 import PropTypes from "prop-types";
 import VideoPlayer from "../video-player/video-player.jsx";
 import withVideo from "../../hocs/with-video/with-video.js";
@@ -8,6 +8,8 @@ const VideoPlayerWrapped = withVideo(VideoPlayer);
 class SmallMovieCard extends PureComponent {
   constructor(props) {
     super(props);
+
+    this._videoRef = createRef();
 
     this._setTimer = this._setTimer.bind(this);
 
@@ -32,8 +34,6 @@ class SmallMovieCard extends PureComponent {
 
   render() {
     const {movie, handleMouseEnterCard} = this.props;
-    const videoRef = React.createRef();
-    console.log(videoRef);
 
     const {isVideo} = this.state;
 
@@ -51,7 +51,7 @@ class SmallMovieCard extends PureComponent {
         <VideoPlayerWrapped
           isPlaying={true}
           src={movie.video}
-          ref={videoRef}
+          ref={this._videoRef}
         />
       </article>;
     }

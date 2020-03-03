@@ -18,7 +18,6 @@ class VideoPlayer extends PureComponent {
 VideoPlayer.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   src: PropTypes.string.isRequired,
-  // ref: PropTypes.object.isRequired,
   forwardedRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({current: PropTypes.any})

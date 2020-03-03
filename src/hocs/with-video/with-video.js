@@ -1,13 +1,10 @@
-import React, {createRef, PureComponent} from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 
 const withVideo = (Component) => {
   class WithVideo extends PureComponent {
     constructor(props) {
       super(props);
-
-      // this._videoRef = createRef();
-      this._videoRef = props.ref;
 
       this.state = {
         progress: 0,
@@ -16,9 +13,8 @@ const withVideo = (Component) => {
     }
 
     componentDidMount() {
-      const {src} = this.props;
-
-      const video = this._videoRef.current;
+      const {src, forwardedRef} = this.props;
+      const video = forwardedRef.current;
 
       video.src = src;
 
@@ -38,7 +34,8 @@ const withVideo = (Component) => {
     }
 
     componentWillUnmount() {
-      const video = this._videoRef.current;
+      const {forwardedRef} = this.props;
+      const video = forwardedRef.current;
 
       video.oncanplaythrough = null;
       video.onplay = null;
@@ -48,7 +45,8 @@ const withVideo = (Component) => {
     }
 
     componentDidUpdate() {
-      const video = this._videoRef.current;
+      const {forwardedRef} = this.props;
+      const video = forwardedRef.current;
 
       if (this.props.isPlaying) {
         video.play();
@@ -65,7 +63,7 @@ const withVideo = (Component) => {
         <Component
           {...this.props}
           isPlaying={isPlaying}
-          ref={forwardedRef}
+          forwardedRef={forwardedRef}
         >
         </Component>
       );
@@ -85,7 +83,6 @@ const withVideo = (Component) => {
     ]),
   };
 
-  // return WithVideo;
   return React.forwardRef((props, ref) => {
     return <WithVideo {...props} forwardedRef={ref} />;
   });
