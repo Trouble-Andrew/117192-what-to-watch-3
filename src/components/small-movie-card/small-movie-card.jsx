@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer.js";
 import PropTypes from "prop-types";
 import VideoPlayer from "../video-player/video-player.jsx";
-import withVideo from "../../hocs/with-video/with-video.js";
+import withVideo from "../../hocs/with-video/with-video.jsx";
 
 const VideoPlayerWrapped = withVideo(VideoPlayer);
 
@@ -16,41 +16,34 @@ class SmallMovieCard extends PureComponent {
     this._setTimer = this._setTimer.bind(this);
 
     this.timer = null;
-
-    this.state = {
-      isVideo: false,
-      isPlaying: true,
-    };
   }
 
-  _setTimer() {
+  _setTimer(callback) {
     this.timer = setTimeout(() => {
-      this.setState({isVideo: !this.state.isVideo});
+      callback();
     }, 1000);
   }
 
-  _clearTimer() {
-    this.setState({isVideo: false});
+  _clearTimer(callback) {
+    callback();
     clearTimeout(this.timer);
   }
 
   render() {
-    const {movie, handleClickCard} = this.props;
+    const {movie, handleClickCard, isPlay, startPlay, stopPlay} = this.props;
 
-    const {isVideo} = this.state;
-
-    if (isVideo) {
+    if (isPlay) {
       return <article className="small-movie-card catalog__movies-card" onClick={(evt) => {
         evt.preventDefault();
-        this._clearTimer();
+        handleClickCard(movie);
+        this._clearTimer(stopPlay);
       }}
       onMouseLeave={() => {
-        this.setState({isVideo: false});
-        this._clearTimer();
+        stopPlay();
       }}
       >
         <VideoPlayerWrapped
-          isPlaying={true}
+          isPlaying={isPlay}
           src={movie.video}
           ref={this._videoRef}
         />
@@ -61,12 +54,13 @@ class SmallMovieCard extends PureComponent {
       <article className="small-movie-card catalog__movies-card" onClick={(evt) => {
         evt.preventDefault();
         handleClickCard(movie);
-        this._clearTimer();
+        this._clearTimer(stopPlay);
       }}
-      onMouseEnter = {this._setTimer}
-
+      onMouseEnter={() => {
+        this._setTimer(startPlay);
+      }}
       onMouseLeave={() => {
-        this._clearTimer();
+        this._clearTimer(stopPlay);
       }}
       >
         <div className="small-movie-card__image">
@@ -95,6 +89,9 @@ SmallMovieCard.propTypes = {
     preview: PropTypes.string.isRequired,
   }).isRequired,
   handleClickCard: PropTypes.func.isRequired,
+  startPlay: PropTypes.func.isRequired,
+  stopPlay: PropTypes.func.isRequired,
+  isPlay: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

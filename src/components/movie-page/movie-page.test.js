@@ -33,8 +33,12 @@ const film = {
 
 it(`MoviePage is rendered correctly`, () => {
   const tree = renderer.create(
-      <MoviePage film={film} handleMouseEnterCard={() => {}} />
-  ).toJSON();
+      <MoviePage film={film} handleMouseEnterCard={() => {}} toggleTab={() => {}} tab={`Overview`} />
+      , {
+        createNodeMock: () => {
+          return {};
+        }
+      }).toJSON();
 
   expect(tree).toMatchSnapshot();
 });

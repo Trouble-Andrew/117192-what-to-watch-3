@@ -1,32 +1,16 @@
-import React from "react";
+import React, {createRef} from "react";
 import renderer from "react-test-renderer";
-import PropTypes from "prop-types";
-import withAudio from "./with-audio.js";
+import withVideo from "./with-video.jsx";
+import VideoPlayer from "../../components/video-player/video-player.jsx";
 
-const MockComponent = (props) => {
-  const {children} = props;
+const MockComponentWrapped = withVideo(VideoPlayer);
 
-  return (
-    <div>
-      {children}
-    </div>
-  );
-};
-
-MockComponent.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ]).isRequired,
-};
-
-const MockComponentWrapped = withAudio(MockComponent);
-
-it(`withAudio is rendered correctly`, () => {
+it(`withVideo is rendered correctly`, () => {
+  const videoRef = createRef();
   const tree = renderer.create((
     <MockComponentWrapped
       isPlaying={false}
-      onPlayButtonClick={() => {}}
+      ref={videoRef}
       src={``}
     />
   ), {

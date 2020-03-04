@@ -1,7 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
 import SmallMovieCard from "../small-movie-card/small-movie-card.jsx";
 
+const mockStore = configureStore([]);
 
 const film = {
   title: `Parasite`,
@@ -18,9 +21,20 @@ const film = {
 };
 
 it(`SmallMovieCard is rendered correctly`, () => {
+  const store = mockStore({
+    genre: `All genres`,
+    activeMovie: {},
+  });
+
   const tree = renderer.create(
-      <SmallMovieCard movie={film} handleClickCard={() => {}} />
-  ).toJSON();
+      <Provider store={store}>
+        <SmallMovieCard movie={film} handleClickCard={() => {}} startPlay={() => {}} stopPlay={() => {}} isPlay={false} />
+      </Provider>
+      , {
+        createNodeMock: () => {
+          return {};
+        }
+      }).toJSON();
 
   expect(tree).toMatchSnapshot();
 });

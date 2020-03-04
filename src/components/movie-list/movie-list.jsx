@@ -1,6 +1,9 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import SmallMovieCard from "../small-movie-card/small-movie-card.jsx";
+import withTogglePlay from "../../hocs/with-toggle-play/with-toggle-play.jsx";
+
+const SmallMovieCardWrapped = withTogglePlay(SmallMovieCard);
 
 class MovieList extends PureComponent {
   constructor(props) {
@@ -14,7 +17,7 @@ class MovieList extends PureComponent {
 
       <div className="catalog__movies-list">
         {films.map((film, index) => (
-          <SmallMovieCard movie={film} key={index}/>
+          <SmallMovieCardWrapped movie={film} key={index}/>
         ))}
       </div>
     );
