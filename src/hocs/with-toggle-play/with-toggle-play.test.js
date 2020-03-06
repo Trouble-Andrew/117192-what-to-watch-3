@@ -1,11 +1,10 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import {Provider} from "react-redux";
-import configureStore from "redux-mock-store";
 import withTogglePlay from "./with-toggle-play.jsx";
-import SmallMovieCard from "../../components/small-movie-card/small-movie-card.jsx";
 
-const mockStore = configureStore([]);
+const MockComponent = () => {
+  return <div></div>;
+};
 
 const film = {
   title: `Joker`,
@@ -21,19 +20,14 @@ const film = {
   preview: `In Gotham City, mentally troubled comedian Arthur Fleck is disregarded and mistreated by society. He then embarks on a downward spiral of revolution and bloody crime. This path brings him face-to-face with his alter-ego: the Joker.`
 };
 
-const MockComponentWrapped = withTogglePlay(SmallMovieCard);
+const MockComponentWrapped = withTogglePlay(MockComponent);
 
 it(`withTogglePlay is rendered correctly`, () => {
-  const store = mockStore({
-    genre: `All genres`,
-    activeMovie: {},
-  });
   const tree = renderer.create((
-    <Provider store={store}>
-      <MockComponentWrapped
-        movie={film}
-      />
-    </Provider>
+    <MockComponentWrapped
+      movie={film}
+      onPlayButtonClick={() => {}}
+    />
   ), {
     createNodeMock() {
       return {};

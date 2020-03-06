@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Tabs from "../tabs/tabs.jsx";
+import MovieOverview from "../movie-reviews/movie-reviews.jsx";
 
 const film = {
   title: `Parasite`,
@@ -31,9 +31,9 @@ const film = {
   ],
 };
 
-it(`Tabs is rendered correctly`, () => {
+it(`MovieOverview is rendered correctly`, () => {
   const tree = renderer.create(
-      <Tabs film={film} tab={0} toggleTab={() => {}}/>
+      <MovieOverview film={film} />
   ).toJSON();
 
   expect(tree).toMatchSnapshot();

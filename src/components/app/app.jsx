@@ -4,9 +4,6 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Main from "../main/main.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
-import withActiveTab from "../../hocs/with-active-tab/with-active-tab.jsx";
-
-const MoviePagerWrapped = withActiveTab(MoviePage);
 
 class App extends PureComponent {
   constructor(props) {
@@ -22,7 +19,7 @@ class App extends PureComponent {
       );
     } else {
       return (
-        <MoviePagerWrapped film={activeMovie} />
+        <MoviePage film={activeMovie} />
       );
     }
   }

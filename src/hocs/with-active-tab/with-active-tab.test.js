@@ -1,15 +1,10 @@
 import React from "react";
-import Enzyme, {mount} from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
-import {Provider} from "react-redux";
-import configureStore from "redux-mock-store";
-import SmallMovieCard from "../small-movie-card/small-movie-card.jsx";
+import renderer from "react-test-renderer";
+import withActiveTab from "./with-active-tab.jsx";
 
-const mockStore = configureStore([]);
-
-Enzyme.configure({
-  adapter: new Adapter(),
-});
+const MockComponent = () => {
+  return <div></div>;
+};
 
 const film = {
   title: `Joker`,
@@ -25,22 +20,18 @@ const film = {
   preview: `In Gotham City, mentally troubled comedian Arthur Fleck is disregarded and mistreated by society. He then embarks on a downward spiral of revolution and bloody crime. This path brings him face-to-face with his alter-ego: the Joker.`
 };
 
-it(`Movie information gets into the handler`, () => {
-  const store = mockStore({
-    genre: `All genres`,
-    activeMovie: {},
-  });
-  const onMouseClick = jest.fn();
+const MockComponentWrapped = withActiveTab(MockComponent);
 
-  const main = mount(
-      <Provider store={store}>
-        <SmallMovieCard movie={film} handleClickCard={onMouseClick} startPlay={() => {}} stopPlay={() => {}} isPlay={false} />
-      </Provider>
-  );
+it(`withActiveTab is rendered correctly`, () => {
+  const tree = renderer.create((
+    <MockComponentWrapped
+      film={film}
+    />
+  ), {
+    createNodeMock() {
+      return {};
+    }
+  }).toJSON();
 
-  const movieCard = main.find(`article.small-movie-card`);
-
-  movieCard.simulate(`click`, {preventDefault() {}});
-
-  expect(onMouseClick).toHaveBeenCalledTimes(1);
+  expect(tree).toMatchSnapshot();
 });

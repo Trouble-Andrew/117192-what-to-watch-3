@@ -16,7 +16,7 @@ it(`Filter is rendered correctly`, () => {
 
   const tree = renderer.create(
       <Provider store={store}>
-        <Filter films={films} genre={`All genres`} handleClickFilter={() => {}}/>
+        <Filter tab={0} toggleTab={() => {}}/>
       </Provider>
   ).toJSON();
 

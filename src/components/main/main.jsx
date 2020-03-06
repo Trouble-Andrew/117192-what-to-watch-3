@@ -2,6 +2,9 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import MovieList from "../movie-list/movie-list.jsx";
 import Filter from "../filter/filter.jsx";
+import withActiveTab from "../../hocs/with-active-tab/with-active-tab.jsx";
+
+const FilterWrapped = withActiveTab(Filter);
 
 class Main extends PureComponent {
 
@@ -69,7 +72,7 @@ class Main extends PureComponent {
           <section className="catalog">
             <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-            <Filter />
+            <FilterWrapped />
 
             <MovieList films={films} />
 

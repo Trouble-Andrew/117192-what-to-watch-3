@@ -5,25 +5,15 @@ const withActiveTab = (Component) => {
     constructor(props) {
       super(props);
 
-      this._toggleTab = this._toggleTab.bind(this);
+      this.toggleTab = this.toggleTab.bind(this);
 
       this.state = {
-        tab: `Overview`,
+        tab: 0,
       };
     }
 
-    _toggleTab(currentTab) {
-      switch (true) {
-        case currentTab === `Overview`:
-          this.setState({tab: currentTab});
-          break;
-        case currentTab === `Details`:
-          this.setState({tab: currentTab});
-          break;
-        case currentTab === `Reviews`:
-          this.setState({tab: currentTab});
-          break;
-      }
+    toggleTab(currentTab) {
+      this.setState({tab: currentTab});
     }
 
     render() {
@@ -32,7 +22,7 @@ const withActiveTab = (Component) => {
       return (
         <Component
           {...this.props}
-          toggleTab={this._toggleTab}
+          toggleTab={this.toggleTab}
           tab={tab}
         >
         </Component>

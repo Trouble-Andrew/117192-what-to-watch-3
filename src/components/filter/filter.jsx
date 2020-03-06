@@ -6,17 +6,17 @@ import {ActionCreator} from "../../reducer.js";
 class Filter extends PureComponent {
 
   render() {
-    const {genre, allGenres, handleClickFilter} = this.props;
+    const {allGenres, handleClickFilter, tab, toggleTab} = this.props;
 
     return (
       <ul className="catalog__genres-list">
-        <li className={genre === `All genres` ? `catalog__genres-item catalog__genres-item--active` : `catalog__genres-item`}>
-          <a href="#" className="catalog__genres-link" onClick={handleClickFilter}>All genres</a>
-        </li>
-
         {allGenres.map((element, index) =>
-          <li key={index} className={genre === element ? `catalog__genres-item catalog__genres-item--active` : `catalog__genres-item`}>
-            <a href="#" className="catalog__genres-link" onClick={handleClickFilter}>{element}</a>
+          <li key={index} className={tab === index ? `catalog__genres-item catalog__genres-item--active` : `catalog__genres-item`}>
+            <a href="#" className="catalog__genres-link" onClick={(evt) => {
+              evt.preventDefault();
+              handleClickFilter(evt);
+              toggleTab(index);
+            }}>{element}</a>
           </li>
         )}
       </ul>
@@ -25,7 +25,7 @@ class Filter extends PureComponent {
 }
 
 const getAllGenres = function (films) {
-  let newArray = [];
+  let newArray = [`All genres`];
   films.forEach((film) => newArray.push(...film.genre));
 
   let unique = newArray.filter((v, i, a) => a.indexOf(v) === i);
@@ -48,9 +48,10 @@ Filter.propTypes = {
         preview: PropTypes.string.isRequired,
       })
   ).isRequired,
-  genre: PropTypes.string.isRequired,
   handleClickFilter: PropTypes.func.isRequired,
   allGenres: PropTypes.array.isRequired,
+  tab: PropTypes.number.isRequired,
+  toggleTab: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

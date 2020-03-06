@@ -33,7 +33,7 @@ const film = {
 
 it(`MoviePage is rendered correctly`, () => {
   const tree = renderer.create(
-      <MoviePage film={film} handleMouseEnterCard={() => {}} toggleTab={() => {}} tab={`Overview`} />
+      <MoviePage film={film} />
       , {
         createNodeMock: () => {
           return {};

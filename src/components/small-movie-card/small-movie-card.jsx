@@ -3,9 +3,9 @@ import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer.js";
 import PropTypes from "prop-types";
 import VideoPlayer from "../video-player/video-player.jsx";
-import withVideo from "../../hocs/with-video/with-video.jsx";
+import withTogglePlay from "../../hocs/with-toggle-play/with-toggle-play.jsx";
 
-const VideoPlayerWrapped = withVideo(VideoPlayer);
+const VideoPlayerWrapped = withTogglePlay(VideoPlayer);
 
 class SmallMovieCard extends PureComponent {
   constructor(props) {
@@ -46,6 +46,8 @@ class SmallMovieCard extends PureComponent {
           isPlaying={isPlay}
           src={movie.video}
           ref={this._videoRef}
+          startPlay={startPlay}
+          stopPlay={stopPlay}
         />
       </article>;
     }

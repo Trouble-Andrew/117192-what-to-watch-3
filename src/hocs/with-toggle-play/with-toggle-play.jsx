@@ -15,13 +15,13 @@ const withTogglePlay = (Component) => {
 
     _start() {
       this.setState({
-        isPlay: !this.state.isPlay
+        isPlay: true,
       });
     }
 
     _stop() {
       this.setState({
-        isPlay: false
+        isPlay: false,
       });
     }
 
