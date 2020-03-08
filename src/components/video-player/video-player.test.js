@@ -14,6 +14,8 @@ it(`VideoPlayer is rendered correctly`, () => {
   const tree = renderer.create(<VideoPlayer
     isPlaying={true}
     src={movie.video}
+    startPlay={() => {}}
+    stopPlay={() => {}}
   />, {
     createNodeMock: () => {
       return {};

@@ -1,30 +1,23 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import SmallMovieCard from "../small-movie-card/small-movie-card.jsx";
+import withTogglePlay from "../../hocs/with-toggle-play/with-toggle-play.jsx";
+
+const SmallMovieCardWrapped = withTogglePlay(SmallMovieCard);
 
 class MovieList extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      activeMovie: [],
-    };
   }
 
   render() {
     const {films} = this.props;
-    const {handleMouseEnterCard} = this.props;
 
     return (
 
       <div className="catalog__movies-list">
         {films.map((film, index) => (
-          <SmallMovieCard movie={film} handleMouseEnterCard={(activeCard) => {
-            this.setState({
-              activeMovie: [activeCard],
-            });
-            handleMouseEnterCard(activeCard);
-          }} key={index}/>
+          <SmallMovieCardWrapped movie={film} key={index}/>
         ))}
       </div>
     );
@@ -47,8 +40,6 @@ MovieList.propTypes = {
         preview: PropTypes.string.isRequired,
       })
   ).isRequired,
-  handleMouseEnterCard: PropTypes.func.isRequired,
 };
-
 
 export default MovieList;

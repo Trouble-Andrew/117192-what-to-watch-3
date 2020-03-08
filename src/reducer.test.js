@@ -273,6 +273,7 @@ const films = [
 it(`Reducer without additional parameters should return initial state`, () => {
   expect(reducer(void 0, {})).toEqual({
     genre: `All genres`,
+    activeMovie: {},
     filteredList: [...films],
     films,
   });
@@ -283,34 +284,14 @@ describe(`Action creators work correctly`, () => {
   it(`Action creator for filter movies returns action with correct list`, () => {
     expect(ActionCreator.getFiltededList(`Biography`)).toEqual({
       type: ActionType.GET_FILTERED_LIST,
-      payload: [{
-        title: `Ford v Ferrari`,
-        date: `14.11.2019`,
-        genre: [`Action`, `Biography`, `Drama`],
-        posterBig: `https://m.media-amazon.com/images/M/MV5BNGVmNzE2ZmEtNTBmNC00MjVjLWE2ZjgtNmNhYjJlYTIzYjQ5XkEyXkFqcGdeQXVyNzgxMzc3OTc@._V1_SX1777_CR0,0,1777,999_AL_.jpg`,
-        poster: `https://m.media-amazon.com/images/M/MV5BM2UwMDVmMDItM2I2Yi00NGZmLTk4ZTUtY2JjNTQ3OGQ5ZjM2XkEyXkFqcGdeQXVyMTA1OTYzOTUx._V1_SY1000_CR0,0,675,1000_AL_.jpg`,
-        video: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
-        rating: 8.2,
-        time: `1h 55min`,
-        ratingCount: 225900,
-        director: [`James Mangold`],
-        stars: [`Roman Griffin Davis`, `Thomasin McKenzie`, `Scarlett Johansson`],
-        preview: `American car designer Carroll Shelby and driver Ken Miles battle corporate interference and the laws of physics to build a revolutionary race car for Ford in order to defeat Ferrari at the 24 Hours of Le Mans in 1966.`,
-        reviews: [
-          {
-            author: `Jeremy_Urquhart`,
-            text: `Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-            rating: 8.8,
-            date: `20 december 2019`,
-          },
-          {
-            author: `drgergart`,
-            text: `Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-            rating: 8.8,
-            date: `21 april 2012`,
-          },
-        ],
-      }],
+      payload: [films[7]],
+    });
+  });
+
+  it(`Action creator for select movies returns action with correct element`, () => {
+    expect(ActionCreator.getSelectedMovie(films[0])).toEqual({
+      type: ActionType.GET_SELECTED_MOVIE,
+      payload: films[0],
     });
   });
 

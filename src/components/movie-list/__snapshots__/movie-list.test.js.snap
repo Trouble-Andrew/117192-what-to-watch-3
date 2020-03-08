@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ArtistQuestionScreen is rendered correctly 1`] = `
+exports[`MovieList is rendered correctly 1`] = `
 <div
   className="catalog__movies-list"
 >

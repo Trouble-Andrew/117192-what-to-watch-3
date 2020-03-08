@@ -8,31 +8,18 @@ import MoviePage from "../movie-page/movie-page.jsx";
 class App extends PureComponent {
   constructor(props) {
     super(props);
-
-    this._handleMouseEnterCard = this._handleMouseEnterCard.bind(this);
-
-    this.state = {
-      screen: {},
-    };
-  }
-
-  _handleMouseEnterCard(item) {
-
-    this.setState({
-      screen: item,
-    });
   }
 
   _renderScreen() {
-    const {movieData, films} = this.props;
+    const {movieData, films, activeMovie} = this.props;
 
-    if (Object.keys(this.state.screen).length === 0) {
+    if (Object.keys(activeMovie).length === 0) {
       return (
-        <Main movieData={movieData} films={films} handleMouseEnterCard={this._handleMouseEnterCard} />
+        <Main movieData={movieData} films={films} />
       );
     } else {
       return (
-        <MoviePage film={this.state.screen} />
+        <MoviePage film={activeMovie} />
       );
     }
   }
@@ -74,11 +61,13 @@ App.propTypes = {
         stars: PropTypes.array.isRequired,
         preview: PropTypes.string.isRequired,
       })
-  ).isRequired
+  ).isRequired,
+  activeMovie: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   films: state.filteredList,
+  activeMovie: state.activeMovie,
 });
 
 export {App};

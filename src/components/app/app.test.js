@@ -16,7 +16,8 @@ const PromoMovie = {
 it(`Render App`, () => {
   const store = mockStore({
     genre: `All genres`,
-    filteredList: films,
+    activeMovie: films[0],
+    filteredList: [...films],
     films,
   });
 

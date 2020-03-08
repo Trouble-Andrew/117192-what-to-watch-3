@@ -1,52 +1,13 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import Tabs from "../tabs/tabs.jsx";
-import MovieDetails from "../movie-details/movie-details.jsx";
-import MovieReviews from "../movie-reviews/movie-reviews.jsx";
+import withActiveTab from "../../hocs/with-active-tab/with-active-tab.jsx";
+
+const TabsWrapped = withActiveTab(Tabs);
 
 class MoviePage extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      tab: `Overview`,
-    };
-  }
-
-  _ratingToText(rating) {
-    let text;
-    switch (true) {
-      case rating > 0 && rating < 3:
-        text = `Bad`;
-        break;
-      case rating >= 3 && rating < 5:
-        text = `Normal`;
-        break;
-      case rating >= 5 && rating < 8:
-        text = `Good`;
-        break;
-      case rating >= 8 && rating < 10:
-        text = `Very Good`;
-        break;
-      case rating >= 10:
-        text = `Awesome`;
-        break;
-    }
-    return text;
-  }
-
-  _toggleTab(currentTab) {
-    switch (true) {
-      case currentTab === `Overview`:
-        this.setState({tab: `Overview`});
-        break;
-      case currentTab === `Details`:
-        this.setState({tab: `Details`});
-        break;
-      case currentTab === `Reviews`:
-        this.setState({tab: `Reviews`});
-        break;
-    }
   }
 
   render() {
@@ -58,11 +19,6 @@ class MoviePage extends PureComponent {
       genre,
       poster,
       posterBig,
-      rating,
-      ratingCount,
-      director,
-      stars,
-      preview,
     } = film;
 
     return (
@@ -118,28 +74,7 @@ class MoviePage extends PureComponent {
                 <img src={poster} alt="The Grand Budapest Hotel poster" width={218} height={327} />
               </div>
               <div className="movie-card__desc">
-                <nav className="movie-nav movie-card__nav">
-                  <Tabs tab={this.state.tab} handleClickTab={(tab) => {
-                    this._toggleTab(tab);
-                  }} />
-                </nav>
-
-                {this.state.tab === `Details` ? <MovieDetails film={film} /> : ``}
-
-                {this.state.tab === `Reviews` ? <MovieReviews film={film} /> : ``}
-
-                <div className={this.state.tab === `Overview` ? `movie-rating` : `movie-rating visually-hidden`}>
-                  <div className="movie-rating__score">{rating}</div>
-                  <p className="movie-rating__meta">
-                    <span className="movie-rating__level">{this._ratingToText(rating)}</span>
-                    <span className="movie-rating__count">{ratingCount} ratings</span>
-                  </p>
-                </div>
-                <div className={this.state.tab === `Overview` ? `movie-card__text` : `movie-card__text visually-hidden`}>
-                  <p>{preview}</p>
-                  <p className="movie-card__director"><strong>Director: {director}</strong></p>
-                  <p className="movie-card__starring"><strong>Starring: {stars.join(`, `)} and other</strong></p>
-                </div>
+                <TabsWrapped film={film} />
               </div>
             </div>
           </div>

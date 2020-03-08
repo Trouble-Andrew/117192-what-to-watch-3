@@ -1,11 +1,11 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Tabs from "../tabs/tabs.jsx";
+import MovieOverview from "../movie-reviews/movie-reviews.jsx";
 import films from "../../mocks/films.js";
 
-it(`Tabs is rendered correctly`, () => {
+it(`MovieOverview is rendered correctly`, () => {
   const tree = renderer.create(
-      <Tabs film={films[0]} tab={0} toggleTab={() => {}}/>
+      <MovieOverview film={films[0]} />
   ).toJSON();
 
   expect(tree).toMatchSnapshot();

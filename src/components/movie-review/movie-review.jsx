@@ -1,20 +1,25 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 
-const MovieReview = (props) => {
-  const {review} = props;
+class MovieReview extends PureComponent {
 
-  return <div className="review">
-    <blockquote className="review__quote">
-      <p className="review__text">{review.text}</p>
-      <footer className="review__details">
-        <cite className="review__author">{review.author}</cite>
-        <time className="review__date" dateTime="2016-12-24">{review.date}</time>
-      </footer>
-    </blockquote>
-    <div className="review__rating">{review.rating}</div>
-  </div>;
-};
+  render() {
+    const {review} = this.props;
+
+    return (
+      <div className="review">
+        <blockquote className="review__quote">
+          <p className="review__text">{review.text}</p>
+          <footer className="review__details">
+            <cite className="review__author">{review.author}</cite>
+            <time className="review__date" dateTime="2016-12-24">{review.date}</time>
+          </footer>
+        </blockquote>
+        <div className="review__rating">{review.rating}</div>
+      </div>
+    );
+  }
+}
 
 MovieReview.propTypes = {
   review: PropTypes.shape({
