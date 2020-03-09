@@ -45,9 +45,6 @@ class SmallMovieCard extends PureComponent {
         <VideoPlayerWrapped
           isPlaying={isPlay}
           src={movie.video}
-          ref={this._videoRef}
-          startPlay={startPlay}
-          stopPlay={stopPlay}
         />
       </article>;
     }

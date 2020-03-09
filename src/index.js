@@ -11,11 +11,7 @@ const store = createStore(
     window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
 );
 
-const PromoMovie = {
-  title: `The Grand Budapest Hotel`,
-  date: 2014,
-  genre: `Drama`
-};
+const PromoMovie = films[0];
 
 ReactDOM.render(
     <Provider store={store}>

@@ -1,9 +1,17 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import Tabs from "../tabs/tabs.jsx";
+import VideoPlayerFull from "../video-player-full/video-player-full.jsx";
 import withActiveTab from "../../hocs/with-active-tab/with-active-tab.jsx";
+import withTogglePlay from "../../hocs/with-toggle-play/with-toggle-play.jsx";
 
 const TabsWrapped = withActiveTab(Tabs);
+const FullVideoPlayerWrapped = withTogglePlay(VideoPlayerFull);
+
+{/* <FullVideoPlayerWrapped
+  isPlay={true}
+  src={video}
+/>  */}
 
 class MoviePage extends PureComponent {
   constructor(props) {
@@ -18,12 +26,24 @@ class MoviePage extends PureComponent {
       date,
       genre,
       poster,
+      video,
       posterBig,
     } = film;
 
     return (
-      <React.Fragment>
-        <section className="movie-card movie-card--full">
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            {this._renderScreen()}
+          </Route>
+          <Route exact path="/movie-page">
+            {this._renderScreen()}
+          </Route>
+        </Switch>
+      </BrowserRouter>
+      
+      <React.Fragment>            
+        <section className="movie-card movie-card--full">          
           <div className="movie-card__hero">
             <div className="movie-card__bg">
               <img src={posterBig} alt="The Grand Budapest Hotel" />
