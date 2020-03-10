@@ -3,7 +3,7 @@ import {Switch, Route, BrowserRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {getMovies} from "../../reducer/data/selectors.js";
-import {getActiveMovie} from "../../reducer/movie-list-utils/selectors.js";
+import {getActiveMovie, getFiltededList, getGenre} from "../../reducer/movie-list-state/selectors.js";
 import Main from "../main/main.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
 
@@ -15,7 +15,7 @@ class App extends PureComponent {
   _renderScreen() {
     const {movieData, movies, activeMovie} = this.props;
 
-    if (Object.keys(activeMovie).length === 0) {      
+    if (Object.keys(activeMovie).length === 0) {
       return (
         <Main movieData={movieData} movies={movies} />
       );
@@ -69,7 +69,9 @@ App.propTypes = {
 
 const mapStateToProps = (state) => ({
   movies: getMovies(state),
+  genre: getGenre(state),
   activeMovie: getActiveMovie(state),
+  filteredList: getFiltededList(state.movies, state.genre),
 });
 
 export {App};

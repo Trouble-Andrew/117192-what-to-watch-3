@@ -9,6 +9,7 @@ const initialState = {
 const ActionType = {
   GET_FILTERED_LIST: `GET_FILTERED_LIST`,
   GET_SELECTED_MOVIE: `GET_SELECTED_MOVIE`,
+  GET_SELECTED_GENRE: `GET_SELECTED_GENRE`,
 };
 
 const getFiltededList = (type) => {
@@ -34,6 +35,12 @@ const ActionCreator = {
       payload: movie,
     };
   },
+  getSelectedGenre: (genre) => {
+    return {
+      type: ActionType.GET_SELECTED_GENRE,
+      payload: genre,
+    };
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -49,6 +56,12 @@ const reducer = (state = initialState, action) => {
 
       return extend(state, {
         activeMovie: action.payload,
+      });
+
+    case ActionType.GET_SELECTED_GENRE:
+
+      return extend(state, {
+        genre: action.payload,
       });
   }
 

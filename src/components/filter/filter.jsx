@@ -1,8 +1,9 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../reducer/movie-list-utils/movie-list-utils.js";
+import {ActionCreator} from "../../reducer/movie-list-state/movie-list-state.js";
 import {getMovies} from "../../reducer/data/selectors.js";
+import {getGenre} from "../../reducer/movie-list-state/selectors.js";
 
 class Filter extends PureComponent {
 
@@ -58,12 +59,12 @@ Filter.propTypes = {
 
 const mapStateToProps = (state) => ({
   movies: getMovies(state),
-  genre: state.genre,
+  genre: getGenre(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   handleClickFilter(type) {
-    dispatch(ActionCreator.getFiltededList(type.target.innerHTML));
+    dispatch(ActionCreator.getSelectedGenre(type.target.innerHTML));
   },
 });
 

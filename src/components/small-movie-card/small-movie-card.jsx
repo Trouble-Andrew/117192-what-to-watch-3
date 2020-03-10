@@ -1,6 +1,6 @@
 import React, {createRef, PureComponent} from "react";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../reducer/movie-list-utils/movie-list-utils.js";
+import {ActionCreator} from "../../reducer/movie-list-state/movie-list-state.js";
 import PropTypes from "prop-types";
 import VideoPlayer from "../video-player/video-player.jsx";
 import withTogglePlay from "../../hocs/with-toggle-play/with-toggle-play.jsx";

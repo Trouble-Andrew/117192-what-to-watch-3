@@ -1,7 +1,6 @@
 import {extend} from "../../utils.js";
 import Adapter from "../../adapter.js";
 
-
 const initialState = {
   movies: [],
 };
@@ -22,7 +21,7 @@ const ActionCreator = {
 const Operation = {
   loadMovies: () => (dispatch, getState, api) => {
     return api.get(`/films`)
-      .then((response) => {        
+      .then((response) => {
         dispatch(ActionCreator.loadMovies(Adapter.parseElements(response.data)));
       });
   },
