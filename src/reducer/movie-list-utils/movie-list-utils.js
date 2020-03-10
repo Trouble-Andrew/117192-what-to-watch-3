@@ -1,16 +1,24 @@
-import {extend} from "./utils.js";
-import films from "./mocks/films.js";
-import ActionType from "./action-types.js";
-import initialState from "./initial-state.js";
+import {extend} from "../../utils.js";
+
+const initialState = {
+  genre: `All genres`,
+  activeMovie: {},
+  filteredList: [],
+};
+
+const ActionType = {
+  GET_FILTERED_LIST: `GET_FILTERED_LIST`,
+  GET_SELECTED_MOVIE: `GET_SELECTED_MOVIE`,
+};
 
 const getFiltededList = (type) => {
   if (type === `All genres`) {
-    return films;
+    // return films;
   }
-  let newArray = films.filter(function (el) {
-    return el.genre.includes(type);
-  });
-  return newArray;
+  // let newArray = films.filter(function (el) {
+  //   return el.genre.includes(type);
+  // });
+  // return newArray;
 };
 
 const ActionCreator = {

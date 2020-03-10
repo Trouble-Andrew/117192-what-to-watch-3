@@ -9,7 +9,7 @@ const FilterWrapped = withActiveTab(Filter);
 class Main extends PureComponent {
 
   render() {
-    const {movieData, films} = this.props;
+    const {movieData, movies} = this.props;
 
     return (
       <React.Fragment>
@@ -72,9 +72,9 @@ class Main extends PureComponent {
           <section className="catalog">
             <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-            <FilterWrapped />
+            <FilterWrapped movies={movies} />
 
-            <MovieList films={films} />
+            <MovieList movies={movies} />
 
             <div className="catalog__more">
               <button className="catalog__button" type="button">Show more</button>
@@ -106,7 +106,7 @@ Main.propTypes = {
     date: PropTypes.number.isRequired,
     genre: PropTypes.string.isRequired,
   }).isRequired,
-  films: PropTypes.arrayOf(
+  movies: PropTypes.arrayOf(
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,

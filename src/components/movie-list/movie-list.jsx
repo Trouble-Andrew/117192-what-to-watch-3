@@ -11,12 +11,12 @@ class MovieList extends PureComponent {
   }
 
   render() {
-    const {films} = this.props;
+    const {movies} = this.props;
 
     return (
 
       <div className="catalog__movies-list">
-        {films.map((film, index) => (
+        {movies.map((film, index) => (
           <SmallMovieCardWrapped movie={film} key={index}/>
         ))}
       </div>
@@ -25,7 +25,7 @@ class MovieList extends PureComponent {
 }
 
 MovieList.propTypes = {
-  films: PropTypes.arrayOf(
+  movies: PropTypes.arrayOf(
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,

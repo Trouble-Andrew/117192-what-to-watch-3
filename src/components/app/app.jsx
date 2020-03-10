@@ -2,6 +2,8 @@ import React, {PureComponent} from "react";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
+import {getMovies} from "../../reducer/data/selectors.js";
+import {getActiveMovie} from "../../reducer/movie-list-utils/selectors.js";
 import Main from "../main/main.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
 
@@ -11,11 +13,11 @@ class App extends PureComponent {
   }
 
   _renderScreen() {
-    const {movieData, films, activeMovie} = this.props;
+    const {movieData, movies, activeMovie} = this.props;
 
-    if (Object.keys(activeMovie).length === 0) {
+    if (Object.keys(activeMovie).length === 0) {      
       return (
-        <Main movieData={movieData} films={films} />
+        <Main movieData={movieData} movies={movies} />
       );
     } else {
       return (
@@ -47,7 +49,7 @@ App.propTypes = {
     date: PropTypes.number.isRequired,
     genre: PropTypes.string.isRequired,
   }).isRequired,
-  films: PropTypes.arrayOf(
+  movies: PropTypes.arrayOf(
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
@@ -66,8 +68,8 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  films: state.filteredList,
-  activeMovie: state.activeMovie,
+  movies: getMovies(state),
+  activeMovie: getActiveMovie(state),
 });
 
 export {App};
