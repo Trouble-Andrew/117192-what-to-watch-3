@@ -1,5 +1,6 @@
 export default [
   {
+    id: 1,
     title: `Parasite`,
     date: `04.07.2019`,
     genre: [`Crime`, `Drama`, `Comedy`],
@@ -28,6 +29,7 @@ export default [
     ],
   },
   {
+    id: 2,
     title: `Jojo Rabbit`,
     date: `24.10.2019`,
     genre: [`Crime`, `Drama`, `War`],
@@ -98,6 +100,7 @@ export default [
     ],
   },
   {
+    id: 3,
     title: `1917`,
     date: `30.01.2020`,
     genre: [`Drama`, `War`],
@@ -126,6 +129,7 @@ export default [
     ],
   },
   {
+    id: 4,
     title: `Joker`,
     date: `3.10.2019`,
     genre: [`Crime`, `Drama`, `Thriller`],
@@ -154,6 +158,7 @@ export default [
     ],
   },
   {
+    id: 5,
     title: `Uncut Gems`,
     date: `25.12.2019`,
     genre: [`Crime`, `Drama`, `Thriller`],
@@ -182,6 +187,7 @@ export default [
     ],
   },
   {
+    id: 6,
     title: `Knives Out`,
     date: `28.11.2019`,
     genre: [`Comedy`, `Crime`, `Drama`],
@@ -210,6 +216,7 @@ export default [
     ],
   },
   {
+    id: 7,
     title: `Once Upon a Time ...in Hollywood`,
     date: `08.08.2019`,
     genre: [`Comedy`, `Drama`],
@@ -238,6 +245,7 @@ export default [
     ],
   },
   {
+    id: 8,
     title: `Ford v Ferrari`,
     date: `14.11.2019`,
     genre: [`Action`, `Biography`, `Drama`],

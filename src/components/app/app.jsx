@@ -2,8 +2,9 @@ import React, {PureComponent} from "react";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {getMovies} from "../../reducer/data/selectors.js";
+import {getMovies, getPromoMovie} from "../../reducer/data/selectors.js";
 import {getActiveMovie, getFiltededList, getGenre} from "../../reducer/movie-list-state/selectors.js";
+import {Operation as DataOperation} from "../../reducer/data/data.js";
 import Main from "../main/main.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
 
@@ -13,15 +14,16 @@ class App extends PureComponent {
   }
 
   _renderScreen() {
-    const {movieData, movies, activeMovie} = this.props;
+    const {promoMovie, activeMovie, filteredList, handleClickCard} = this.props;
 
     if (Object.keys(activeMovie).length === 0) {
       return (
-        <Main movieData={movieData} movies={movies} />
+        <Main promoMovie={promoMovie} movies={filteredList} />
       );
     } else {
+      handleClickCard(activeMovie);
       return (
-        <MoviePage film={activeMovie} />
+        <MoviePage movie={activeMovie} />
       );
     }
   }
@@ -44,12 +46,8 @@ class App extends PureComponent {
 }
 
 App.propTypes = {
-  movieData: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    date: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
-  }).isRequired,
-  movies: PropTypes.arrayOf(
+  promoMovie: PropTypes.object.isRequired,
+  filteredList: PropTypes.arrayOf(
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
@@ -61,18 +59,25 @@ App.propTypes = {
         ratingCount: PropTypes.number.isRequired,
         director: PropTypes.array.isRequired,
         stars: PropTypes.array.isRequired,
-        preview: PropTypes.string.isRequired,
       })
   ).isRequired,
   activeMovie: PropTypes.object.isRequired,
+  handleClickCard: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   movies: getMovies(state),
   genre: getGenre(state),
   activeMovie: getActiveMovie(state),
-  filteredList: getFiltededList(state.movies, state.genre),
+  promoMovie: getPromoMovie(state),
+  filteredList: getFiltededList(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleClickCard(movie) {
+    dispatch(DataOperation.loadComments(movie.id));
+  },
 });
 
 export {App};
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

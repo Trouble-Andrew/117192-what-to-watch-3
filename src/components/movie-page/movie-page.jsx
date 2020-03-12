@@ -12,14 +12,14 @@ class MoviePage extends PureComponent {
 
   render() {
 
-    const {film} = this.props;
+    const {movie} = this.props;
     const {
       title,
       date,
       genre,
       poster,
       posterBig,
-    } = film;
+    } = movie;
 
     return (
       <React.Fragment>
@@ -71,10 +71,10 @@ class MoviePage extends PureComponent {
           <div className="movie-card__wrap movie-card__translate-top">
             <div className="movie-card__info">
               <div className="movie-card__poster movie-card__poster--big">
-                <img src={poster} alt="The Grand Budapest Hotel poster" width={218} height={327} />
+                <img src={poster} alt={title} width={218} height={327} />
               </div>
               <div className="movie-card__desc">
-                <TabsWrapped film={film} />
+                <TabsWrapped movie={movie} />
               </div>
             </div>
           </div>
@@ -136,7 +136,7 @@ class MoviePage extends PureComponent {
 }
 
 MoviePage.propTypes = {
-  film: PropTypes.shape({
+  movie: PropTypes.shape({
     title: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     genre: PropTypes.array.isRequired,
@@ -149,12 +149,6 @@ MoviePage.propTypes = {
     director: PropTypes.array.isRequired,
     stars: PropTypes.array.isRequired,
     preview: PropTypes.string.isRequired,
-    reviews: PropTypes.arrayOf(PropTypes.shape({
-      author: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      date: PropTypes.string.isRequired,
-    })).isRequired,
   }).isRequired,
 };
 

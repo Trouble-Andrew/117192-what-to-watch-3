@@ -15,7 +15,7 @@ it(`MovieList is rendered correctly`, () => {
 
   const tree = renderer.create(
       <Provider store={store}>
-        <MovieList films={films} handleMouseEnterCard={() => {}} />
+        <MovieList movies={films} />
       </Provider>
   ).toJSON();
 

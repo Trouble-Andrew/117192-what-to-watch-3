@@ -3,30 +3,26 @@ import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import App from "./app.jsx";
+import NameSpace from "../../reducer/name-space.js";
 import films from "../../mocks/films.js";
 
 const mockStore = configureStore([]);
 
-const PromoMovie = {
-  title: `The Grand Budapest Hotel`,
-  date: 2014,
-  genre: `Drama`
-};
-
 it(`Render App`, () => {
   const store = mockStore({
-    genre: `All genres`,
-    activeMovie: films[0],
-    filteredList: [...films],
-    films,
+    [NameSpace.DATA]: {
+      movies: films,
+      promoMovie: films[0],
+    },
+    [NameSpace.MOVIE_LIST_STATE]: {
+      activeMovie: {},
+    },
   });
 
   const tree = renderer
     .create(
         <Provider store={store}>
-          <App
-            movieData={PromoMovie} films={films}
-          />
+          <App filteredList={films} />
         </Provider>)
       .toJSON();
 

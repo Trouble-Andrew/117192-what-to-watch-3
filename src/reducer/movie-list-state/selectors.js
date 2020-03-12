@@ -18,16 +18,12 @@ export const getFiltededList = createSelector(
     getMovies,
     getGenre,
     (resultOne, resultTwo) => {
-      console.log(resultOne);
-      console.log(resultTwo);
       if (resultTwo === `All genres`) {
         return resultOne;
       }
       let newArray = resultOne.filter(function (el) {
         return el.genre.includes(resultTwo);
       });
-      console.log(newArray);
-      
       return newArray;
     }
 );

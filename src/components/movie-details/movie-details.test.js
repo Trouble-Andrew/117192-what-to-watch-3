@@ -5,7 +5,7 @@ import films from "../../mocks/films.js";
 
 it(`MovieDetails is rendered correctly`, () => {
   const tree = renderer.create(
-      <MovieDetails film={films[0]} />
+      <MovieDetails movie={films[0]} />
   ).toJSON();
 
   expect(tree).toMatchSnapshot();

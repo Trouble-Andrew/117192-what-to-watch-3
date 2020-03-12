@@ -5,7 +5,7 @@ import films from "../../mocks/films.js";
 
 it(`MoviePage is rendered correctly`, () => {
   const tree = renderer.create(
-      <MoviePage film={films[0]} />
+      <MoviePage movie={films[0]} />
       , {
         createNodeMock: () => {
           return {};

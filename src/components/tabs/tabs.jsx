@@ -10,16 +10,16 @@ const TABS = {
   REVIEWS: `Reviews`,
 };
 
-function TabsContent({activeTab, film}) {
+function TabsContent({activeTab, movie}) {
   switch (activeTab) {
     case TABS.OVERVIEW:
-      return <MovieOverview film={film} />;
+      return <MovieOverview movie={movie} />;
 
     case TABS.DETAILS:
-      return <MovieDetails film={film} />;
+      return <MovieDetails movie={movie} />;
 
     case TABS.REVIEWS:
-      return <MovieReviews film={film} />;
+      return <MovieReviews movie={movie} />;
   }
   return null;
 }
@@ -27,7 +27,7 @@ function TabsContent({activeTab, film}) {
 class Tabs extends PureComponent {
 
   render() {
-    const {film, tab, toggleTab} = this.props;
+    const {movie, tab, toggleTab} = this.props;
     const tabs = [`Overview`, `Details`, `Reviews`];
 
     return (
@@ -44,7 +44,7 @@ class Tabs extends PureComponent {
             )}
           </ul>
         </nav>
-        <TabsContent film={film} activeTab={tabs[tab]}/>
+        <TabsContent movie={movie} activeTab={tabs[tab]}/>
       </React.Fragment>
     );
   }
@@ -53,7 +53,7 @@ class Tabs extends PureComponent {
 Tabs.propTypes = {
   tab: PropTypes.number.isRequired,
   toggleTab: PropTypes.func.isRequired,
-  film: PropTypes.shape({
+  movie: PropTypes.shape({
     title: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     genre: PropTypes.array.isRequired,
@@ -66,18 +66,12 @@ Tabs.propTypes = {
     director: PropTypes.array.isRequired,
     stars: PropTypes.array.isRequired,
     preview: PropTypes.string.isRequired,
-    reviews: PropTypes.arrayOf(PropTypes.shape({
-      author: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      date: PropTypes.string.isRequired,
-    })).isRequired,
   }).isRequired,
 };
 
 TabsContent.propTypes = {
   activeTab: PropTypes.string.isRequired,
-  film: PropTypes.shape({
+  movie: PropTypes.shape({
     title: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     genre: PropTypes.array.isRequired,
@@ -90,12 +84,6 @@ TabsContent.propTypes = {
     director: PropTypes.array.isRequired,
     stars: PropTypes.array.isRequired,
     preview: PropTypes.string.isRequired,
-    reviews: PropTypes.arrayOf(PropTypes.shape({
-      author: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      date: PropTypes.string.isRequired,
-    })).isRequired,
   }).isRequired,
 };
 
