@@ -26,14 +26,14 @@ class MovieOverview extends PureComponent {
   }
 
   render() {
-    const {film} = this.props;
+    const {movie} = this.props;
     const {
       rating,
       ratingCount,
       director,
       stars,
       preview,
-    } = film;
+    } = movie;
 
     return (
       <React.Fragment>
@@ -55,7 +55,7 @@ class MovieOverview extends PureComponent {
 }
 
 MovieOverview.propTypes = {
-  film: PropTypes.shape({
+  movie: PropTypes.shape({
     title: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     genre: PropTypes.array.isRequired,
@@ -68,12 +68,6 @@ MovieOverview.propTypes = {
     director: PropTypes.array.isRequired,
     stars: PropTypes.array.isRequired,
     preview: PropTypes.string.isRequired,
-    reviews: PropTypes.arrayOf(PropTypes.shape({
-      author: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      date: PropTypes.string.isRequired,
-    })).isRequired,
   }).isRequired,
 };
 

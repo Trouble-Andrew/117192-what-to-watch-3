@@ -2,19 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const MovieDetails = (props) => {
-  const {film} = props;
+  const {movie} = props;
 
   return <div className="movie-card__text movie-card__row">
     <div className="movie-card__text-col">
       <p className="movie-card__details-item">
         <strong className="movie-card__details-name">Director</strong>
-        <span className="movie-card__details-value">{film.director.map((element) => element) }</span>
+        <span className="movie-card__details-value">{movie.director.map((element) => element) }</span>
       </p>
       <p className="movie-card__details-item">
         <strong className="movie-card__details-name">Starring</strong>
         <span className="movie-card__details-value">
-          {film.stars.map((element, i) => {
-            if (film.stars.length === i + 1) {
+          {movie.stars.map((element, i) => {
+            if (movie.stars.length === i + 1) {
               return `${element}`;
             } else {
               return `${element}, `;
@@ -26,15 +26,15 @@ const MovieDetails = (props) => {
     <div className="movie-card__text-col">
       <p className="movie-card__details-item">
         <strong className="movie-card__details-name">Run Time</strong>
-        <span className="movie-card__details-value">{film.time}</span>
+        <span className="movie-card__details-value">{movie.time}</span>
       </p>
       <p className="movie-card__details-item">
         <strong className="movie-card__details-name">Genre</strong>
-        <span className="movie-card__details-value">{film.genre.join(`, `) }</span>
+        <span className="movie-card__details-value">{movie.genre.join(`, `) }</span>
       </p>
       <p className="movie-card__details-item">
         <strong className="movie-card__details-name">Released</strong>
-        <span className="movie-card__details-value">{film.date}</span>
+        <span className="movie-card__details-value">{movie.date}</span>
       </p>
     </div>
   </div>;
@@ -42,7 +42,7 @@ const MovieDetails = (props) => {
 
 
 MovieDetails.propTypes = {
-  film: PropTypes.shape({
+  movie: PropTypes.shape({
     title: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     genre: PropTypes.array.isRequired,
@@ -55,12 +55,6 @@ MovieDetails.propTypes = {
     director: PropTypes.array.isRequired,
     stars: PropTypes.array.isRequired,
     preview: PropTypes.string.isRequired,
-    reviews: PropTypes.arrayOf(PropTypes.shape({
-      author: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      date: PropTypes.string.isRequired,
-    })).isRequired,
   }).isRequired,
 };
 

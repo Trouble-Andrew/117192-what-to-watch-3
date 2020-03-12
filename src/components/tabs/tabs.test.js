@@ -5,7 +5,7 @@ import films from "../../mocks/films.js";
 
 it(`Tabs is rendered correctly`, () => {
   const tree = renderer.create(
-      <Tabs film={films[0]} tab={0} toggleTab={() => {}}/>
+      <Tabs movie={films[0]} tab={0} toggleTab={() => {}}/>
   ).toJSON();
 
   expect(tree).toMatchSnapshot();

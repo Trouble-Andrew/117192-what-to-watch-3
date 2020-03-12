@@ -9,13 +9,13 @@ const FilterWrapped = withActiveTab(Filter);
 class Main extends PureComponent {
 
   render() {
-    const {movieData, films} = this.props;
+    const {promoMovie, movies} = this.props;
 
     return (
       <React.Fragment>
         <section className="movie-card">
           <div className="movie-card__bg">
-            <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+            <img src={promoMovie.posterBig} alt={promoMovie.title} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -39,14 +39,14 @@ class Main extends PureComponent {
           <div className="movie-card__wrap">
             <div className="movie-card__info">
               <div className="movie-card__poster">
-                <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+                <img src={promoMovie.poster} alt={promoMovie.title} width="218" height="327" />
               </div>
 
               <div className="movie-card__desc">
-                <h2 className="movie-card__title">{movieData.title}</h2>
+                <h2 className="movie-card__title">{promoMovie.title}</h2>
                 <p className="movie-card__meta">
-                  <span className="movie-card__genre">{movieData.genre}</span>
-                  <span className="movie-card__year">{movieData.date}</span>
+                  <span className="movie-card__genre">{promoMovie.genre}</span>
+                  <span className="movie-card__year">{promoMovie.date}</span>
                 </p>
 
                 <div className="movie-card__buttons">
@@ -72,9 +72,9 @@ class Main extends PureComponent {
           <section className="catalog">
             <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-            <FilterWrapped />
+            <FilterWrapped movies={movies} />
 
-            <MovieList films={films} />
+            <MovieList movies={movies} />
 
             <div className="catalog__more">
               <button className="catalog__button" type="button">Show more</button>
@@ -101,12 +101,8 @@ class Main extends PureComponent {
 }
 
 Main.propTypes = {
-  movieData: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    date: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
-  }).isRequired,
-  films: PropTypes.arrayOf(
+  promoMovie: PropTypes.object.isRequired,
+  movies: PropTypes.arrayOf(
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
