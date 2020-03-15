@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import MovieList from "../movie-list/movie-list.jsx";
 import Filter from "../filter/filter.jsx";
 import withActiveTab from "../../hocs/with-active-tab/with-active-tab.jsx";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
 
 const FilterWrapped = withActiveTab(Filter);
 
 class Main extends PureComponent {
 
   render() {
-    const {promoMovie, movies} = this.props;
+    const {promoMovie, movies, authorizationStatus, user} = this.props;
 
     return (
       <React.Fragment>
@@ -30,9 +31,14 @@ class Main extends PureComponent {
             </div>
 
             <div className="user-block">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-              </div>
+              {authorizationStatus === AuthorizationStatus.AUTH &&
+                <div className="user-block__avatar">
+                  <img src={user.avatar} alt="User avatar" width="63" height="63"/>
+                </div>
+              }
+              {authorizationStatus === AuthorizationStatus.NO_AUTH &&
+                <a href="sign-in.html" className="user-block__link">Sign in</a>
+              }
             </div>
           </header>
 
@@ -117,6 +123,13 @@ Main.propTypes = {
         preview: PropTypes.string.isRequired,
       })
   ).isRequired,
+  user: PropTypes.shape({
+    avatar: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  }).isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 export default Main;
