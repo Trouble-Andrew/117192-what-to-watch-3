@@ -10,7 +10,15 @@ const FilterWrapped = withActiveTab(Filter);
 class Main extends PureComponent {
 
   render() {
-    const {promoMovie, movies, authorizationStatus, user} = this.props;
+    const {promoMovie, movies, authorizationStatus, user, visibleMovies, handleClickMoreButton} = this.props;
+
+    let showMoreFlag = true;
+
+    if (movies.length > visibleMovies.length) {
+      showMoreFlag = true;
+    } else {
+      showMoreFlag = false;
+    }
 
     return (
       <React.Fragment>
@@ -80,11 +88,11 @@ class Main extends PureComponent {
 
             <FilterWrapped movies={movies} />
 
-            <MovieList movies={movies} />
+            <MovieList movies={visibleMovies} />
 
-            <div className="catalog__more">
-              <button className="catalog__button" type="button">Show more</button>
-            </div>
+            {showMoreFlag && <div className="catalog__more">
+              <button className="catalog__button" type="button" onClick = {handleClickMoreButton}>Show more</button>
+            </div>}
           </section>
 
           <footer className="page-footer">
@@ -123,6 +131,21 @@ Main.propTypes = {
         preview: PropTypes.string.isRequired,
       })
   ).isRequired,
+  visibleMovies: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        date: PropTypes.string.isRequired,
+        genre: PropTypes.array.isRequired,
+        poster: PropTypes.string.isRequired,
+        posterBig: PropTypes.string.isRequired,
+        video: PropTypes.string.isRequired,
+        rating: PropTypes.number.isRequired,
+        ratingCount: PropTypes.number.isRequired,
+        director: PropTypes.array.isRequired,
+        stars: PropTypes.array.isRequired,
+        preview: PropTypes.string.isRequired,
+      })
+  ).isRequired,
   user: PropTypes.shape({
     avatar: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
@@ -130,6 +153,7 @@ Main.propTypes = {
     email: PropTypes.string.isRequired,
   }).isRequired,
   authorizationStatus: PropTypes.string.isRequired,
+  handleClickMoreButton: PropTypes.func.isRequired,
 };
 
 export default Main;

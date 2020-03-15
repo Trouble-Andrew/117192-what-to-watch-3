@@ -15,6 +15,7 @@ describe(`Render Main`, () => {
       [NameSpace.DATA]: {
         movies: films,
         promoMovie: films[0],
+        visibleMovies: 8,
       },
       [NameSpace.MOVIE_LIST_STATE]: {
         activeMovie: {},
@@ -25,7 +26,7 @@ describe(`Render Main`, () => {
     .create(
         <Provider store={store}>
           <Main
-            promoMovie={films[0]} movies={films}
+            promoMovie={films[0]} movies={films} visibleMovies={films}
           />
         </Provider>)
       .toJSON();

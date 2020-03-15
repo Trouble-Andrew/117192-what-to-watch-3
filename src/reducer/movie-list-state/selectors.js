@@ -14,6 +14,10 @@ export const getGenre = (state) => {
   return state[NameSpace.MOVIE_LIST_STATE].genre;
 };
 
+export const getVisibleMoviesCount = (state) => {
+  return state[NameSpace.MOVIE_LIST_STATE].visibleMovies;
+};
+
 export const getFiltededList = createSelector(
     getMovies,
     getGenre,
@@ -25,5 +29,19 @@ export const getFiltededList = createSelector(
         return el.genre.includes(resultTwo);
       });
       return newArray;
+    }
+);
+
+export const getVisibleMovies = createSelector(
+    getFiltededList,
+    getVisibleMoviesCount,
+    (resultOne, resultTwo) => {
+      const visibleMovies = [];
+      for (let i = 0; i < resultTwo; i++) {
+        if (resultOne[i]) {
+          visibleMovies.push(resultOne[i]);
+        }
+      }
+      return visibleMovies;
     }
 );
