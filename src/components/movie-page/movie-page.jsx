@@ -2,6 +2,7 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import Tabs from "../tabs/tabs.jsx";
 import withActiveTab from "../../hocs/with-active-tab/with-active-tab.jsx";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
 
 const TabsWrapped = withActiveTab(Tabs);
 
@@ -12,7 +13,7 @@ class MoviePage extends PureComponent {
 
   render() {
 
-    const {movie} = this.props;
+    const {movie, authorizationStatus, user} = this.props;
     const {
       title,
       date,
@@ -38,9 +39,14 @@ class MoviePage extends PureComponent {
                 </a>
               </div>
               <div className="user-block">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width={63} height={63} />
-                </div>
+                {authorizationStatus === AuthorizationStatus.AUTH &&
+                  <div className="user-block__avatar">
+                    <img src={user.avatar} alt="User avatar" width="63" height="63"/>
+                  </div>
+                }
+                {authorizationStatus === AuthorizationStatus.NO_AUTH &&
+                  <a href="sign-in.html" className="user-block__link">Sign in</a>
+                }
               </div>
             </header>
             <div className="movie-card__wrap">
@@ -150,6 +156,13 @@ MoviePage.propTypes = {
     stars: PropTypes.array.isRequired,
     preview: PropTypes.string.isRequired,
   }).isRequired,
+  user: PropTypes.shape({
+    avatar: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  }).isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 export default MoviePage;

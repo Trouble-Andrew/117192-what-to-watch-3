@@ -11,6 +11,7 @@ import {createAPI} from "./api.js";
 
 const onUnauthorized = () => {
   store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH));
+  console.log(`ПОЛЬЗОВАТЕЛЬ НЕ АВТОРИЗОВАН`);
 };
 
 const api = createAPI(onUnauthorized);

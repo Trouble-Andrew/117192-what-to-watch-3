@@ -5,8 +5,12 @@ import PropTypes from "prop-types";
 import {getMovies, getPromoMovie} from "../../reducer/data/selectors.js";
 import {getActiveMovie, getFiltededList, getGenre} from "../../reducer/movie-list-state/selectors.js";
 import {Operation as DataOperation} from "../../reducer/data/data.js";
+import {Operation as UserOperation} from "../../reducer/user/user.js";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
+import {getAuthorizationStatus, getUserInfo} from "../../reducer/user/selectors.js";
 import Main from "../main/main.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
+import SignIn from "../sign-in/sign-in.jsx";
 
 class App extends PureComponent {
   constructor(props) {
@@ -14,16 +18,32 @@ class App extends PureComponent {
   }
 
   _renderScreen() {
-    const {promoMovie, activeMovie, filteredList, handleClickCard} = this.props;
+    const {
+      promoMovie,
+      activeMovie,
+      filteredList,
+      handleClickCard,
+      authorizationStatus,
+      login,
+      user,
+    } = this.props;
+
+    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      return (
+        <SignIn
+          onSubmit={login}
+        />
+      );
+    }
 
     if (Object.keys(activeMovie).length === 0) {
       return (
-        <Main promoMovie={promoMovie} movies={filteredList} />
+        <Main promoMovie={promoMovie} movies={filteredList} authorizationStatus={authorizationStatus} user={user} />
       );
     } else {
       handleClickCard(activeMovie);
       return (
-        <MoviePage movie={activeMovie} />
+        <MoviePage movie={activeMovie} authorizationStatus={authorizationStatus} user={user} />
       );
     }
   }
@@ -38,6 +58,11 @@ class App extends PureComponent {
           </Route>
           <Route exact path="/movie-page">
             {this._renderScreen()}
+          </Route>
+          <Route exact path="/dev-auth">
+            <SignIn
+              onSubmit={() => {}}
+            />
           </Route>
         </Switch>
       </BrowserRouter>
@@ -63,6 +88,14 @@ App.propTypes = {
   ).isRequired,
   activeMovie: PropTypes.object.isRequired,
   handleClickCard: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  login: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    avatar: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -71,11 +104,16 @@ const mapStateToProps = (state) => ({
   activeMovie: getActiveMovie(state),
   promoMovie: getPromoMovie(state),
   filteredList: getFiltededList(state),
+  authorizationStatus: getAuthorizationStatus(state),
+  user: getUserInfo(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   handleClickCard(movie) {
     dispatch(DataOperation.loadComments(movie.id));
+  },
+  login(authData) {
+    dispatch(UserOperation.login(authData));
   },
 });
 
