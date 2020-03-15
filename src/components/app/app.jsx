@@ -3,7 +3,8 @@ import {Switch, Route, BrowserRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {getMovies, getPromoMovie} from "../../reducer/data/selectors.js";
-import {getActiveMovie, getFiltededList, getGenre} from "../../reducer/movie-list-state/selectors.js";
+import {getActiveMovie, getFiltededList, getGenre, getVisibleMovies} from "../../reducer/movie-list-state/selectors.js";
+import {ActionCreator} from "../../reducer/movie-list-state/movie-list-state.js";
 import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {Operation as UserOperation} from "../../reducer/user/user.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
@@ -26,6 +27,8 @@ class App extends PureComponent {
       authorizationStatus,
       login,
       user,
+      visibleMovies,
+      handleClickMoreButton,
     } = this.props;
 
     if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
@@ -38,7 +41,7 @@ class App extends PureComponent {
 
     if (Object.keys(activeMovie).length === 0) {
       return (
-        <Main promoMovie={promoMovie} movies={filteredList} authorizationStatus={authorizationStatus} user={user} />
+        <Main promoMovie={promoMovie} movies={filteredList} visibleMovies={visibleMovies} authorizationStatus={authorizationStatus} user={user} handleClickMoreButton={handleClickMoreButton} />
       );
     } else {
       handleClickCard(activeMovie);
@@ -96,6 +99,8 @@ App.propTypes = {
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
   }).isRequired,
+  handleClickMoreButton: PropTypes.func.isRequired,
+  visibleMovies: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -106,6 +111,7 @@ const mapStateToProps = (state) => ({
   filteredList: getFiltededList(state),
   authorizationStatus: getAuthorizationStatus(state),
   user: getUserInfo(state),
+  visibleMovies: getVisibleMovies(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -114,6 +120,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   login(authData) {
     dispatch(UserOperation.login(authData));
+  },
+  handleClickMoreButton() {
+    dispatch(ActionCreator.incrementVisibleMovies());
   },
 });
 

@@ -5,6 +5,7 @@ it(`Reducer without additional parameters should return initial state`, () => {
   expect(reducer(void 0, {})).toEqual({
     genre: `All genres`,
     activeMovie: {},
+    visibleMovies: 8,
   });
 });
 
@@ -12,12 +13,14 @@ it(`Action creator for select movies returns action with correct element`, () =>
   expect(reducer({
     genre: `All genres`,
     activeMovie: {},
+    visibleMovies: 8,
   }, {
     type: ActionType.GET_SELECTED_MOVIE,
     payload: films[0],
   })).toEqual({
     genre: `All genres`,
     activeMovie: films[0],
+    visibleMovies: 8,
   });
 });
 
@@ -25,12 +28,14 @@ it(`Action creator for select genre returns action with correct element`, () => 
   expect(reducer({
     genre: `All genres`,
     activeMovie: {},
+    visibleMovies: 8,
   }, {
     type: ActionType.GET_SELECTED_GENRE,
     payload: `Drama`,
   })).toEqual({
     genre: `Drama`,
     activeMovie: {},
+    visibleMovies: 8,
   });
 });
 
