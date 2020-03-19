@@ -11,6 +11,12 @@ import {AuthorizationStatus} from "../../reducer/user/user.js";
 import history from "../../history.js";
 
 const TabsWrapped = withActiveTab(Tabs);
+const FullVideoPlayerWrapped = withTogglePlay(VideoPlayerFull);
+
+{/* <FullVideoPlayerWrapped
+  isPlay={true}
+  src={video}
+/>  */}
 
 class MoviePage extends PureComponent {
   constructor(props) {
@@ -31,11 +37,23 @@ class MoviePage extends PureComponent {
       date,
       genre,
       poster,
+      video,
       posterBig,
       isFavorite,
     } = movie;
 
     return (
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            {this._renderScreen()}
+          </Route>
+          <Route exact path="/movie-page">
+            {this._renderScreen()}
+          </Route>
+        </Switch>
+      </BrowserRouter>
+
       <React.Fragment>
         <section className="movie-card movie-card--full">
           <div className="movie-card__hero">
