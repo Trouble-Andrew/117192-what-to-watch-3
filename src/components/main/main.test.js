@@ -5,6 +5,8 @@ import configureStore from "redux-mock-store";
 import Main from "./main.jsx";
 import NameSpace from "../../reducer/name-space.js";
 import films from "../../mocks/films.js";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 const mockStore = configureStore([]);
 
@@ -22,14 +24,17 @@ describe(`Render Main`, () => {
       },
     });
 
-    const tree = renderer
-    .create(
-        <Provider store={store}>
-          <Main
-            promoMovie={films[0]} movies={films} visibleMovies={films}
-          />
-        </Provider>)
-      .toJSON();
+    const tree = renderer.create(
+        <Router
+          history={history}
+        >
+          <Provider store={store}>
+            <Main
+              promoMovie={films[0]} movies={films} visibleMovies={films}
+            />
+          </Provider>
+        </Router>
+    ).toJSON();
 
     expect(tree).toMatchSnapshot();
   });

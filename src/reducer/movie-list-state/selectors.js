@@ -45,3 +45,14 @@ export const getVisibleMovies = createSelector(
       return visibleMovies;
     }
 );
+
+export const getSilimarMovies = createSelector(
+    getMovies,
+    getActiveMovie,
+    (resultOne, resultTwo) => {
+      let newArray = resultOne.filter(function (el) {
+        return el.genre[0].includes(resultTwo.genre[0]);
+      });
+      return newArray;
+    }
+);

@@ -67,6 +67,7 @@ it(`Reducer without additional parameters should return initial state`, () => {
     movies: [],
     promoMovie: {},
     comments: [],
+    favoriteMovies: [],
   });
 });
 

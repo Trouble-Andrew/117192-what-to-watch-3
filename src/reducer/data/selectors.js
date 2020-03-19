@@ -13,3 +13,7 @@ export const getPromoMovie = (state) => {
 export const getComments = (state) => {
   return state[NameSpace.DATA].comments;
 };
+
+export const getFavoriteMovies = (state) => {
+  return state[NameSpace.DATA].favoriteMovies;
+};

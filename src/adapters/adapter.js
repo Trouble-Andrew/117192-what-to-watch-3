@@ -1,4 +1,4 @@
-import {convertMinsToHrsMins} from "./utils.js";
+import {convertMinsToHrsMins} from "../utils.js";
 
 class Adapter {
   constructor(data) {

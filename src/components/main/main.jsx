@@ -1,16 +1,29 @@
 import React, {PureComponent} from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
+import {AppRoute} from "../../const.js";
+import {Operation as DataOperation} from "../../reducer/data/data.js";
 import MovieList from "../movie-list/movie-list.jsx";
 import Filter from "../filter/filter.jsx";
 import withActiveTab from "../../hocs/with-active-tab/with-active-tab.jsx";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
+import history from "../../history.js";
 
 const FilterWrapped = withActiveTab(Filter);
 
 class Main extends PureComponent {
 
   render() {
-    const {promoMovie, movies, authorizationStatus, user, visibleMovies, handleClickMoreButton} = this.props;
+    const {
+      promoMovie,
+      movies,
+      authorizationStatus,
+      user, visibleMovies,
+      handleClickMoreButton,
+      handleClickUser,
+      handleClickFavoriteButton
+    } = this.props;
 
     let showMoreFlag = true;
 
@@ -41,11 +54,21 @@ class Main extends PureComponent {
             <div className="user-block">
               {authorizationStatus === AuthorizationStatus.AUTH &&
                 <div className="user-block__avatar">
-                  <img src={user.avatar} alt="User avatar" width="63" height="63"/>
+                  <Link
+                    to={AppRoute.MY_LIST}
+                    onClick={handleClickUser}
+                  >
+                    <img src={user.avatar} alt="User avatar" width="63" height="63"/>
+                  </Link>
                 </div>
               }
               {authorizationStatus === AuthorizationStatus.NO_AUTH &&
-                <a href="sign-in.html" className="user-block__link">Sign in</a>
+                <Link
+                  className="user-block__link"
+                  to={AppRoute.SIGN_IN}
+                >
+                  Sign in
+                </Link>
               }
             </div>
           </header>
@@ -70,10 +93,19 @@ class Main extends PureComponent {
                     </svg>
                     <span>Play</span>
                   </button>
-                  <button className="btn btn--list movie-card__button" type="button">
-                    <svg viewBox="0 0 19 20" width="19" height="20">
-                      <use xlinkHref="#add"></use>
-                    </svg>
+                  <button className="btn btn--list movie-card__button" type="button" onClick={() => {
+                    return authorizationStatus === AuthorizationStatus.NO_AUTH ? history.push(AppRoute.SIGN_IN) : handleClickFavoriteButton(promoMovie);
+                  }}>
+                    {promoMovie.isFavorite &&
+                        <svg viewBox="0 0 18 14" width={18} height={14}>
+                          <use xlinkHref="#in-list"></use>
+                        </svg>
+                    }
+                    {promoMovie.isFavorite ||
+                      <svg viewBox="0 0 19 20" width={19} height={20}>
+                        <use xlinkHref="#add" />
+                      </svg>
+                    }
                     <span>My list</span>
                   </button>
                 </div>
@@ -91,7 +123,7 @@ class Main extends PureComponent {
             <MovieList movies={visibleMovies} />
 
             {showMoreFlag && <div className="catalog__more">
-              <button className="catalog__button" type="button" onClick = {handleClickMoreButton}>Show more</button>
+              <button className="catalog__button" type="button" onClick={handleClickMoreButton}>Show more</button>
             </div>}
           </section>
 
@@ -154,6 +186,15 @@ Main.propTypes = {
   }).isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   handleClickMoreButton: PropTypes.func.isRequired,
+  handleClickUser: PropTypes.func.isRequired,
+  handleClickFavoriteButton: PropTypes.func.isRequired,
 };
 
-export default Main;
+const mapDispatchToProps = (dispatch) => ({
+  handleClickFavoriteButton(movie) {
+    dispatch(DataOperation.changeMovieStatus(movie.id, movie.isFavorite));
+  },
+});
+
+export {Main};
+export default connect(null, mapDispatchToProps)(Main);

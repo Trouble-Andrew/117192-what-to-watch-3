@@ -29,7 +29,8 @@ Array [
         >
           <a
             className="logo__link"
-            href="main.html"
+            href="/"
+            onClick={[Function]}
           >
             <span
               className="logo__letter logo__letter--1"
@@ -50,7 +51,15 @@ Array [
         </div>
         <div
           className="user-block"
-        />
+        >
+          <a
+            className="user-block__link"
+            href="/login"
+            onClick={[Function]}
+          >
+            Sign in
+          </a>
+        </div>
       </header>
       <div
         className="movie-card__wrap"
@@ -99,6 +108,7 @@ Array [
             </button>
             <button
               className="btn btn--list movie-card__button"
+              onClick={[Function]}
               type="button"
             >
               <svg
@@ -252,99 +262,127 @@ Array [
       >
         <article
           className="small-movie-card catalog__movies-card"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
         >
-          <div
-            className="small-movie-card__image"
+          <a
+            href="/films/1"
+            onClick={[Function]}
           >
-            <img
-              alt="Fantastic Beasts: The Crimes of Grindelwald"
-              height={175}
-              src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-              width={280}
-            />
-          </div>
-          <h3
-            className="small-movie-card__title"
-          >
-            <a
-              className="small-movie-card__link"
-              href="movie-page.html"
+            <div
+              className="small-movie-card__image"
             >
-              Fantastic Beasts: The Crimes of Grindelwald
-            </a>
-          </h3>
+              <img
+                alt="Parasite"
+                height={175}
+                src="https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SY1000_CR0,0,674,1000_AL_.jpg"
+                width={280}
+              />
+            </div>
+            <h3
+              className="small-movie-card__title"
+            >
+              <p
+                className="small-movie-card__link"
+              >
+                Parasite
+              </p>
+            </h3>
+          </a>
         </article>
         <article
           className="small-movie-card catalog__movies-card"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
         >
-          <div
-            className="small-movie-card__image"
+          <a
+            href="/films/2"
+            onClick={[Function]}
           >
-            <img
-              alt="Bohemian Rhapsody"
-              height={175}
-              src="img/bohemian-rhapsody.jpg"
-              width={280}
-            />
-          </div>
-          <h3
-            className="small-movie-card__title"
-          >
-            <a
-              className="small-movie-card__link"
-              href="movie-page.html"
+            <div
+              className="small-movie-card__image"
             >
-              Bohemian Rhapsody
-            </a>
-          </h3>
+              <img
+                alt="Jojo Rabbit"
+                height={175}
+                src="https://m.media-amazon.com/images/M/MV5BZjU0Yzk2MzEtMjAzYy00MzY0LTg2YmItM2RkNzdkY2ZhN2JkXkEyXkFqcGdeQXVyNDg4NjY5OTQ@._V1_SY1000_SX667_AL_.jpg"
+                width={280}
+              />
+            </div>
+            <h3
+              className="small-movie-card__title"
+            >
+              <p
+                className="small-movie-card__link"
+              >
+                Jojo Rabbit
+              </p>
+            </h3>
+          </a>
         </article>
         <article
           className="small-movie-card catalog__movies-card"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
         >
-          <div
-            className="small-movie-card__image"
+          <a
+            href="/films/4"
+            onClick={[Function]}
           >
-            <img
-              alt="Macbeth"
-              height={175}
-              src="img/macbeth.jpg"
-              width={280}
-            />
-          </div>
-          <h3
-            className="small-movie-card__title"
-          >
-            <a
-              className="small-movie-card__link"
-              href="movie-page.html"
+            <div
+              className="small-movie-card__image"
             >
-              Macbeth
-            </a>
-          </h3>
+              <img
+                alt="Joker"
+                height={175}
+                src="https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SY1000_CR0,0,674,1000_AL_.jpg"
+                width={280}
+              />
+            </div>
+            <h3
+              className="small-movie-card__title"
+            >
+              <p
+                className="small-movie-card__link"
+              >
+                Joker
+              </p>
+            </h3>
+          </a>
         </article>
         <article
           className="small-movie-card catalog__movies-card"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
         >
-          <div
-            className="small-movie-card__image"
+          <a
+            href="/films/5"
+            onClick={[Function]}
           >
-            <img
-              alt="Aviator"
-              height={175}
-              src="img/aviator.jpg"
-              width={280}
-            />
-          </div>
-          <h3
-            className="small-movie-card__title"
-          >
-            <a
-              className="small-movie-card__link"
-              href="movie-page.html"
+            <div
+              className="small-movie-card__image"
             >
-              Aviator
-            </a>
-          </h3>
+              <img
+                alt="Uncut Gems"
+                height={175}
+                src="https://m.media-amazon.com/images/M/MV5BZDhkMjUyYjItYWVkYi00YTM5LWE4MGEtY2FlMjA3OThlYmZhXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SY1000_CR0,0,640,1000_AL_.jpg"
+                width={280}
+              />
+            </div>
+            <h3
+              className="small-movie-card__title"
+            >
+              <p
+                className="small-movie-card__link"
+              >
+                Uncut Gems
+              </p>
+            </h3>
+          </a>
         </article>
       </div>
     </section>

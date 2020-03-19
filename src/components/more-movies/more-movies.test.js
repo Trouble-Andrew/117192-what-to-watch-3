@@ -4,15 +4,25 @@ import {Provider} from "react-redux";
 import {Router} from "react-router-dom";
 import history from "../../history.js";
 import configureStore from "redux-mock-store";
-import SmallMovieCard from "../small-movie-card/small-movie-card.jsx";
+import NameSpace from "../../reducer/name-space.js";
+import MoreMovies from "../more-movies/more-movies.jsx";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
 import films from "../../mocks/films.js";
 
 const mockStore = configureStore([]);
 
-it(`SmallMovieCard is rendered correctly`, () => {
+it(`MoreMovies is rendered correctly`, () => {
   const store = mockStore({
-    genre: `All genres`,
-    activeMovie: {},
+    [NameSpace.DATA]: {
+      movies: films,
+      promoMovie: films[0],
+    },
+    [NameSpace.MOVIE_LIST_STATE]: {
+      activeMovie: films[0],
+    },
+    [NameSpace.USER]: {
+      authorizationStatus: AuthorizationStatus.NO_AUTH,
+    },
   });
 
   const tree = renderer.create(
@@ -20,7 +30,7 @@ it(`SmallMovieCard is rendered correctly`, () => {
         history={history}
       >
         <Provider store={store}>
-          <SmallMovieCard movie={films[0]} handleClickCard={() => {}} startPlay={() => {}} stopPlay={() => {}} isPlay={false} />
+          <MoreMovies movies={films} />
         </Provider>
       </Router>
   ).toJSON();
