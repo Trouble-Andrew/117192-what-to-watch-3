@@ -1,5 +1,5 @@
 import {extend} from "../../utils.js";
-import UserInfoAdapter from "../../user-info-adapter.js";
+import UserInfoAdapter from "../../adapters/user-info-adapter.js";
 
 const AuthorizationStatus = {
   AUTH: `AUTH`,

@@ -33,10 +33,11 @@ class VideoPlayer extends PureComponent {
   }
 
   render() {
+    const {poster} = this.props;
 
     return (
       <Fragment>
-        <video ref={this._videoRef} className="player__video" poster="img/player-poster.jpg" muted />
+        <video ref={this._videoRef} className="player__video" poster={poster} muted />
       </Fragment>
     );
   }
@@ -57,6 +58,7 @@ VideoPlayer.propTypes = {
   startPlay: PropTypes.func.isRequired,
   stopPlay: PropTypes.func.isRequired,
   src: PropTypes.string.isRequired,
+  poster: PropTypes.string.isRequired,
 };
 
 export default VideoPlayer;

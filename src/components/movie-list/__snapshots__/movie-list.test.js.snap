@@ -10,26 +10,30 @@ exports[`MovieList is rendered correctly 1`] = `
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <div
-      className="small-movie-card__image"
+    <a
+      href="/films/1"
+      onClick={[Function]}
     >
-      <img
-        alt="Parasite"
-        height={175}
-        src="https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SY1000_CR0,0,674,1000_AL_.jpg"
-        width={280}
-      />
-    </div>
-    <h3
-      className="small-movie-card__title"
-    >
-      <a
-        className="small-movie-card__link"
-        href="movie-page.html"
+      <div
+        className="small-movie-card__image"
       >
-        Parasite
-      </a>
-    </h3>
+        <img
+          alt="Parasite"
+          height={175}
+          src="https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SY1000_CR0,0,674,1000_AL_.jpg"
+          width={280}
+        />
+      </div>
+      <h3
+        className="small-movie-card__title"
+      >
+        <p
+          className="small-movie-card__link"
+        >
+          Parasite
+        </p>
+      </h3>
+    </a>
   </article>
   <article
     className="small-movie-card catalog__movies-card"
@@ -37,26 +41,30 @@ exports[`MovieList is rendered correctly 1`] = `
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <div
-      className="small-movie-card__image"
+    <a
+      href="/films/2"
+      onClick={[Function]}
     >
-      <img
-        alt="Jojo Rabbit"
-        height={175}
-        src="https://m.media-amazon.com/images/M/MV5BZjU0Yzk2MzEtMjAzYy00MzY0LTg2YmItM2RkNzdkY2ZhN2JkXkEyXkFqcGdeQXVyNDg4NjY5OTQ@._V1_SY1000_SX667_AL_.jpg"
-        width={280}
-      />
-    </div>
-    <h3
-      className="small-movie-card__title"
-    >
-      <a
-        className="small-movie-card__link"
-        href="movie-page.html"
+      <div
+        className="small-movie-card__image"
       >
-        Jojo Rabbit
-      </a>
-    </h3>
+        <img
+          alt="Jojo Rabbit"
+          height={175}
+          src="https://m.media-amazon.com/images/M/MV5BZjU0Yzk2MzEtMjAzYy00MzY0LTg2YmItM2RkNzdkY2ZhN2JkXkEyXkFqcGdeQXVyNDg4NjY5OTQ@._V1_SY1000_SX667_AL_.jpg"
+          width={280}
+        />
+      </div>
+      <h3
+        className="small-movie-card__title"
+      >
+        <p
+          className="small-movie-card__link"
+        >
+          Jojo Rabbit
+        </p>
+      </h3>
+    </a>
   </article>
   <article
     className="small-movie-card catalog__movies-card"
@@ -64,26 +72,30 @@ exports[`MovieList is rendered correctly 1`] = `
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <div
-      className="small-movie-card__image"
+    <a
+      href="/films/3"
+      onClick={[Function]}
     >
-      <img
-        alt="1917"
-        height={175}
-        src="https://m.media-amazon.com/images/M/MV5BOTdmNTFjNDEtNzg0My00ZjkxLTg1ZDAtZTdkMDc2ZmFiNWQ1XkEyXkFqcGdeQXVyNTAzNzgwNTg@._V1_SY1000_CR0,0,631,1000_AL_.jpg"
-        width={280}
-      />
-    </div>
-    <h3
-      className="small-movie-card__title"
-    >
-      <a
-        className="small-movie-card__link"
-        href="movie-page.html"
+      <div
+        className="small-movie-card__image"
       >
-        1917
-      </a>
-    </h3>
+        <img
+          alt="1917"
+          height={175}
+          src="https://m.media-amazon.com/images/M/MV5BOTdmNTFjNDEtNzg0My00ZjkxLTg1ZDAtZTdkMDc2ZmFiNWQ1XkEyXkFqcGdeQXVyNTAzNzgwNTg@._V1_SY1000_CR0,0,631,1000_AL_.jpg"
+          width={280}
+        />
+      </div>
+      <h3
+        className="small-movie-card__title"
+      >
+        <p
+          className="small-movie-card__link"
+        >
+          1917
+        </p>
+      </h3>
+    </a>
   </article>
   <article
     className="small-movie-card catalog__movies-card"
@@ -91,26 +103,30 @@ exports[`MovieList is rendered correctly 1`] = `
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <div
-      className="small-movie-card__image"
+    <a
+      href="/films/4"
+      onClick={[Function]}
     >
-      <img
-        alt="Joker"
-        height={175}
-        src="https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SY1000_CR0,0,674,1000_AL_.jpg"
-        width={280}
-      />
-    </div>
-    <h3
-      className="small-movie-card__title"
-    >
-      <a
-        className="small-movie-card__link"
-        href="movie-page.html"
+      <div
+        className="small-movie-card__image"
       >
-        Joker
-      </a>
-    </h3>
+        <img
+          alt="Joker"
+          height={175}
+          src="https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SY1000_CR0,0,674,1000_AL_.jpg"
+          width={280}
+        />
+      </div>
+      <h3
+        className="small-movie-card__title"
+      >
+        <p
+          className="small-movie-card__link"
+        >
+          Joker
+        </p>
+      </h3>
+    </a>
   </article>
   <article
     className="small-movie-card catalog__movies-card"
@@ -118,26 +134,30 @@ exports[`MovieList is rendered correctly 1`] = `
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <div
-      className="small-movie-card__image"
+    <a
+      href="/films/5"
+      onClick={[Function]}
     >
-      <img
-        alt="Uncut Gems"
-        height={175}
-        src="https://m.media-amazon.com/images/M/MV5BZDhkMjUyYjItYWVkYi00YTM5LWE4MGEtY2FlMjA3OThlYmZhXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SY1000_CR0,0,640,1000_AL_.jpg"
-        width={280}
-      />
-    </div>
-    <h3
-      className="small-movie-card__title"
-    >
-      <a
-        className="small-movie-card__link"
-        href="movie-page.html"
+      <div
+        className="small-movie-card__image"
       >
-        Uncut Gems
-      </a>
-    </h3>
+        <img
+          alt="Uncut Gems"
+          height={175}
+          src="https://m.media-amazon.com/images/M/MV5BZDhkMjUyYjItYWVkYi00YTM5LWE4MGEtY2FlMjA3OThlYmZhXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SY1000_CR0,0,640,1000_AL_.jpg"
+          width={280}
+        />
+      </div>
+      <h3
+        className="small-movie-card__title"
+      >
+        <p
+          className="small-movie-card__link"
+        >
+          Uncut Gems
+        </p>
+      </h3>
+    </a>
   </article>
   <article
     className="small-movie-card catalog__movies-card"
@@ -145,26 +165,30 @@ exports[`MovieList is rendered correctly 1`] = `
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <div
-      className="small-movie-card__image"
+    <a
+      href="/films/6"
+      onClick={[Function]}
     >
-      <img
-        alt="Knives Out"
-        height={175}
-        src="https://m.media-amazon.com/images/M/MV5BMGUwZjliMTAtNzAxZi00MWNiLWE2NzgtZGUxMGQxZjhhNDRiXkEyXkFqcGdeQXVyNjU1NzU3MzE@._V1_SY1000_SX675_AL_.jpg"
-        width={280}
-      />
-    </div>
-    <h3
-      className="small-movie-card__title"
-    >
-      <a
-        className="small-movie-card__link"
-        href="movie-page.html"
+      <div
+        className="small-movie-card__image"
       >
-        Knives Out
-      </a>
-    </h3>
+        <img
+          alt="Knives Out"
+          height={175}
+          src="https://m.media-amazon.com/images/M/MV5BMGUwZjliMTAtNzAxZi00MWNiLWE2NzgtZGUxMGQxZjhhNDRiXkEyXkFqcGdeQXVyNjU1NzU3MzE@._V1_SY1000_SX675_AL_.jpg"
+          width={280}
+        />
+      </div>
+      <h3
+        className="small-movie-card__title"
+      >
+        <p
+          className="small-movie-card__link"
+        >
+          Knives Out
+        </p>
+      </h3>
+    </a>
   </article>
   <article
     className="small-movie-card catalog__movies-card"
@@ -172,26 +196,30 @@ exports[`MovieList is rendered correctly 1`] = `
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <div
-      className="small-movie-card__image"
+    <a
+      href="/films/7"
+      onClick={[Function]}
     >
-      <img
-        alt="Once Upon a Time ...in Hollywood"
-        height={175}
-        src="https://m.media-amazon.com/images/M/MV5BOTg4ZTNkZmUtMzNlZi00YmFjLTk1MmUtNWQwNTM0YjcyNTNkXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SY1000_CR0,0,674,1000_AL_.jpg"
-        width={280}
-      />
-    </div>
-    <h3
-      className="small-movie-card__title"
-    >
-      <a
-        className="small-movie-card__link"
-        href="movie-page.html"
+      <div
+        className="small-movie-card__image"
       >
-        Once Upon a Time ...in Hollywood
-      </a>
-    </h3>
+        <img
+          alt="Once Upon a Time ...in Hollywood"
+          height={175}
+          src="https://m.media-amazon.com/images/M/MV5BOTg4ZTNkZmUtMzNlZi00YmFjLTk1MmUtNWQwNTM0YjcyNTNkXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SY1000_CR0,0,674,1000_AL_.jpg"
+          width={280}
+        />
+      </div>
+      <h3
+        className="small-movie-card__title"
+      >
+        <p
+          className="small-movie-card__link"
+        >
+          Once Upon a Time ...in Hollywood
+        </p>
+      </h3>
+    </a>
   </article>
   <article
     className="small-movie-card catalog__movies-card"
@@ -199,26 +227,30 @@ exports[`MovieList is rendered correctly 1`] = `
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <div
-      className="small-movie-card__image"
+    <a
+      href="/films/8"
+      onClick={[Function]}
     >
-      <img
-        alt="Ford v Ferrari"
-        height={175}
-        src="https://m.media-amazon.com/images/M/MV5BM2UwMDVmMDItM2I2Yi00NGZmLTk4ZTUtY2JjNTQ3OGQ5ZjM2XkEyXkFqcGdeQXVyMTA1OTYzOTUx._V1_SY1000_CR0,0,675,1000_AL_.jpg"
-        width={280}
-      />
-    </div>
-    <h3
-      className="small-movie-card__title"
-    >
-      <a
-        className="small-movie-card__link"
-        href="movie-page.html"
+      <div
+        className="small-movie-card__image"
       >
-        Ford v Ferrari
-      </a>
-    </h3>
+        <img
+          alt="Ford v Ferrari"
+          height={175}
+          src="https://m.media-amazon.com/images/M/MV5BM2UwMDVmMDItM2I2Yi00NGZmLTk4ZTUtY2JjNTQ3OGQ5ZjM2XkEyXkFqcGdeQXVyMTA1OTYzOTUx._V1_SY1000_CR0,0,675,1000_AL_.jpg"
+          width={280}
+        />
+      </div>
+      <h3
+        className="small-movie-card__title"
+      >
+        <p
+          className="small-movie-card__link"
+        >
+          Ford v Ferrari
+        </p>
+      </h3>
+    </a>
   </article>
 </div>
 `;

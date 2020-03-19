@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import {reducer, ActionCreator, ActionType, AuthorizationStatus, Operation} from "./user.js";
-import UserInfoAdapter from "../../user-info-adapter.js";
+import UserInfoAdapter from "../../adapters/user-info-adapter.js";
 import MockAdapter from "axios-mock-adapter";
 import {createAPI} from "../../api.js";
 

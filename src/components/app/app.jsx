@@ -1,16 +1,19 @@
 import React, {PureComponent} from "react";
-import {Switch, Route, BrowserRouter} from "react-router-dom";
+import {Switch, Route, Router} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {getMovies, getPromoMovie} from "../../reducer/data/selectors.js";
+import {getMovies, getPromoMovie, getFavoriteMovies} from "../../reducer/data/selectors.js";
 import {getActiveMovie, getFiltededList, getGenre, getVisibleMovies} from "../../reducer/movie-list-state/selectors.js";
 import {ActionCreator} from "../../reducer/movie-list-state/movie-list-state.js";
 import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {Operation as UserOperation} from "../../reducer/user/user.js";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
 import {getAuthorizationStatus, getUserInfo} from "../../reducer/user/selectors.js";
+import PrivateRoute from "../private-route/private-route.jsx";
+import history from "../../history.js";
+import {AppRoute} from "../../const.js";
 import Main from "../main/main.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
+import MyList from "../my-list/my-list.jsx";
 import SignIn from "../sign-in/sign-in.jsx";
 
 class App extends PureComponent {
@@ -18,57 +21,61 @@ class App extends PureComponent {
     super(props);
   }
 
-  _renderScreen() {
+  render() {
     const {
       promoMovie,
       activeMovie,
       filteredList,
-      handleClickCard,
       authorizationStatus,
       login,
       user,
       visibleMovies,
       handleClickMoreButton,
+      favoriteMovies,
+      handleClickUser,
     } = this.props;
 
-    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-      return (
-        <SignIn
-          onSubmit={login}
-        />
-      );
-    }
-
-    if (Object.keys(activeMovie).length === 0) {
-      return (
-        <Main promoMovie={promoMovie} movies={filteredList} visibleMovies={visibleMovies} authorizationStatus={authorizationStatus} user={user} handleClickMoreButton={handleClickMoreButton} />
-      );
-    } else {
-      handleClickCard(activeMovie);
-      return (
-        <MoviePage movie={activeMovie} authorizationStatus={authorizationStatus} user={user} />
-      );
-    }
-  }
-
-  render() {
-
     return (
-      <BrowserRouter>
+      <Router history={history}>
         <Switch>
-          <Route exact path="/">
-            {this._renderScreen()}
-          </Route>
-          <Route exact path="/movie-page">
-            {this._renderScreen()}
-          </Route>
-          <Route exact path="/dev-auth">
-            <SignIn
-              onSubmit={() => {}}
+          <Route exact path={AppRoute.ROOT}>
+            <Main
+              promoMovie={promoMovie}
+              movies={filteredList}
+              visibleMovies={visibleMovies}
+              authorizationStatus={authorizationStatus}
+              user={user}
+              handleClickMoreButton={handleClickMoreButton}
+              handleClickUser={handleClickUser}
             />
           </Route>
+          <Route exact path={AppRoute.SIGN_IN}>
+            <SignIn
+              onSubmit={login}
+            />
+          </Route>
+          <Route exact path={`${AppRoute.MOVIE}/:number`}>
+            <MoviePage
+              movie={activeMovie}
+              authorizationStatus={authorizationStatus}
+              user={user}
+              handleClickMoreButton={handleClickMoreButton}
+              handleClickUser={handleClickUser} />
+          </Route>
+          <PrivateRoute
+            exact
+            path={AppRoute.MY_LIST}
+            render={() => {
+              return (
+                <MyList
+                  movies={favoriteMovies}
+                  user={user}
+                />
+              );
+            }}
+          />
         </Switch>
-      </BrowserRouter>
+      </Router>
     );
   }
 }
@@ -101,6 +108,8 @@ App.propTypes = {
   }).isRequired,
   handleClickMoreButton: PropTypes.func.isRequired,
   visibleMovies: PropTypes.array.isRequired,
+  favoriteMovies: PropTypes.array.isRequired,
+  handleClickUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -112,6 +121,7 @@ const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
   user: getUserInfo(state),
   visibleMovies: getVisibleMovies(state),
+  favoriteMovies: getFavoriteMovies(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -123,6 +133,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   handleClickMoreButton() {
     dispatch(ActionCreator.incrementVisibleMovies());
+  },
+  handleClickUser() {
+    dispatch(DataOperation.loadFavoriteMovies());
   },
 });
 

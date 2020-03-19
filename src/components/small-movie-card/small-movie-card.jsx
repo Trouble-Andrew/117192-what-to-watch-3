@@ -1,7 +1,10 @@
 import React, {createRef, PureComponent} from "react";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
 import {ActionCreator} from "../../reducer/movie-list-state/movie-list-state.js";
+import {Operation as DataOperation} from "../../reducer/data/data.js";
 import PropTypes from "prop-types";
+import {AppRoute} from "../../const.js";
 import VideoPlayer from "../video-player/video-player.jsx";
 import withTogglePlay from "../../hocs/with-toggle-play/with-toggle-play.jsx";
 
@@ -30,7 +33,13 @@ class SmallMovieCard extends PureComponent {
   }
 
   render() {
-    const {movie, handleClickCard, isPlay, startPlay, stopPlay} = this.props;
+    const {
+      movie,
+      handleClickCard,
+      isPlay,
+      startPlay,
+      stopPlay
+    } = this.props;
 
     if (isPlay) {
       return <article className="small-movie-card catalog__movies-card" onClick={(evt) => {
@@ -42,13 +51,16 @@ class SmallMovieCard extends PureComponent {
         stopPlay();
       }}
       >
-        <VideoPlayerWrapped
-          isPlaying={isPlay}
-          src={movie.video}
-          ref={this._videoRef}
-          startPlay={startPlay}
-          stopPlay={stopPlay}
-        />
+        <Link to={{pathname: `${AppRoute.MOVIE}/:${movie.id}`}}>
+          <VideoPlayerWrapped
+            isPlaying={isPlay}
+            src={movie.video}
+            ref={this._videoRef}
+            startPlay={startPlay}
+            stopPlay={stopPlay}
+            poster={movie.posterBig}
+          />
+        </Link>
       </article>;
     }
 
@@ -65,12 +77,14 @@ class SmallMovieCard extends PureComponent {
         this._clearTimer(stopPlay);
       }}
       >
-        <div className="small-movie-card__image">
-          <img src={movie.poster} alt={movie.title} width={280} height={175} />
-        </div>
-        <h3 className="small-movie-card__title">
-          <a className="small-movie-card__link" href="movie-page.html">{movie.title}</a>
-        </h3>
+        <Link to={{pathname: `${AppRoute.MOVIE}/${movie.id}`}}>
+          <div className="small-movie-card__image">
+            <img src={movie.poster} alt={movie.title} width={280} height={175} />
+          </div>
+          <h3 className="small-movie-card__title">
+            <p className="small-movie-card__link">{movie.title}</p>
+          </h3>
+        </Link>
       </article>
     );
   }
@@ -85,6 +99,7 @@ SmallMovieCard.propTypes = {
     posterBig: PropTypes.string.isRequired,
     video: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
     ratingCount: PropTypes.number.isRequired,
     director: PropTypes.array.isRequired,
     stars: PropTypes.array.isRequired,
@@ -99,6 +114,7 @@ SmallMovieCard.propTypes = {
 const mapDispatchToProps = (dispatch) => ({
   handleClickCard(movie) {
     dispatch(ActionCreator.getSelectedMovie(movie));
+    dispatch(DataOperation.loadComments(movie.id));
   },
 });
 

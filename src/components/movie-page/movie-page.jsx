@@ -1,8 +1,14 @@
 import React, {PureComponent} from "react";
+import {connect} from "react-redux";
+import {Link} from "react-router-dom";
+import {AppRoute} from "../../const.js";
 import PropTypes from "prop-types";
+import {Operation as MovieOperation} from "../../reducer/movie-list-state/movie-list-state.js";
 import Tabs from "../tabs/tabs.jsx";
+import MoreMovies from "../more-movies/more-movies.jsx";
 import withActiveTab from "../../hocs/with-active-tab/with-active-tab.jsx";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
+import history from "../../history.js";
 
 const TabsWrapped = withActiveTab(Tabs);
 
@@ -12,14 +18,21 @@ class MoviePage extends PureComponent {
   }
 
   render() {
+    const {
+      movie,
+      authorizationStatus,
+      user, handleClickMoreButton,
+      handleClickFavoriteButton,
+      handleClickUser
+    } = this.props;
 
-    const {movie, authorizationStatus, user} = this.props;
     const {
       title,
       date,
       genre,
       poster,
       posterBig,
+      isFavorite,
     } = movie;
 
     return (
@@ -32,20 +45,34 @@ class MoviePage extends PureComponent {
             <h1 className="visually-hidden">WTW</h1>
             <header className="page-header movie-card__head">
               <div className="logo">
-                <a href="main.html" className="logo__link">
+                <Link
+                  className="logo__link"
+                  to={AppRoute.ROOT}
+                >
                   <span className="logo__letter logo__letter--1">W</span>
                   <span className="logo__letter logo__letter--2">T</span>
                   <span className="logo__letter logo__letter--3">W</span>
-                </a>
+                </Link>
               </div>
               <div className="user-block">
                 {authorizationStatus === AuthorizationStatus.AUTH &&
-                  <div className="user-block__avatar">
-                    <img src={user.avatar} alt="User avatar" width="63" height="63"/>
+                  <div className="user-block__avatar" >
+                    <Link
+                      to={AppRoute.MY_LIST}
+                      onClick={handleClickUser}
+                    >
+                      <img src={user.avatar} alt="User avatar" width="63" height="63"/>
+                    </Link>
                   </div>
                 }
                 {authorizationStatus === AuthorizationStatus.NO_AUTH &&
-                  <a href="sign-in.html" className="user-block__link">Sign in</a>
+                  <Link
+                    className="user-block__link"
+                    to={AppRoute.SIGN_IN}
+                    onClick = {handleClickMoreButton}
+                  >
+                    Sign in
+                  </Link>
                 }
               </div>
             </header>
@@ -63,10 +90,19 @@ class MoviePage extends PureComponent {
                     </svg>
                     <span>Play</span>
                   </button>
-                  <button className="btn btn--list movie-card__button" type="button">
-                    <svg viewBox="0 0 19 20" width={19} height={20}>
-                      <use xlinkHref="#add" />
-                    </svg>
+                  <button className="btn btn--list movie-card__button" type="button" onClick={() => {
+                    return authorizationStatus === AuthorizationStatus.NO_AUTH ? history.push(AppRoute.SIGN_IN) : handleClickFavoriteButton(movie);
+                  }}>
+                    {isFavorite &&
+                        <svg viewBox="0 0 18 14" width={18} height={14}>
+                          <use xlinkHref="#in-list"></use>
+                        </svg>
+                    }
+                    {isFavorite ||
+                      <svg viewBox="0 0 19 20" width={19} height={20}>
+                        <use xlinkHref="#add" />
+                      </svg>
+                    }
                     <span>My list</span>
                   </button>
                   <a href="add-review.html" className="btn movie-card__button">Add review</a>
@@ -85,57 +121,7 @@ class MoviePage extends PureComponent {
             </div>
           </div>
         </section>
-        <div className="page-content">
-          <section className="catalog catalog--like-this">
-            <h2 className="catalog__title">More like this</h2>
-            <div className="catalog__movies-list">
-              <article className="small-movie-card catalog__movies-card">
-                <div className="small-movie-card__image">
-                  <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width={280} height={175} />
-                </div>
-                <h3 className="small-movie-card__title">
-                  <a className="small-movie-card__link" href="movie-page.html">Fantastic Beasts: The Crimes of Grindelwald</a>
-                </h3>
-              </article>
-              <article className="small-movie-card catalog__movies-card">
-                <div className="small-movie-card__image">
-                  <img src="img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width={280} height={175} />
-                </div>
-                <h3 className="small-movie-card__title">
-                  <a className="small-movie-card__link" href="movie-page.html">Bohemian Rhapsody</a>
-                </h3>
-              </article>
-              <article className="small-movie-card catalog__movies-card">
-                <div className="small-movie-card__image">
-                  <img src="img/macbeth.jpg" alt="Macbeth" width={280} height={175} />
-                </div>
-                <h3 className="small-movie-card__title">
-                  <a className="small-movie-card__link" href="movie-page.html">Macbeth</a>
-                </h3>
-              </article>
-              <article className="small-movie-card catalog__movies-card">
-                <div className="small-movie-card__image">
-                  <img src="img/aviator.jpg" alt="Aviator" width={280} height={175} />
-                </div>
-                <h3 className="small-movie-card__title">
-                  <a className="small-movie-card__link" href="movie-page.html">Aviator</a>
-                </h3>
-              </article>
-            </div>
-          </section>
-          <footer className="page-footer">
-            <div className="logo">
-              <a href="main.html" className="logo__link logo__link--light">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </a>
-            </div>
-            <div className="copyright">
-              <p>© 2019 What to watch Ltd.</p>
-            </div>
-          </footer>
-        </div>
+        <MoreMovies />
       </React.Fragment>
     );
   }
@@ -155,6 +141,7 @@ MoviePage.propTypes = {
     director: PropTypes.array.isRequired,
     stars: PropTypes.array.isRequired,
     preview: PropTypes.string.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
   }).isRequired,
   user: PropTypes.shape({
     avatar: PropTypes.string.isRequired,
@@ -163,6 +150,16 @@ MoviePage.propTypes = {
     email: PropTypes.string.isRequired,
   }).isRequired,
   authorizationStatus: PropTypes.string.isRequired,
+  handleClickUser: PropTypes.func.isRequired,
+  handleClickMoreButton: PropTypes.func.isRequired,
+  handleClickFavoriteButton: PropTypes.func.isRequired,
 };
 
-export default MoviePage;
+const mapDispatchToProps = (dispatch) => ({
+  handleClickFavoriteButton(movie) {
+    dispatch(MovieOperation.changeMovieStatus(movie.id, movie.isFavorite));
+  },
+});
+
+export {MoviePage};
+export default connect(null, mapDispatchToProps)(MoviePage);
