@@ -13,8 +13,12 @@ import history from "../../history.js";
 import {AppRoute} from "../../const.js";
 import Main from "../main/main.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
+import VideoPlayerFull from "../video-player-full/video-player-full.jsx";
+import withTogglePlay from "../../hocs/with-toggle-play/with-toggle-play.jsx";
 import MyList from "../my-list/my-list.jsx";
 import SignIn from "../sign-in/sign-in.jsx";
+
+const FullVideoPlayerWrapped = withTogglePlay(VideoPlayerFull);
 
 class App extends PureComponent {
   constructor(props) {
@@ -62,6 +66,15 @@ class App extends PureComponent {
               handleClickMoreButton={handleClickMoreButton}
               handleClickUser={handleClickUser} />
           </Route>
+          <Route
+            exact path={`${AppRoute.MOVIE}/:number${AppRoute.PLAYER}`}
+            render={(routeProps) => (
+              <FullVideoPlayerWrapped
+                {...routeProps}
+                isPlay={true}
+              />
+            )}
+          />
           <PrivateRoute
             exact
             path={AppRoute.MY_LIST}

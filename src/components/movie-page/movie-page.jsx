@@ -11,12 +11,6 @@ import {AuthorizationStatus} from "../../reducer/user/user.js";
 import history from "../../history.js";
 
 const TabsWrapped = withActiveTab(Tabs);
-const FullVideoPlayerWrapped = withTogglePlay(VideoPlayerFull);
-
-{/* <FullVideoPlayerWrapped
-  isPlay={true}
-  src={video}
-/>  */}
 
 class MoviePage extends PureComponent {
   constructor(props) {
@@ -37,23 +31,11 @@ class MoviePage extends PureComponent {
       date,
       genre,
       poster,
-      video,
       posterBig,
       isFavorite,
     } = movie;
 
     return (
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/">
-            {this._renderScreen()}
-          </Route>
-          <Route exact path="/movie-page">
-            {this._renderScreen()}
-          </Route>
-        </Switch>
-      </BrowserRouter>
-
       <React.Fragment>
         <section className="movie-card movie-card--full">
           <div className="movie-card__hero">
@@ -102,12 +84,18 @@ class MoviePage extends PureComponent {
                   <span className="movie-card__year">{date}</span>
                 </p>
                 <div className="movie-card__buttons">
-                  <button className="btn btn--play movie-card__button" type="button">
-                    <svg viewBox="0 0 19 19" width={19} height={19}>
-                      <use xlinkHref="#play-s" />
+                  <Link
+                    className="btn btn--play movie-card__button"
+                    to={{
+                      pathname: `${AppRoute.MOVIE}/${movie.id}${AppRoute.PLAYER}`,
+                      linkProp: {movie},
+                    }}
+                  >
+                    <svg viewBox="0 0 19 19" width="19" height="19">
+                      <use xlinkHref="#play-s"></use>
                     </svg>
                     <span>Play</span>
-                  </button>
+                  </Link>
                   <button className="btn btn--list movie-card__button" type="button" onClick={() => {
                     return authorizationStatus === AuthorizationStatus.NO_AUTH ? history.push(AppRoute.SIGN_IN) : handleClickFavoriteButton(movie);
                   }}>
@@ -147,6 +135,7 @@ class MoviePage extends PureComponent {
 
 MoviePage.propTypes = {
   movie: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     genre: PropTypes.array.isRequired,
