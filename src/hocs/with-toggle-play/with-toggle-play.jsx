@@ -7,6 +7,7 @@ const withTogglePlay = (Component) => {
 
       this._start = this._start.bind(this);
       this._stop = this._stop.bind(this);
+      this._toggle = this._toggle.bind(this);
 
       this.state = {
         isPlay: false,
@@ -25,6 +26,12 @@ const withTogglePlay = (Component) => {
       });
     }
 
+    _toggle() {
+      this.setState({
+        isPlay: !this.state.isPlay,
+      });
+    }
+
     render() {
       const {isPlay} = this.state;
 
@@ -33,6 +40,7 @@ const withTogglePlay = (Component) => {
           {...this.props}
           startPlay={this._start}
           stopPlay={this._stop}
+          togglePlay={this._toggle}
           isPlay={isPlay}
         >
         </Component>

@@ -13,6 +13,7 @@ export default [
     director: [`Bong Joon Ho`],
     stars: [`Kang-ho Song`, `Sun-kyun Lee`, `Yeo-jeong Jo`],
     preview: `A poor family, the Kims, con their way into becoming the servants of a rich family, the Parks. But their easy life gets complicated when their deception is threatened with exposure.`,
+    isFavorite: false,
     reviews: [
       {
         author: `Jeremy_Urquhart`,
