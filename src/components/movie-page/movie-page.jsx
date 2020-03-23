@@ -5,6 +5,8 @@ import {AppRoute} from "../../const.js";
 import PropTypes from "prop-types";
 import {Operation as MovieOperation} from "../../reducer/movie-list-state/movie-list-state.js";
 import {getActiveMovie} from "../../reducer/movie-list-state/selectors.js";
+import {ActionCreator} from "../../reducer/movie-list-state/movie-list-state.js";
+import {getMovies} from "../../reducer/data/selectors.js";
 import Tabs from "../tabs/tabs.jsx";
 import MoreMovies from "../more-movies/more-movies.jsx";
 import withActiveTab from "../../hocs/with-active-tab/with-active-tab.jsx";
@@ -21,20 +23,18 @@ class MoviePage extends PureComponent {
   render() {
     const {
       movie,
+      movies,
       authorizationStatus,
       user,
       handleClickMoreButton,
       handleClickFavoriteButton,
       handleClickUser,
+      handleLoadMovie,
     } = this.props;
 
-    // handleLoadMovie(movies, parseInt(this.props.match.params.number, 10));
+    handleLoadMovie(movies, parseInt(this.props.match.params.number, 10));
 
-    // if (movies.length !== 0) {
-    //   handleLoadMovie(movies, parseInt(this.props.match.params.number, 10));
-    //   if (movie !== undefined) {
-    //   }
-    // }
+    console.log(this.props.match.params.number);
 
     return (
       <React.Fragment>
@@ -166,17 +166,24 @@ MoviePage.propTypes = {
   handleClickUser: PropTypes.func.isRequired,
   handleClickMoreButton: PropTypes.func.isRequired,
   handleClickFavoriteButton: PropTypes.func.isRequired,
+  handleLoadMovie: PropTypes.func.isRequired,
+  movies: PropTypes.array.isRequired,
+  match: PropTypes.func.isRequired,
 };
 
-// const mapStateToProps = (state) => ({
-//   movie: getActiveMovie(state),
-// });
+const mapStateToProps = (state) => ({
+  movie: getActiveMovie(state),
+  movies: getMovies(state),
+});
 
 const mapDispatchToProps = (dispatch) => ({
   handleClickFavoriteButton(movie) {
     dispatch(MovieOperation.changeMovieStatus(movie.id, movie.isFavorite));
   },
+  handleLoadMovie(movies, id) {
+    dispatch(ActionCreator.getSelectedMovie(movies[id]));
+  },
 });
 
 export {MoviePage};
-export default connect(null, mapDispatchToProps)(MoviePage);
+export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
