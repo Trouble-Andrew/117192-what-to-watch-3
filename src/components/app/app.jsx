@@ -1,12 +1,13 @@
 import React, {PureComponent} from "react";
-import {Switch, Route, Router} from "react-router-dom";
+import {Switch, Route, Router, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {getMovies, getPromoMovie, getFavoriteMovies} from "../../reducer/data/selectors.js";
+import {getPromoMovie, getFavoriteMovies} from "../../reducer/data/selectors.js";
 import {getActiveMovie, getFiltededList, getGenre, getVisibleMovies} from "../../reducer/movie-list-state/selectors.js";
 import {ActionCreator} from "../../reducer/movie-list-state/movie-list-state.js";
 import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {Operation as UserOperation} from "../../reducer/user/user.js";
+import {getMovies} from "../../reducer/data/selectors.js";
 import {getAuthorizationStatus, getUserInfo} from "../../reducer/user/selectors.js";
 import PrivateRoute from "../private-route/private-route.jsx";
 import history from "../../history.js";
@@ -15,10 +16,14 @@ import Main from "../main/main.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
 import VideoPlayerFull from "../video-player-full/video-player-full.jsx";
 import withTogglePlay from "../../hocs/with-toggle-play/with-toggle-play.jsx";
+import withFormValue from "../../hocs/with-form-value/with-form-value.jsx";
 import MyList from "../my-list/my-list.jsx";
 import SignIn from "../sign-in/sign-in.jsx";
+import AddReview from "../add-review/add-review.jsx";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
 
 const FullVideoPlayerWrapped = withTogglePlay(VideoPlayerFull);
+const AddReviewWrapped = withFormValue(AddReview);
 
 class App extends PureComponent {
   constructor(props) {
@@ -26,7 +31,10 @@ class App extends PureComponent {
   }
 
   render() {
+
+
     const {
+      movies,
       promoMovie,
       activeMovie,
       filteredList,
@@ -37,7 +45,11 @@ class App extends PureComponent {
       handleClickMoreButton,
       favoriteMovies,
       handleClickUser,
+      handleLoadMovie,
     } = this.props;
+
+    console.log(movies);
+    console.log(activeMovie);
 
     return (
       <Router history={history}>
@@ -53,19 +65,32 @@ class App extends PureComponent {
               handleClickUser={handleClickUser}
             />
           </Route>
-          <Route exact path={AppRoute.SIGN_IN}>
-            <SignIn
-              onSubmit={login}
-            />
+          <Route exact path={AppRoute.SIGN_IN} render={
+            () => {
+              return authorizationStatus === AuthorizationStatus.AUTH ? <Redirect to={AppRoute.ROOT} /> : <SignIn onSubmit={login} />;
+            }
+          }>
           </Route>
-          <Route exact path={`${AppRoute.MOVIE}/:number`}>
-            <MoviePage
-              movie={activeMovie}
-              authorizationStatus={authorizationStatus}
-              user={user}
-              handleClickMoreButton={handleClickMoreButton}
-              handleClickUser={handleClickUser} />
-          </Route>
+          <Route
+            exact
+            path={`${AppRoute.MOVIE}/:number`}
+            render={(routeProps) => {
+              if (Object.keys(activeMovie).length === 0) {
+                console.log(`NONE`);
+                handleLoadMovie(movies, parseInt(routeProps.match.params.number, 10));
+              }
+              return (
+                <MoviePage
+                  {...routeProps}
+                  movie = {activeMovie}
+                  authorizationStatus={authorizationStatus}
+                  user={user}
+                  handleClickMoreButton={handleClickMoreButton}
+                  handleClickUser={handleClickUser}
+                />
+              );
+            }}
+          />
           <Route
             exact path={`${AppRoute.MOVIE}/:number${AppRoute.PLAYER}`}
             render={(routeProps) => (
@@ -79,10 +104,24 @@ class App extends PureComponent {
             exact
             path={AppRoute.MY_LIST}
             render={() => {
+              return authorizationStatus === AuthorizationStatus.NO_AUTH ? <Redirect to={AppRoute.SIGN_IN} /> : <MyList movies={favoriteMovies} user={user} />;
+              // return (
+              //   <MyList
+              //     movies={favoriteMovies}
+              //     user={user}
+              //   />
+              // );
+            }}
+          />
+          <PrivateRoute
+            exact
+            path={`${AppRoute.MOVIE}/:number${AppRoute.ADD_REVIEW}`}
+            render={() => {
               return (
-                <MyList
-                  movies={favoriteMovies}
+                <AddReviewWrapped
+                  movie={activeMovie}
                   user={user}
+                  handleClickUser={handleClickUser}
                 />
               );
             }}
@@ -94,6 +133,7 @@ class App extends PureComponent {
 }
 
 App.propTypes = {
+  movies: PropTypes.array.isRequired,
   promoMovie: PropTypes.object.isRequired,
   filteredList: PropTypes.arrayOf(
       PropTypes.shape({
@@ -123,6 +163,7 @@ App.propTypes = {
   visibleMovies: PropTypes.array.isRequired,
   favoriteMovies: PropTypes.array.isRequired,
   handleClickUser: PropTypes.func.isRequired,
+  handleLoadMovie: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -149,6 +190,11 @@ const mapDispatchToProps = (dispatch) => ({
   },
   handleClickUser() {
     dispatch(DataOperation.loadFavoriteMovies());
+  },
+  handleLoadMovie(movies, id) {
+    console.log(`dispatch start`);
+
+    dispatch(ActionCreator.getSelectedMovie(movies[id]));
   },
 });
 

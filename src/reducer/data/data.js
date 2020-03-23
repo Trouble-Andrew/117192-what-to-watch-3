@@ -15,6 +15,7 @@ const ActionType = {
   LOAD_COMMENTS: `LOAD_COMMENTS`,
   LOAD_FAVORITE_MOVIES: `LOAD_FAVORITE_MOVIES`,
   CHANGE_MOVIE_STATUS: `CHANGE_MOVIE_STATUS`,
+  SUBMIT_REVIEW: `SUBMIT_REVIEW`,
 };
 
 const ActionCreator = {
@@ -46,6 +47,12 @@ const ActionCreator = {
     return {
       type: ActionType.CHANGE_MOVIE_STATUS,
       payload: movie,
+    };
+  },
+  submitReview: (review) => {
+    return {
+      type: ActionType.SUBMIT_REVIEW,
+      payload: review,
     };
   },
 };
@@ -81,6 +88,12 @@ const Operation = {
         dispatch(ActionCreator.changeMovieStatus(Adapter.parseElement(response.data)));
       });
   },
+  submitReview: (id, review) => (dispatch, getState, api) => {
+    return api.post(`/comments/${id}`, review)
+      .then((response) => {
+        dispatch(ActionCreator.loadComments(CommentsAdapter.parseElements(response.data)));
+      });
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -102,6 +115,10 @@ const reducer = (state = initialState, action) => {
         favoriteMovies: action.payload,
       });
     case ActionType.CHANGE_MOVIE_STATUS:
+      return extend(state, {
+        promoMovie: action.payload,
+      });
+    case ActionType.SUBMIT_REVIEW:
       return extend(state, {
         promoMovie: action.payload,
       });

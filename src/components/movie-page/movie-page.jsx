@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {AppRoute} from "../../const.js";
 import PropTypes from "prop-types";
 import {Operation as MovieOperation} from "../../reducer/movie-list-state/movie-list-state.js";
+import {getActiveMovie} from "../../reducer/movie-list-state/selectors.js";
 import Tabs from "../tabs/tabs.jsx";
 import MoreMovies from "../more-movies/more-movies.jsx";
 import withActiveTab from "../../hocs/with-active-tab/with-active-tab.jsx";
@@ -21,26 +22,26 @@ class MoviePage extends PureComponent {
     const {
       movie,
       authorizationStatus,
-      user, handleClickMoreButton,
+      user,
+      handleClickMoreButton,
       handleClickFavoriteButton,
-      handleClickUser
+      handleClickUser,
     } = this.props;
 
-    const {
-      title,
-      date,
-      genre,
-      poster,
-      posterBig,
-      isFavorite,
-    } = movie;
+    // handleLoadMovie(movies, parseInt(this.props.match.params.number, 10));
+
+    // if (movies.length !== 0) {
+    //   handleLoadMovie(movies, parseInt(this.props.match.params.number, 10));
+    //   if (movie !== undefined) {
+    //   }
+    // }
 
     return (
       <React.Fragment>
         <section className="movie-card movie-card--full">
           <div className="movie-card__hero">
             <div className="movie-card__bg">
-              <img src={posterBig} alt="The Grand Budapest Hotel" />
+              <img src={movie.posterBig} alt="The Grand Budapest Hotel" />
             </div>
             <h1 className="visually-hidden">WTW</h1>
             <header className="page-header movie-card__head">
@@ -78,10 +79,10 @@ class MoviePage extends PureComponent {
             </header>
             <div className="movie-card__wrap">
               <div className="movie-card__desc">
-                <h2 className="movie-card__title">{title}</h2>
+                <h2 className="movie-card__title">{movie.title}</h2>
                 <p className="movie-card__meta">
-                  <span className="movie-card__genre">{genre.join(`, `)}</span>
-                  <span className="movie-card__year">{date}</span>
+                  <span className="movie-card__genre">{movie.genre.join(`, `)}</span>
+                  <span className="movie-card__year">{movie.date}</span>
                 </p>
                 <div className="movie-card__buttons">
                   <Link
@@ -99,19 +100,24 @@ class MoviePage extends PureComponent {
                   <button className="btn btn--list movie-card__button" type="button" onClick={() => {
                     return authorizationStatus === AuthorizationStatus.NO_AUTH ? history.push(AppRoute.SIGN_IN) : handleClickFavoriteButton(movie);
                   }}>
-                    {isFavorite &&
+                    {movie.isFavorite &&
                         <svg viewBox="0 0 18 14" width={18} height={14}>
                           <use xlinkHref="#in-list"></use>
                         </svg>
                     }
-                    {isFavorite ||
+                    {movie.isFavorite ||
                       <svg viewBox="0 0 19 20" width={19} height={20}>
                         <use xlinkHref="#add" />
                       </svg>
                     }
                     <span>My list</span>
                   </button>
-                  <a href="add-review.html" className="btn movie-card__button">Add review</a>
+                  <Link
+                    className="btn movie-card__button"
+                    to={{pathname: `${AppRoute.MOVIE}/${movie.id}${AppRoute.ADD_REVIEW}`}}
+                  >
+                    Add review
+                  </Link>
                 </div>
               </div>
             </div>
@@ -119,7 +125,7 @@ class MoviePage extends PureComponent {
           <div className="movie-card__wrap movie-card__translate-top">
             <div className="movie-card__info">
               <div className="movie-card__poster movie-card__poster--big">
-                <img src={poster} alt={title} width={218} height={327} />
+                <img src={movie.poster} alt={movie.title} width={218} height={327} />
               </div>
               <div className="movie-card__desc">
                 <TabsWrapped movie={movie} />
@@ -161,6 +167,10 @@ MoviePage.propTypes = {
   handleClickMoreButton: PropTypes.func.isRequired,
   handleClickFavoriteButton: PropTypes.func.isRequired,
 };
+
+// const mapStateToProps = (state) => ({
+//   movie: getActiveMovie(state),
+// });
 
 const mapDispatchToProps = (dispatch) => ({
   handleClickFavoriteButton(movie) {

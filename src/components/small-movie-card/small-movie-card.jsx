@@ -51,7 +51,7 @@ class SmallMovieCard extends PureComponent {
         stopPlay();
       }}
       >
-        <Link to={{pathname: `${AppRoute.MOVIE}/:${movie.id}`}}>
+        <Link to={{pathname: `${AppRoute.MOVIE}/${movie.id}`}}>
           <VideoPlayerWrapped
             isPlaying={isPlay}
             src={movie.video}
