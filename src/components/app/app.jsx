@@ -45,7 +45,7 @@ class App extends PureComponent {
       handleClickMoreButton,
       favoriteMovies,
       handleClickUser,
-      // handleLoadMovie,
+      handleLoadMovie,
     } = this.props;
 
     console.log(movies);
@@ -82,8 +82,9 @@ class App extends PureComponent {
               return (
                 <MoviePage
                   {...routeProps}
-                  user={user}
+                  movie = {movies[routeProps.match.params.number]}
                   authorizationStatus={authorizationStatus}
+                  user={user}
                   handleClickMoreButton={handleClickMoreButton}
                   handleClickUser={handleClickUser}
                 />
@@ -104,6 +105,12 @@ class App extends PureComponent {
             path={AppRoute.MY_LIST}
             render={() => {
               return authorizationStatus === AuthorizationStatus.NO_AUTH ? <Redirect to={AppRoute.SIGN_IN} /> : <MyList movies={favoriteMovies} user={user} />;
+              // return (
+              //   <MyList
+              //     movies={favoriteMovies}
+              //     user={user}
+              //   />
+              // );
             }}
           />
           <PrivateRoute
@@ -185,6 +192,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(DataOperation.loadFavoriteMovies());
   },
   handleLoadMovie(movies, id) {
+    console.log(`dispatch start`);
+
     dispatch(ActionCreator.getSelectedMovie(movies[id]));
   },
 });
