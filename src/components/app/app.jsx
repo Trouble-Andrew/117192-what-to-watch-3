@@ -44,70 +44,77 @@ class App extends PureComponent {
       userFetching,
     } = this.props;
 
-    return (
-      <Router history={history}>
-        <Switch>
-          <Route exact path={AppRoute.ROOT}>
-            <Main
-              promoMovie={promoMovie}
-              movies={filteredList}
-              visibleMovies={visibleMovies}
-              authorizationStatus={authorizationStatus}
-              user={user}
-              handleClickMoreButton={handleClickMoreButton}
-            />
-          </Route>
-          <Route exact path={AppRoute.SIGN_IN} render={
-            () => {
-              return authorizationStatus === AuthorizationStatus.AUTH ? <Redirect to={AppRoute.ROOT} /> : <SignIn onSubmit={login} />;
-            }
-          }>
-          </Route>
-          <Route
-            exact
-            path={`${AppRoute.MOVIE}/:number`}
-            render={(routeProps) => {
-              return (
-                <MoviePage
-                  {...routeProps}
-                  authorizationStatus={authorizationStatus}
-                  user={user}
-                  handleClickMoreButton={handleClickMoreButton}
-                />
-              );
-            }}
-          />
-          <Route
-            exact path={`${AppRoute.MOVIE}/:number${AppRoute.PLAYER}`}
-            render={(routeProps) => (
-              <FullVideoPlayerWrapped
-                {...routeProps}
-                isPlay={true}
+    if (!dataFetching) {
+      return (
+        <Router history={history}>
+          <Switch>
+            <Route
+              exact
+              path={AppRoute.ROOT}>
+              <Main
+                promoMovie={promoMovie}
+                movies={filteredList}
+                visibleMovies={visibleMovies}
+                authorizationStatus={authorizationStatus}
+                user={user}
+                handleClickMoreButton={handleClickMoreButton}
               />
-            )}
-          />
-          <PrivateRoute
-            exact
-            path={AppRoute.MY_LIST}
-            render={() => {
-              return authorizationStatus === AuthorizationStatus.NO_AUTH ? <Redirect to={AppRoute.SIGN_IN} /> : <MyList user={user} />;
-            }}
-          />
-          <PrivateRoute
-            exact
-            path={`${AppRoute.MOVIE}/:number${AppRoute.ADD_REVIEW}`}
-            render={() => {
-              return (
-                <AddReviewWrapped
-                  movie={activeMovie}
-                  user={user}
+            </Route>
+            <Route exact path={AppRoute.SIGN_IN} render={
+              () => {
+                return authorizationStatus === AuthorizationStatus.AUTH ? <Redirect to={AppRoute.ROOT} /> : <SignIn onSubmit={login} />;
+              }
+            }>
+            </Route>
+            <Route
+              exact
+              path={`${AppRoute.MOVIE}/:number`}
+              render={(routeProps) => {
+                return (
+                  <MoviePage
+                    {...routeProps}
+                    authorizationStatus={authorizationStatus}
+                    user={user}
+                    handleClickMoreButton={handleClickMoreButton}
+                  />
+                );
+              }}
+            />
+            <Route
+              exact
+              path={`${AppRoute.MOVIE}/:number${AppRoute.PLAYER}`}
+              render={(routeProps) => (
+                <FullVideoPlayerWrapped
+                  {...routeProps}
+                  isPlay={true}
                 />
-              );
-            }}
-          />
-        </Switch>
-      </Router>
-    );
+              )}
+            />
+            <PrivateRoute
+              exact
+              path={AppRoute.MY_LIST}
+              render={() => {
+                return authorizationStatus === AuthorizationStatus.NO_AUTH ? <Redirect to={AppRoute.SIGN_IN} /> : <MyList user={user} />;
+              }}
+            />
+            <PrivateRoute
+              exact
+              path={`${AppRoute.MOVIE}/:number${AppRoute.ADD_REVIEW}`}
+              render={(routeProps) => {
+                return (
+                  <AddReviewWrapped
+                    {...routeProps}
+                    user={user}
+                  />
+                );
+              }}
+            />
+          </Switch>
+        </Router>
+      );
+    } else {
+      return null;
+    }
   }
 }
 

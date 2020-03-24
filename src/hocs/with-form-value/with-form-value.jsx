@@ -42,7 +42,10 @@ const withFormValue = (Component) => {
       }
     }
 
+
     render() {
+
+      console.log(this.props);
       const {comment, rating, isActive} = this.state;
 
       return (

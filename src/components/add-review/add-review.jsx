@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {AppRoute} from "../../const.js";
 import history from "../../history.js";
+import {getMovies} from "../../reducer/data/selectors.js";
+import {ActionCreator} from "../../reducer/movie-list-state/movie-list-state.js";
 import {Operation as DataOperation} from "../../reducer/data/data.js";
 
 class AddReview extends PureComponent {
@@ -12,13 +14,28 @@ class AddReview extends PureComponent {
   }
 
   render() {
-    const {movie, user, handleChangeInput, handleClickSubmit, comment, rating} = this.props;
+    const {
+      movies,
+      user,
+      handleChangeInput,
+      handleClickSubmit,
+      comment,
+      rating,
+      handleLoadMovie,
+    } = this.props;
+
+    console.log(this.props);
+
+
+    const movieID = this.props.match.params.number - 1;
+
+    handleLoadMovie(movies, parseInt(this.props.match.params.number, 10));
 
     return (
       <section className="movie-card movie-card--full">
         <div className="movie-card__header">
           <div className="movie-card__bg">
-            <img src={movie.poster} alt={movie.title} />
+            <img src={movies[movieID].poster} alt={movies[movieID].title} />
           </div>
           <h1 className="visually-hidden">WTW</h1>
           <header className="page-header">
@@ -38,7 +55,7 @@ class AddReview extends PureComponent {
                   <a href="movie-page.html" className="breadcrumbs__link" onClick={(evt) => {
                     evt.preventDefault();
                     return history.goBack();
-                  }}>{movie.title}</a>
+                  }}>{movies[movieID].title}</a>
                 </li>
                 <li className="breadcrumbs__item">
                   <a className="breadcrumbs__link">Add review</a>
@@ -56,7 +73,7 @@ class AddReview extends PureComponent {
             </div>
           </header>
           <div className="movie-card__poster movie-card__poster--small">
-            <img src={movie.poster} alt={`${movie.title} poster`} width={218} height={327} />
+            <img src={movies[movieID].poster} alt={`${movies[movieID].title} poster`} width={218} height={327} />
           </div>
         </div>
         <div className="add-review">
@@ -81,7 +98,7 @@ class AddReview extends PureComponent {
                 <button className="add-review__btn" type="submit" onClick={(evt) => {
                   evt.preventDefault();
 
-                  handleClickSubmit(movie, {
+                  handleClickSubmit(movies[movieID], {
                     rating: parseInt(rating, 10),
                     comment,
                   });
@@ -96,19 +113,22 @@ class AddReview extends PureComponent {
 }
 
 AddReview.propTypes = {
-  movie: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-    genre: PropTypes.array.isRequired,
-    poster: PropTypes.string.isRequired,
-    posterBig: PropTypes.string.isRequired,
-    video: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    ratingCount: PropTypes.number.isRequired,
-    director: PropTypes.array.isRequired,
-    stars: PropTypes.array.isRequired,
-    preview: PropTypes.string.isRequired,
-  }).isRequired,
+  movies: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        date: PropTypes.string.isRequired,
+        genre: PropTypes.array.isRequired,
+        poster: PropTypes.string.isRequired,
+        posterBig: PropTypes.string.isRequired,
+        video: PropTypes.string.isRequired,
+        rating: PropTypes.number.isRequired,
+        ratingCount: PropTypes.number.isRequired,
+        director: PropTypes.array.isRequired,
+        stars: PropTypes.array.isRequired,
+        isFavorite: PropTypes.bool.isRequired,
+        id: PropTypes.number.isRequired,
+      })
+  ).isRequired,
   user: PropTypes.shape({
     avatar: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
@@ -119,13 +139,21 @@ AddReview.propTypes = {
   handleClickSubmit: PropTypes.func.isRequired,
   comment: PropTypes.string.isRequired,
   rating: PropTypes.string.isRequired,
+  match: PropTypes.any.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  movies: getMovies(state),
+});
 
 const mapDispatchToProps = (dispatch) => ({
   handleClickSubmit(movie, review) {
     dispatch(DataOperation.submitReview(movie.id, review));
   },
+  handleLoadMovie(movies, id) {
+    dispatch(ActionCreator.getSelectedMovie(movies[id - 1]));
+  },
 });
 
 export {AddReview};
-export default connect(null, mapDispatchToProps)(AddReview);
+export default connect(mapStateToProps, mapDispatchToProps)(AddReview);
