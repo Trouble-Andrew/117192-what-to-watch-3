@@ -17,3 +17,7 @@ export const getComments = (state) => {
 export const getFavoriteMovies = (state) => {
   return state[NameSpace.DATA].favoriteMovies;
 };
+
+export const getFetchingStatus = (state) => {
+  return state[NAME_SPACE].dataFetching;
+};

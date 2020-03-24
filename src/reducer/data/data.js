@@ -4,6 +4,7 @@ import CommentsAdapter from "../../adapters/comments-adapter.js";
 
 const initialState = {
   movies: [],
+  dataFetching: true,
   promoMovie: {},
   comments: [],
   favoriteMovies: [],
@@ -16,6 +17,8 @@ const ActionType = {
   LOAD_FAVORITE_MOVIES: `LOAD_FAVORITE_MOVIES`,
   CHANGE_MOVIE_STATUS: `CHANGE_MOVIE_STATUS`,
   SUBMIT_REVIEW: `SUBMIT_REVIEW`,
+  DATA_FETCHING_SUCCESS: `DATA_FETCHING_SUCCESS`,
+  DATA_FETCHING_START: `DATA_FETCHING_START`,
 };
 
 const ActionCreator = {
@@ -55,6 +58,18 @@ const ActionCreator = {
       payload: review,
     };
   },
+  dataFetchingSuccess: () => {
+    return {
+      type: ActionType.DATA_FETCHING_SUCCESS,
+      payload: false,
+    };
+  },
+  dataFetchingStart: () => {
+    return {
+      type: ActionType.DATA_FETCHING_SUCCESS,
+      payload: true,
+    };
+  },
 };
 
 const Operation = {
@@ -62,6 +77,7 @@ const Operation = {
     return api.get(`/films`)
       .then((response) => {
         dispatch(ActionCreator.loadMovies(Adapter.parseElements(response.data)));
+        dispatch(ActionCreator.dataFetchingSuccess());
       });
   },
   loadActiveMovie: () => (dispatch, getState, api) => {
@@ -80,6 +96,7 @@ const Operation = {
     return api.get(`/favorite`)
       .then((response) => {
         dispatch(ActionCreator.loadFavoriteMovies(Adapter.parseElements(response.data)));
+        dispatch(ActionCreator.dataFetchingSuccess());
       });
   },
   changeMovieStatus: (id, favorite) => (dispatch, getState, api) => {
@@ -121,6 +138,14 @@ const reducer = (state = initialState, action) => {
     case ActionType.SUBMIT_REVIEW:
       return extend(state, {
         promoMovie: action.payload,
+      });
+    case ActionType.DATA_FETCHING_SUCCESS:
+      return extend(state, {
+        dataFetching: action.payload,
+      });
+    case ActionType.DATA_FETCHING_START:
+      return extend(state, {
+        dataFetching: action.payload,
       });
   }
   return state;

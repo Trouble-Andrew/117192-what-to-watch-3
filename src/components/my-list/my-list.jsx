@@ -1,19 +1,36 @@
 import React, {PureComponent} from "react";
+import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import {AppRoute} from "../../const.js";
 import PropTypes from "prop-types";
+import {Operation as DataOperation} from "../../reducer/data/data.js";
+import {getFavoriteMovies} from "../../reducer/data/selectors.js";
 import SmallMovieCard from "../small-movie-card/small-movie-card.jsx";
 import withTogglePlay from "../../hocs/with-toggle-play/with-toggle-play.jsx";
 
 const SmallMovieCardWrapped = withTogglePlay(SmallMovieCard);
 
 class MyList extends PureComponent {
+
   constructor(props) {
     super(props);
   }
 
+  componentDidMount() {
+    const {handleLoadMovies} = this.props;
+    window.addEventListener(`load`, handleLoadMovies());
+  }
+
+  componentWillUnmount() {
+    // const {handleLoadMovies} = this.props;
+    // window.removeEventListener(`load`, handleLoadMovies());
+  }
+
   render() {
-    const {user, movies} = this.props;
+    const {
+      user,
+      favoriteMovies,
+    } = this.props;
 
     return (
       <div className="user-page">
@@ -38,7 +55,7 @@ class MyList extends PureComponent {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <div className="catalog__movies-list">
-            {movies.map((film, index) => (
+            {favoriteMovies.map((film, index) => (
               <SmallMovieCardWrapped movie={film} key={index}/>
             ))}
           </div>
@@ -64,7 +81,7 @@ class MyList extends PureComponent {
 }
 
 MyList.propTypes = {
-  movies: PropTypes.arrayOf(
+  favoriteMovies: PropTypes.arrayOf(
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
@@ -84,6 +101,19 @@ MyList.propTypes = {
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
   }).isRequired,
+  handleLoadMovies: PropTypes.func.isRequired,
 };
 
-export default MyList;
+const mapStateToProps = (state) => ({
+  favoriteMovies: getFavoriteMovies(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleLoadMovies() {
+    dispatch(DataOperation.loadFavoriteMovies());
+  },
+});
+
+export {MyList};
+export default connect(mapStateToProps, mapDispatchToProps)(MyList);
+

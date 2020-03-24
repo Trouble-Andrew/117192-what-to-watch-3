@@ -12,7 +12,7 @@ class AddReview extends PureComponent {
   }
 
   render() {
-    const {movie, user, handleClickUser, handleChangeInput, handleClickSubmit, comment, rating} = this.props;
+    const {movie, user, handleChangeInput, handleClickSubmit, comment, rating} = this.props;
 
     return (
       <section className="movie-card movie-card--full">
@@ -49,7 +49,6 @@ class AddReview extends PureComponent {
               <div className="user-block__avatar">
                 <Link
                   to={AppRoute.MY_LIST}
-                  onClick={handleClickUser}
                 >
                   <img src={user.avatar} alt="User avatar" width="63" height="63"/>
                 </Link>
@@ -116,11 +115,11 @@ AddReview.propTypes = {
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
   }).isRequired,
-  handleClickUser: PropTypes.func.isRequired,
   handleChangeInput: PropTypes.func.isRequired,
+  handleClickSubmit: PropTypes.func.isRequired,
+  comment: PropTypes.string.isRequired,
+  rating: PropTypes.string.isRequired,
 };
-
-// export default AddReview;
 
 const mapDispatchToProps = (dispatch) => ({
   handleClickSubmit(movie, review) {

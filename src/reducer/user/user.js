@@ -9,11 +9,14 @@ const AuthorizationStatus = {
 const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   user: {},
+  userFetching: true,
 };
 
 const ActionType = {
   REQUIRED_AUTHORIZATION: `REQUIRED_AUTHORIZATION`,
   LOAD_USER_INFORMATION: `LOAD_USER_INFORMATION`,
+  USER_FETCHING_SUCCESS: `USER_FETCHING_SUCCESS`,
+  USER_FETCHING_START: `USER_FETCHING_START`,
 };
 
 const ActionCreator = {
@@ -29,22 +32,18 @@ const ActionCreator = {
       payload: data,
     };
   },
-};
-
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionType.REQUIRED_AUTHORIZATION:
-      return extend(state, {
-        authorizationStatus: action.payload,
-      });
-
-    case ActionType.LOAD_USER_INFORMATION:
-      return extend(state, {
-        user: action.payload,
-      });
-  }
-
-  return state;
+  userFetchingSuccess: () => {
+    return {
+      type: ActionType.USER_FETCHING_SUCCESS,
+      payload: false,
+    };
+  },
+  userFetchingStart: () => {
+    return {
+      type: ActionType.USER_FETCHING_START,
+      payload: true,
+    };
+  },
 };
 
 const Operation = {
@@ -53,6 +52,7 @@ const Operation = {
       .then((response) => {
         dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
         dispatch(ActionCreator.loadUserInformation(UserInfoAdapter.parseElement(response.data)));
+        dispatch(ActionCreator.userFetchingSuccess());
       })
       .catch((err) => {
         throw err;
@@ -67,8 +67,33 @@ const Operation = {
       .then((response) => {
         dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
         dispatch(ActionCreator.loadUserInformation(UserInfoAdapter.parseElement(response.data)));
+        dispatch(ActionCreator.userFetchingSuccess());
       });
   },
+};
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return extend(state, {
+        authorizationStatus: action.payload,
+      });
+
+    case ActionType.LOAD_USER_INFORMATION:
+      return extend(state, {
+        user: action.payload,
+      });
+    case ActionType.USER_FETCHING_SUCCESS:
+      return extend(state, {
+        userFetching: action.payload,
+      });
+    case ActionType.USER_FETCHING_START:
+      return extend(state, {
+        userFetching: action.payload,
+      });
+  }
+
+  return state;
 };
 
 export {

@@ -9,3 +9,7 @@ export const getAuthorizationStatus = (state) => {
 export const getUserInfo = (state) => {
   return state[NAME_SPACE].user;
 };
+
+export const getUserFetchingStatus = (state) => {
+  return state[NAME_SPACE].userFetching;
+};
