@@ -15,9 +15,6 @@ it(`MovieOverview is rendered correctly`, () => {
       promoMovie: films[0],
       comments: films[0].reviews,
     },
-    [NameSpace.MOVIE_LIST_STATE]: {
-      activeMovie: {},
-    },
   });
 
   const tree = renderer.create(

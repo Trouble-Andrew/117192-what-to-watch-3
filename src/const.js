@@ -6,3 +6,9 @@ export const AppRoute = {
   ADD_REVIEW: `/review`,
   ROOT: `/`,
 };
+
+export const TabLinks = {
+  OVERVIEW: `Overview`,
+  DETAILS: `Details`,
+  REVIEWS: `Reviews`,
+};

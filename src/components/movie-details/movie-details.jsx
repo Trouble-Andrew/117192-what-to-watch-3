@@ -15,9 +15,9 @@ const MovieDetails = (props) => {
         <span className="movie-card__details-value">
           {movie.stars.map((element, i) => {
             if (movie.stars.length === i + 1) {
-              return `${element}`;
+              return (element);
             } else {
-              return `${element}, `;
+              return (element + `,\n`);
             }
           })}
         </span>

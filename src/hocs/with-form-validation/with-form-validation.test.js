@@ -1,18 +1,16 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import withActiveTab from "./with-active-tab.jsx";
-import films from "../../mocks/films.js";
+import withFormValidation from "./with-form-validation.jsx";
 
 const MockComponent = () => {
   return <div></div>;
 };
 
-const MockComponentWrapped = withActiveTab(MockComponent);
+const MockComponentWrapped = withFormValidation(MockComponent);
 
-it(`withActiveTab is rendered correctly`, () => {
+it(`withFormValidation is rendered correctly`, () => {
   const tree = renderer.create((
     <MockComponentWrapped
-      film={films[0]}
     />
   ), {
     createNodeMock() {

@@ -21,9 +21,12 @@ class MoreMovies extends PureComponent {
           <section className="catalog catalog--like-this">
             <h2 className="catalog__title">More like this</h2>
             <div className="catalog__movies-list">
-              {movies.map((film, index) => (
-                <SmallMovieCardWrapped movie={film} key={index} />
-              ))}
+              {movies.map((film, index) => {
+                if (index <= 3) {
+                  return <SmallMovieCardWrapped movie={film} key={index} />;
+                }
+                return null;
+              })}
             </div>
           </section>
           <footer className="page-footer">

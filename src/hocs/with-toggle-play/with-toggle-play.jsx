@@ -15,17 +15,6 @@ const withTogglePlay = (Component) => {
       };
     }
 
-    componentDidMount() {
-      this._isMounted = true;
-    }
-
-    componentWillUnmount() {
-      this._isMounted = false;
-      this.setState({
-        isPlay: !this.state.isPlay,
-      });
-    }
-
     _start() {
       this.setState({
         isPlay: true,

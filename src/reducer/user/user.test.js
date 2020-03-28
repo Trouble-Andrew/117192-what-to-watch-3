@@ -13,12 +13,18 @@ const receivedMockUser = {
   avatar_url: `/wtw/static/avatar/5.jpg`,
 };
 
+const login = {
+  login: `gg@mail.com`,
+  password: `124234`,
+};
+
 const expectedMockUser = UserInfoAdapter.parseElement(receivedMockUser);
 
 it(`Reducer without additional parameters should return initial state`, () => {
   expect(reducer(void 0, {})).toEqual({
     authorizationStatus: AuthorizationStatus.NO_AUTH,
     user: {},
+    userFetching: true,
   });
 });
 
@@ -71,6 +77,16 @@ describe(`Action creators work correctly`, () => {
       type: ActionType.REQUIRED_AUTHORIZATION,
       payload: AuthorizationStatus.AUTH,
     });
+
+    expect(ActionCreator.userFetchingSuccess()).toEqual({
+      type: ActionType.USER_FETCHING_SUCCESS,
+      payload: false,
+    });
+
+    expect(ActionCreator.userFetchingStart()).toEqual({
+      type: ActionType.USER_FETCHING_START,
+      payload: true,
+    });
   });
 });
 
@@ -86,7 +102,7 @@ describe(`Operation work correctly`, () => {
 
     return userLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(2);
+        expect(dispatch).toHaveBeenCalledTimes(3);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.REQUIRED_AUTHORIZATION,
           payload: `AUTH`,
@@ -95,6 +111,33 @@ describe(`Operation work correctly`, () => {
           type: ActionType.LOAD_USER_INFORMATION,
           payload: expectedMockUser,
         });
+      });
+  });
+
+  it(`Should make a correct API call to /login`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const authData = login;
+    const funcFail = jest.fn();
+    const funcSuccess = jest.fn();
+    const userLoader = Operation.login(authData, funcFail, funcSuccess);
+
+    apiMock
+      .onPost(`/login`)
+      .reply(200, receivedMockUser);
+
+    return userLoader(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(3);
+        expect(dispatch).toHaveBeenNthCalledWith(1, {
+          type: ActionType.REQUIRED_AUTHORIZATION,
+          payload: `AUTH`,
+        });
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
+          type: ActionType.LOAD_USER_INFORMATION,
+          payload: expectedMockUser,
+        });
+        expect(funcSuccess).toHaveBeenNthCalledWith(1);
       });
   });
 });

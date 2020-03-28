@@ -5,8 +5,6 @@ import PropTypes from "prop-types";
 import {getPromoMovie} from "../../reducer/data/selectors.js";
 import {getActiveMovie, getFiltededList, getVisibleMovies} from "../../reducer/movie-list-state/selectors.js";
 import {ActionCreator} from "../../reducer/movie-list-state/movie-list-state.js";
-import {Operation as DataOperation} from "../../reducer/data/data.js";
-import {Operation as UserOperation} from "../../reducer/user/user.js";
 import {getAuthorizationStatus, getUserInfo, getUserFetchingStatus} from "../../reducer/user/selectors.js";
 import PrivateRoute from "../private-route/private-route.jsx";
 import history from "../../history.js";
@@ -16,6 +14,7 @@ import MoviePage from "../movie-page/movie-page.jsx";
 import VideoPlayerFull from "../video-player-full/video-player-full.jsx";
 import withTogglePlay from "../../hocs/with-toggle-play/with-toggle-play.jsx";
 import withFormValue from "../../hocs/with-form-value/with-form-value.jsx";
+import withFormValidation from "../../hocs/with-form-validation/with-form-validation.jsx";
 import MyList from "../my-list/my-list.jsx";
 import SignIn from "../sign-in/sign-in.jsx";
 import AddReview from "../add-review/add-review.jsx";
@@ -24,6 +23,7 @@ import {getFetchingStatus} from "../../reducer/data/selectors.js";
 
 const FullVideoPlayerWrapped = withTogglePlay(VideoPlayerFull);
 const AddReviewWrapped = withFormValue(AddReview);
+const SignInwWrapped = withFormValidation(SignIn);
 
 class App extends PureComponent {
   constructor(props) {
@@ -33,15 +33,12 @@ class App extends PureComponent {
   render() {
     const {
       promoMovie,
-      activeMovie,
       filteredList,
       authorizationStatus,
-      login,
       user,
       visibleMovies,
       handleClickMoreButton,
       dataFetching,
-      userFetching,
     } = this.props;
 
     if (!dataFetching) {
@@ -62,7 +59,7 @@ class App extends PureComponent {
             </Route>
             <Route exact path={AppRoute.SIGN_IN} render={
               () => {
-                return authorizationStatus === AuthorizationStatus.AUTH ? <Redirect to={AppRoute.ROOT} /> : <SignIn onSubmit={login} />;
+                return authorizationStatus === AuthorizationStatus.AUTH ? <Redirect to={AppRoute.ROOT} /> : <SignInwWrapped />;
               }
             }>
             </Route>
@@ -135,12 +132,20 @@ App.propTypes = {
       })
   ).isRequired,
   activeMovie: PropTypes.object.isRequired,
-  handleClickCard: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  login: PropTypes.func.isRequired,
-  user: PropTypes.any.isRequired,
+  user: PropTypes.oneOfType([
+    PropTypes.shape({
+    }),
+    PropTypes.shape({
+      avatar: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+    }),
+  ]),
   handleClickMoreButton: PropTypes.func.isRequired,
   visibleMovies: PropTypes.array.isRequired,
+  dataFetching: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -155,12 +160,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleClickCard(movie) {
-    dispatch(DataOperation.loadComments(movie.id));
-  },
-  login(authData) {
-    dispatch(UserOperation.login(authData));
-  },
   handleClickMoreButton() {
     dispatch(ActionCreator.incrementVisibleMovies());
   },

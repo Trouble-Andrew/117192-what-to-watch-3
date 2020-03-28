@@ -16,12 +16,17 @@ it(`Filter is rendered correctly`, () => {
     },
     [NameSpace.MOVIE_LIST_STATE]: {
       activeMovie: {},
+      genre: films[0].genre[0],
     },
   });
 
   const tree = renderer.create(
       <Provider store={store}>
-        <Filter tab={0} toggleTab={() => {}}/>
+        <Filter
+          movies={films}
+          tab={0}
+          toggleTab={() => {}}
+        />
       </Provider>
   ).toJSON();
 

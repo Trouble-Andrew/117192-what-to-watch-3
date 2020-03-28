@@ -43,6 +43,7 @@ export default [
     director: [`Taika Waititi`],
     stars: [`Roman Griffin Davis`, `Thomasin McKenzie`, `Scarlett Johansson`],
     preview: `A young boy in Hitler's army finds out his mother is hiding a Jewish girl in their home.`,
+    isFavorite: false,
     reviews: [
       {
         author: `Jeremy_Urquhart`,
@@ -113,6 +114,7 @@ export default [
     ratingCount: 787900,
     director: [`Sam Mendes`],
     stars: [`Roman Griffin Davis`, `Thomasin McKenzie`, `Scarlett Johansson`],
+    isFavorite: false,
     preview: `April 6th, 1917. As a regiment assembles to wage war deep in enemy territory, two soldiers are assigned to race against time and deliver a message that will stop 1,600 men from walking straight into a deadly trap.`,
     reviews: [
       {
@@ -141,6 +143,7 @@ export default [
     time: `4h 23min`,
     ratingCount: 56900,
     director: [`Bong Joon Ho`],
+    isFavorite: false,
     stars: [`Roman Griffin Davis`, `Thomasin McKenzie`, `Scarlett Johansson`],
     preview: `In Gotham City, mentally troubled comedian Arthur Fleck is disregarded and mistreated by society. He then embarks on a downward spiral of revolution and bloody crime. This path brings him face-to-face with his alter-ego: the Joker.`,
     reviews: [
@@ -169,6 +172,7 @@ export default [
     rating: 7.7,
     time: `5h 34min`,
     ratingCount: 5677900,
+    isFavorite: false,
     director: [`Benny Safdie`, `Josh Safdie`],
     stars: [`Roman Griffin Davis`, `Thomasin McKenzie`, `Scarlett Johansson`],
     preview: `A charismatic New York City jeweler always on the lookout for the next big score makes a series of high-stakes bets that could lead to the windfall of a lifetime. Howard must perform a precarious high-wire act, balancing business, family, and encroaching adversaries on all sides in his relentless pursuit of the ultimate win.`,
@@ -198,6 +202,7 @@ export default [
     rating: 8.6,
     time: `3h 14min`,
     ratingCount: 212300,
+    isFavorite: false,
     director: [`Rian Johnson`],
     stars: [`Roman Griffin Davis`, `Thomasin McKenzie`, `Scarlett Johansson`],
     preview: `A detective investigates the death of a patriarch of an eccentric, combative family.`,
@@ -227,6 +232,7 @@ export default [
     rating: 7.7,
     time: `8h 43min`,
     ratingCount: 2234500,
+    isFavorite: false,
     director: [`Quentin Tarantino`],
     stars: [`Roman Griffin Davis`, `Thomasin McKenzie`, `Scarlett Johansson`],
     preview: `A faded television actor and his stunt double strive to achieve fame and success in the film industry during the final years of Hollywood's Golden Age in 1969 Los Angeles.`,
@@ -256,6 +262,7 @@ export default [
     rating: 8.2,
     time: `1h 55min`,
     ratingCount: 225900,
+    isFavorite: false,
     director: [`James Mangold`],
     stars: [`Roman Griffin Davis`, `Thomasin McKenzie`, `Scarlett Johansson`],
     preview: `American car designer Carroll Shelby and driver Ken Miles battle corporate interference and the laws of physics to build a revolutionary race car for Ford in order to defeat Ferrari at the 24 Hours of Le Mans in 1966.`,

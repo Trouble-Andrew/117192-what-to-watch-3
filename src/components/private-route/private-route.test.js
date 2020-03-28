@@ -1,13 +1,15 @@
-import React from "react";
-import renderer from "react-test-renderer";
+import React from 'react';
+import renderer from 'react-test-renderer';
 import {Provider} from "react-redux";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 import configureStore from "redux-mock-store";
-import App from "./app.jsx";
 import NameSpace from "../../reducer/name-space.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
+import PrivateRoute from "./private-route.jsx";
 import films from "../../mocks/films.js";
 
-const mockStore = configureStore([]);
+const mockStore = configureStore();
 
 const user = {
   id: 1,
@@ -16,16 +18,13 @@ const user = {
   avatar: `https://htmlacademy-react-3.appspot.com//wtw/static/avatar/8.jpg`,
 };
 
-it(`Render App`, () => {
+it(`PrivateRoute is rendered correctly`, () => {
   const store = mockStore({
     [NameSpace.DATA]: {
-      movies: films,
-      promoMovie: films[0],
-      dataFetching: false,
+      favoriteMovies: [],
     },
     [NameSpace.MOVIE_LIST_STATE]: {
-      activeMovie: {},
-      genre: films[0].genre[0],
+      activeMovie: films[0],
     },
     [NameSpace.USER]: {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
@@ -33,12 +32,22 @@ it(`Render App`, () => {
     },
   });
 
-  const tree = renderer
-    .create(
+  const tree = renderer.create(
+      <Router
+        history={history}
+      >
         <Provider store={store}>
-          <App />
-        </Provider>)
-      .toJSON();
+          <PrivateRoute
+            exact
+            path={`AppRoute.MY_LIST`}
+            render={() => {}}
+          />
+        </Provider>
+      </Router>, {
+        createNodeMock: () => {
+          return {};
+        }
+      }).toJSON();
 
   expect(tree).toMatchSnapshot();
 });

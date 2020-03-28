@@ -10,6 +10,13 @@ import history from "../../history.js";
 
 const mockStore = configureStore([]);
 
+const user = {
+  id: 1,
+  email: `gg@mail.com`,
+  name: `gg`,
+  avatar: `https://htmlacademy-react-3.appspot.com//wtw/static/avatar/8.jpg`,
+};
+
 describe(`Render Main`, () => {
 
   it(`<Main /> should render movies`, () => {
@@ -21,6 +28,7 @@ describe(`Render Main`, () => {
       },
       [NameSpace.MOVIE_LIST_STATE]: {
         activeMovie: {},
+        genre: films[0].genre[0],
       },
     });
 
@@ -30,7 +38,12 @@ describe(`Render Main`, () => {
         >
           <Provider store={store}>
             <Main
-              promoMovie={films[0]} movies={films} visibleMovies={films}
+              promoMovie={films[0]}
+              movies={films}
+              visibleMovies={films}
+              user={user}
+              authorizationStatus={`NO_AUTH`}
+              handleClickMoreButton={() => {}}
             />
           </Provider>
         </Router>

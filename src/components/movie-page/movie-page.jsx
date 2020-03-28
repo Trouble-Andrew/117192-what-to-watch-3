@@ -4,9 +4,9 @@ import {Link} from "react-router-dom";
 import {AppRoute} from "../../const.js";
 import PropTypes from "prop-types";
 import {Operation as MovieOperation} from "../../reducer/movie-list-state/movie-list-state.js";
-import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {ActionCreator} from "../../reducer/movie-list-state/movie-list-state.js";
 import {getMovies} from "../../reducer/data/selectors.js";
+import {getActiveMovie} from "../../reducer/movie-list-state/selectors.js";
 import Tabs from "../tabs/tabs.jsx";
 import MoreMovies from "../more-movies/more-movies.jsx";
 import withActiveTab from "../../hocs/with-active-tab/with-active-tab.jsx";
@@ -22,26 +22,28 @@ class MoviePage extends PureComponent {
 
   render() {
     const {
+      movie,
       movies,
       authorizationStatus,
       user,
       handleClickMoreButton,
       handleClickFavoriteButton,
-      handleLoadMovie,
+      handleMovieLoad,
+      match,
     } = this.props;
 
-    const movieID = this.props.match.params.number - 1;
+    const movieID = match.params.number - 1;
 
-    console.log(this.props);
-
-    handleLoadMovie(movies, parseInt(this.props.match.params.number, 10));
+    if (Object.keys(movie).length === 0) {
+      handleMovieLoad(movies, parseInt(match.params.number, 10));
+    }
 
     return (
       <React.Fragment>
         <section className="movie-card movie-card--full">
           <div className="movie-card__hero">
             <div className="movie-card__bg">
-              <img src={movies[movieID].posterBig} alt="The Grand Budapest Hotel" />
+              <img src={movies[movieID].posterBig} alt={movies[movieID].title} />
             </div>
             <h1 className="visually-hidden">WTW</h1>
             <header className="page-header movie-card__head">
@@ -88,7 +90,7 @@ class MoviePage extends PureComponent {
                     className="btn btn--play movie-card__button"
                     to={{
                       pathname: `${AppRoute.MOVIE}/${movies[movieID].id}${AppRoute.PLAYER}`,
-                      // linkProp: {movie},
+                      linkProp: {movie},
                     }}
                   >
                     <svg viewBox="0 0 19 19" width="19" height="19">
@@ -97,26 +99,28 @@ class MoviePage extends PureComponent {
                     <span>Play</span>
                   </Link>
                   <button className="btn btn--list movie-card__button" type="button" onClick={() => {
-                    return authorizationStatus === AuthorizationStatus.NO_AUTH ? history.push(AppRoute.SIGN_IN) : handleClickFavoriteButton(movies[movieID]);
+                    return authorizationStatus === AuthorizationStatus.NO_AUTH ? history.push(AppRoute.SIGN_IN) : handleClickFavoriteButton(movie);
                   }}>
-                    {movies[movieID].isFavorite &&
+                    {movie.isFavorite &&
                         <svg viewBox="0 0 18 14" width={18} height={14}>
                           <use xlinkHref="#in-list"></use>
                         </svg>
                     }
-                    {movies[movieID].isFavorite ||
+                    {movie.isFavorite ||
                       <svg viewBox="0 0 19 20" width={19} height={20}>
                         <use xlinkHref="#add" />
                       </svg>
                     }
                     <span>My list</span>
                   </button>
-                  <Link
-                    className="btn movie-card__button"
-                    to={{pathname: `${AppRoute.MOVIE}/${movies[movieID].id}${AppRoute.ADD_REVIEW}`}}
-                  >
-                    Add review
-                  </Link>
+                  {authorizationStatus === AuthorizationStatus.AUTH &&
+                    <Link
+                      className="btn movie-card__button"
+                      to={{pathname: `${AppRoute.MOVIE}/${movies[movieID].id}${AppRoute.ADD_REVIEW}`}}
+                    >
+                      Add review
+                    </Link>
+                  }
                 </div>
               </div>
             </div>
@@ -155,33 +159,36 @@ MoviePage.propTypes = {
         id: PropTypes.number.isRequired,
       })
   ).isRequired,
+  movie: PropTypes.any.isRequired,
   match: PropTypes.any.isRequired,
-  user: PropTypes.shape({
-    avatar: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-  }).isRequired,
+  user: PropTypes.oneOfType([
+    PropTypes.shape({
+    }),
+    PropTypes.shape({
+      avatar: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+    }),
+  ]),
   authorizationStatus: PropTypes.string.isRequired,
   handleClickMoreButton: PropTypes.func.isRequired,
   handleClickFavoriteButton: PropTypes.func.isRequired,
-  handleLoadMovie: PropTypes.func.isRequired,
+  handleMovieLoad: PropTypes.func.isRequired,
 
 };
 
 const mapStateToProps = (state) => ({
   movies: getMovies(state),
+  movie: getActiveMovie(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   handleClickFavoriteButton(movie) {
     dispatch(MovieOperation.changeMovieStatus(movie.id, movie.isFavorite));
   },
-  handleLoadMovie(movies, id) {
+  handleMovieLoad(movies, id) {
     dispatch(ActionCreator.getSelectedMovie(movies[id - 1]));
-  },
-  handleFetchMovie() {
-    dispatch(DataOperation.dataFetchingStart());
   },
 });
 

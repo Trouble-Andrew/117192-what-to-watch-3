@@ -21,6 +21,12 @@ class SmallMovieCard extends PureComponent {
     this.timer = null;
   }
 
+  componentWillUnmount() {
+    const {stopPlay} = this.props;
+    stopPlay();
+    this._clearTimer(stopPlay);
+  }
+
   _setTimer(callback) {
     this.timer = setTimeout(() => {
       callback();

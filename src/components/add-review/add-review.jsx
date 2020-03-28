@@ -11,6 +11,32 @@ import {Operation as DataOperation} from "../../reducer/data/data.js";
 class AddReview extends PureComponent {
   constructor(props) {
     super(props);
+
+    this._handleFormDisable = this._handleFormDisable.bind(this);
+    this._handleFormSuccess = this._handleFormSuccess.bind(this);
+    this._handleFormFail = this._handleFormFail.bind(this);
+  }
+
+  componentDidMount() {
+    this._firstLoad = true;
+  }
+
+  componentWillUnmount() {
+    this._firstLoad = false;
+  }
+
+  _handleFormDisable() {
+    const postButton = document.querySelector(`.add-review__btn`);
+    postButton.disabled = true;
+  }
+
+  _handleFormSuccess() {
+    history.goBack();
+  }
+
+  _handleFormFail() {
+    const postForm = document.querySelector(`.add-review__text`);
+    postForm.style.background = `#f75555`;
   }
 
   render() {
@@ -21,15 +47,17 @@ class AddReview extends PureComponent {
       handleClickSubmit,
       comment,
       rating,
-      handleLoadMovie,
+      handleMovieLoad,
+      isActive,
+      match
     } = this.props;
 
-    console.log(this.props);
+    const movieID = match.params.number - 1;
 
-
-    const movieID = this.props.match.params.number - 1;
-
-    handleLoadMovie(movies, parseInt(this.props.match.params.number, 10));
+    if (this._firstLoad) {
+      handleMovieLoad(movies, parseInt(match.params.number, 10));
+      this._firstLoad = false;
+    }
 
     return (
       <section className="movie-card movie-card--full">
@@ -95,13 +123,15 @@ class AddReview extends PureComponent {
             <div className="add-review__text">
               <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" defaultValue={``} onChange={handleChangeInput} />
               <div className="add-review__submit">
-                <button className="add-review__btn" type="submit" onClick={(evt) => {
+                <button className="add-review__btn" type="submit" disabled={!isActive} onClick={(evt) => {
                   evt.preventDefault();
-
                   handleClickSubmit(movies[movieID], {
                     rating: parseInt(rating, 10),
                     comment,
-                  });
+                  },
+                  this._handleFormDisable,
+                  this._handleFormSuccess,
+                  this._handleFormFail);
                 }}>Post</button>
               </div>
             </div>
@@ -140,6 +170,8 @@ AddReview.propTypes = {
   comment: PropTypes.string.isRequired,
   rating: PropTypes.string.isRequired,
   match: PropTypes.any.isRequired,
+  handleMovieLoad: PropTypes.func.isRequired,
+  isActive: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -147,10 +179,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleClickSubmit(movie, review) {
-    dispatch(DataOperation.submitReview(movie.id, review));
+  handleClickSubmit(movie, review, funcSubmit, funcSuccess, funcFail) {
+    dispatch(DataOperation.submitReview(movie.id, review, funcSubmit, funcSuccess, funcFail));
   },
-  handleLoadMovie(movies, id) {
+  handleMovieLoad(movies, id) {
     dispatch(ActionCreator.getSelectedMovie(movies[id - 1]));
   },
 });

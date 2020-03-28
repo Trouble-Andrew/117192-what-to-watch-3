@@ -14,17 +14,18 @@ class Filter extends PureComponent {
 
     return (
       <ul className="catalog__genres-list">
-        {allGenres.map((element, index) =>
-
-
-          <li key={index} className={element === genre ? `catalog__genres-item catalog__genres-item--active` : `catalog__genres-item`}>
-            <a href="#" className="catalog__genres-link" onClick={(evt) => {
-              evt.preventDefault();
-              handleClickFilter(evt);
-              toggleTab(index);
-            }}>{element}</a>
-          </li>
-        )}
+        {allGenres.map((element, index) => {
+          if (index <= 9) {
+            return <li key={index} className={element === genre ? `catalog__genres-item catalog__genres-item--active` : `catalog__genres-item`}>
+              <a href="#" className="catalog__genres-link" onClick={(evt) => {
+                evt.preventDefault();
+                handleClickFilter(evt);
+                toggleTab(index);
+              }}>{element}</a>
+            </li>;
+          }
+          return null;
+        })}
       </ul>
     );
   }
@@ -43,7 +44,6 @@ Filter.propTypes = {
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
-        genre: PropTypes.array.isRequired,
         poster: PropTypes.string.isRequired,
         posterBig: PropTypes.string.isRequired,
         video: PropTypes.string.isRequired,

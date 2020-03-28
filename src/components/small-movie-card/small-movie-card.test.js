@@ -20,7 +20,13 @@ it(`SmallMovieCard is rendered correctly`, () => {
         history={history}
       >
         <Provider store={store}>
-          <SmallMovieCard movie={films[0]} handleClickCard={() => {}} startPlay={() => {}} stopPlay={() => {}} isPlay={false} />
+          <SmallMovieCard
+            movie={films[0]}
+            handleClickCard={() => {}}
+            startPlay={() => {}}
+            stopPlay={() => {}}
+            isPlay={false}
+          />
         </Provider>
       </Router>
   ).toJSON();

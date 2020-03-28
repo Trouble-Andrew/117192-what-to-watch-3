@@ -19,7 +19,8 @@ class Main extends PureComponent {
       promoMovie,
       movies,
       authorizationStatus,
-      user, visibleMovies,
+      user,
+      visibleMovies,
       handleClickMoreButton,
       handleClickFavoriteButton
     } = this.props;
@@ -156,7 +157,6 @@ Main.propTypes = {
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
-        genre: PropTypes.array.isRequired,
         poster: PropTypes.string.isRequired,
         posterBig: PropTypes.string.isRequired,
         video: PropTypes.string.isRequired,
@@ -171,7 +171,6 @@ Main.propTypes = {
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
-        genre: PropTypes.array.isRequired,
         poster: PropTypes.string.isRequired,
         posterBig: PropTypes.string.isRequired,
         video: PropTypes.string.isRequired,

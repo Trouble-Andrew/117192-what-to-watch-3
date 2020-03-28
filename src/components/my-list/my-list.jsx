@@ -14,23 +14,23 @@ class MyList extends PureComponent {
 
   constructor(props) {
     super(props);
-  }
 
-  componentDidMount() {
-    const {handleLoadMovies} = this.props;
-    window.addEventListener(`load`, handleLoadMovies());
-  }
-
-  componentWillUnmount() {
-    // const {handleLoadMovies} = this.props;
-    // window.removeEventListener(`load`, handleLoadMovies());
+    this._firstLoad = true;
   }
 
   render() {
     const {
       user,
       favoriteMovies,
+      handleMovieLoads,
+      stop,
     } = this.props;
+
+
+    if (this._firstLoad & stop !== true) {
+      handleMovieLoads();
+      this._firstLoad = false;
+    }
 
     return (
       <div className="user-page">
@@ -95,13 +95,22 @@ MyList.propTypes = {
         stars: PropTypes.array.isRequired,
       })
   ).isRequired,
-  user: PropTypes.shape({
-    avatar: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-  }).isRequired,
-  handleLoadMovies: PropTypes.func.isRequired,
+  stop: PropTypes.oneOfType([
+    PropTypes.shape({
+    }),
+    PropTypes.bool.isRequired,
+  ]),
+  user: PropTypes.oneOfType([
+    PropTypes.shape({
+    }),
+    PropTypes.shape({
+      avatar: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+    }),
+  ]),
+  handleMovieLoads: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -109,7 +118,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleLoadMovies() {
+  handleMovieLoads() {
     dispatch(DataOperation.loadFavoriteMovies());
   },
 });

@@ -60,6 +60,15 @@ const expectedMockComment = {
   date: `2020-02-21T13:52:49.577Z`,
 };
 
+const mockComments = [
+  {
+    author: `Kendall`,
+    id: 15,
+    text: `Unfortunately we don't have a reliable way to tell the true ratings of a movie.`,
+    date: `2020-03-19T15:07:47.457Z`,
+  }
+];
+
 const api = createAPI(() => {});
 
 it(`Reducer without additional parameters should return initial state`, () => {
@@ -68,6 +77,7 @@ it(`Reducer without additional parameters should return initial state`, () => {
     promoMovie: {},
     comments: [],
     favoriteMovies: [],
+    dataFetching: true,
   });
 });
 
@@ -79,6 +89,50 @@ it(`Reducer should update movies by load movies`, () => {
     payload: movies,
   })).toEqual({
     movies,
+  });
+});
+
+it(`Reducer should toggle fetching flag`, () => {
+  expect(reducer({
+    dataFetching: true,
+  }, {
+    type: ActionType.DATA_FETCHING_SUCCESS,
+    payload: false,
+  })).toEqual({
+    dataFetching: false,
+  });
+});
+
+it(`Reducer should load comments`, () => {
+  expect(reducer({
+    comments: [],
+  }, {
+    type: ActionType.LOAD_COMMENTS,
+    payload: mockComments,
+  })).toEqual({
+    comments: mockComments,
+  });
+});
+
+it(`Reducer should load favoriteMovies`, () => {
+  expect(reducer({
+    favoriteMovies: [],
+  }, {
+    type: ActionType.LOAD_FAVORITE_MOVIES,
+    payload: movies,
+  })).toEqual({
+    favoriteMovies: movies,
+  });
+});
+
+it(`Reducer should load promoMovie`, () => {
+  expect(reducer({
+    promoMovie: [],
+  }, {
+    type: ActionType.LOAD_ACTIVE_MOVIE,
+    payload: expectedMockMovie,
+  })).toEqual({
+    promoMovie: expectedMockMovie,
   });
 });
 
@@ -94,7 +148,7 @@ describe(`Operation work correctly`, () => {
 
     return movieLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.LOAD_MOVIES,
           payload: [expectedMockMovie],
@@ -135,6 +189,25 @@ describe(`Operation work correctly`, () => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.LOAD_ACTIVE_MOVIE,
+          payload: expectedMockMovie,
+        });
+      });
+  });
+
+  it(`Should make a correct API call to /favorite/1/1`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const changeMovieStatus = Operation.changeMovieStatus(1);
+
+    apiMock
+      .onPost(`/favorite/1/1`)
+      .reply(200, receivedMockMovie);
+
+    return changeMovieStatus(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenNthCalledWith(1, {
+          type: ActionType.CHANGE_PROMO_STATUS,
           payload: expectedMockMovie,
         });
       });
