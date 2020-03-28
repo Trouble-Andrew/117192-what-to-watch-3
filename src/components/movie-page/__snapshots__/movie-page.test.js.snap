@@ -12,7 +12,7 @@ Array [
         className="movie-card__bg"
       >
         <img
-          alt="The Grand Budapest Hotel"
+          alt="Parasite"
           src="https://m.media-amazon.com/images/M/MV5BNGVmNzE2ZmEtNTBmNC00MjVjLWE2ZjgtNmNhYjJlYTIzYjQ5XkEyXkFqcGdeQXVyNzgxMzc3OTc@._V1_SX1777_CR0,0,1777,999_AL_.jpg"
         />
       </div>
@@ -125,12 +125,6 @@ Array [
                 My list
               </span>
             </button>
-            <a
-              className="btn movie-card__button"
-              href="add-review.html"
-            >
-              Add review
-            </a>
           </div>
         </div>
       </div>

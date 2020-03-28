@@ -5,11 +5,14 @@ import history from "../../history.js";
 import configureStore from "redux-mock-store";
 import renderer from 'react-test-renderer';
 import NameSpace from "../../reducer/name-space.js";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
 import MoviePage from "../movie-page/movie-page.jsx";
 import films from "../../mocks/films.js";
 
 const mockStore = configureStore([]);
+
+const params = {
+  number: `1`,
+};
 
 it(`MoviePage is rendered correctly`, () => {
   const store = mockStore({
@@ -20,9 +23,6 @@ it(`MoviePage is rendered correctly`, () => {
     [NameSpace.MOVIE_LIST_STATE]: {
       activeMovie: films[0],
     },
-    [NameSpace.USER]: {
-      authorizationStatus: AuthorizationStatus.NO_AUTH,
-    },
   });
 
   const tree = renderer.create(
@@ -32,9 +32,12 @@ it(`MoviePage is rendered correctly`, () => {
         <Provider store={store}>
           <MoviePage
             movie={films[0]}
+            movies={films}
             authorizationStatus={`NO_AUTH`}
             handleClickMoreButton={() => {}}
-            handleClickUser={() => {}}
+            handleClickFavoriteButton={() => {}}
+            handleMovieLoad={() => {}}
+            match={{params}}
           />
         </Provider>
       </Router>, {

@@ -32,8 +32,10 @@ exports[`MovieDetails is rendered correctly 1`] = `
       <span
         className="movie-card__details-value"
       >
-        Kang-ho Song, 
-        Sun-kyun Lee, 
+        Kang-ho Song,
+
+        Sun-kyun Lee,
+
         Yeo-jeong Jo
       </span>
     </p>

@@ -3,6 +3,7 @@ import Adapter from "../../adapters/adapter.js";
 import CommentsAdapter from "../../adapters/comments-adapter.js";
 
 const initialState = {
+  dataFetching: true,
   movies: [],
   promoMovie: {},
   comments: [],
@@ -14,7 +15,10 @@ const ActionType = {
   LOAD_ACTIVE_MOVIE: `LOAD_ACTIVE_MOVIE`,
   LOAD_COMMENTS: `LOAD_COMMENTS`,
   LOAD_FAVORITE_MOVIES: `LOAD_FAVORITE_MOVIES`,
-  CHANGE_MOVIE_STATUS: `CHANGE_MOVIE_STATUS`,
+  CHANGE_PROMO_STATUS: `CHANGE_PROMO_STATUS`,
+  SUBMIT_REVIEW: `SUBMIT_REVIEW`,
+  DATA_FETCHING_SUCCESS: `DATA_FETCHING_SUCCESS`,
+  DATA_FETCHING_START: `DATA_FETCHING_START`,
 };
 
 const ActionCreator = {
@@ -44,8 +48,20 @@ const ActionCreator = {
   },
   changeMovieStatus: (movie) => {
     return {
-      type: ActionType.CHANGE_MOVIE_STATUS,
+      type: ActionType.CHANGE_PROMO_STATUS,
       payload: movie,
+    };
+  },
+  submitReview: (review) => {
+    return {
+      type: ActionType.SUBMIT_REVIEW,
+      payload: review,
+    };
+  },
+  dataFetchingSuccess: () => {
+    return {
+      type: ActionType.DATA_FETCHING_SUCCESS,
+      payload: false,
     };
   },
 };
@@ -55,6 +71,7 @@ const Operation = {
     return api.get(`/films`)
       .then((response) => {
         dispatch(ActionCreator.loadMovies(Adapter.parseElements(response.data)));
+        dispatch(ActionCreator.dataFetchingSuccess());
       });
   },
   loadActiveMovie: () => (dispatch, getState, api) => {
@@ -73,12 +90,26 @@ const Operation = {
     return api.get(`/favorite`)
       .then((response) => {
         dispatch(ActionCreator.loadFavoriteMovies(Adapter.parseElements(response.data)));
+        dispatch(ActionCreator.dataFetchingSuccess());
       });
   },
   changeMovieStatus: (id, favorite) => (dispatch, getState, api) => {
     return api.post(`/favorite/${id}/${favorite ? 0 : 1}`)
       .then((response) => {
         dispatch(ActionCreator.changeMovieStatus(Adapter.parseElement(response.data)));
+      });
+  },
+  submitReview: (id, review, func, funcSuccess, funcFail) => (dispatch, getState, api) => {
+    return api.post(`/comments/${id}`, review)
+      .then((response) => {
+        dispatch(ActionCreator.loadComments(CommentsAdapter.parseElements(response.data)));
+        func();
+        if (response.status === 200) {
+          funcSuccess();
+        }
+        if (response.status === 400) {
+          funcFail();
+        }
       });
   },
 };
@@ -101,9 +132,17 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         favoriteMovies: action.payload,
       });
-    case ActionType.CHANGE_MOVIE_STATUS:
+    case ActionType.CHANGE_PROMO_STATUS:
       return extend(state, {
         promoMovie: action.payload,
+      });
+    case ActionType.SUBMIT_REVIEW:
+      return extend(state, {
+        promoMovie: action.payload,
+      });
+    case ActionType.DATA_FETCHING_SUCCESS:
+      return extend(state, {
+        dataFetching: action.payload,
       });
   }
   return state;

@@ -1,19 +1,36 @@
 import React, {PureComponent} from "react";
+import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import {AppRoute} from "../../const.js";
 import PropTypes from "prop-types";
+import {Operation as DataOperation} from "../../reducer/data/data.js";
+import {getFavoriteMovies} from "../../reducer/data/selectors.js";
 import SmallMovieCard from "../small-movie-card/small-movie-card.jsx";
 import withTogglePlay from "../../hocs/with-toggle-play/with-toggle-play.jsx";
 
 const SmallMovieCardWrapped = withTogglePlay(SmallMovieCard);
 
 class MyList extends PureComponent {
+
   constructor(props) {
     super(props);
+
+    this._firstLoad = true;
   }
 
   render() {
-    const {user, movies} = this.props;
+    const {
+      user,
+      favoriteMovies,
+      handleMovieLoads,
+      stop,
+    } = this.props;
+
+
+    if (this._firstLoad & stop !== true) {
+      handleMovieLoads();
+      this._firstLoad = false;
+    }
 
     return (
       <div className="user-page">
@@ -38,7 +55,7 @@ class MyList extends PureComponent {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <div className="catalog__movies-list">
-            {movies.map((film, index) => (
+            {favoriteMovies.map((film, index) => (
               <SmallMovieCardWrapped movie={film} key={index}/>
             ))}
           </div>
@@ -64,7 +81,7 @@ class MyList extends PureComponent {
 }
 
 MyList.propTypes = {
-  movies: PropTypes.arrayOf(
+  favoriteMovies: PropTypes.arrayOf(
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
@@ -78,12 +95,34 @@ MyList.propTypes = {
         stars: PropTypes.array.isRequired,
       })
   ).isRequired,
-  user: PropTypes.shape({
-    avatar: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-  }).isRequired,
+  stop: PropTypes.oneOfType([
+    PropTypes.shape({
+    }),
+    PropTypes.bool.isRequired,
+  ]),
+  user: PropTypes.oneOfType([
+    PropTypes.shape({
+    }),
+    PropTypes.shape({
+      avatar: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+    }),
+  ]),
+  handleMovieLoads: PropTypes.func.isRequired,
 };
 
-export default MyList;
+const mapStateToProps = (state) => ({
+  favoriteMovies: getFavoriteMovies(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleMovieLoads() {
+    dispatch(DataOperation.loadFavoriteMovies());
+  },
+});
+
+export {MyList};
+export default connect(mapStateToProps, mapDispatchToProps)(MyList);
+

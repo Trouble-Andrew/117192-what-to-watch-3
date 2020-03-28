@@ -1,36 +1,39 @@
 import React from "react";
-import {configure, shallow} from "enzyme";
+import {Router} from "react-router-dom";
+import {configure, mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
+import history from "../../history.js";
 import SignIn from "./sign-in.jsx";
+
+const mockStore = configureStore([]);
 
 configure({adapter: new Adapter()});
 
 describe(`SignIn component work correctly`, () => {
-  it(`Checks SignIn component should return false`, () => {
-    const onSubmit = jest.fn();
-    const e = {
-      target: {value: `some value`},
-      preventDefault: () => {}
-    };
-    const signInComponent = shallow(<SignIn onSubmit={onSubmit} />);
-    const emailInput = signInComponent.find(`input#user-email`);
-
-    emailInput.simulate(`blur`, e);
-
-    expect(signInComponent.state(`isValid`)).toBe(false);
+  const store = mockStore({
   });
 
-  it(`Checks SignIn component should return true`, () => {
-    const onSubmit = jest.fn();
-    const e = {
-      target: {value: `aaa@aaa.com`},
-      preventDefault: () => {}
-    };
-    const signInComponent = shallow(<SignIn onSubmit={onSubmit} />);
-    const emailInput = signInComponent.find(`input#user-email`);
+  it(`If state isValid prop is false show error message`, () => {
+    const signInComponent = mount(
+        <Router
+          history={history}
+        >
+          <Provider store={store}>
+            <SignIn
+              valid={() => {}}
+              invalid={() => {}}
+              fail={() => {}}
+              isValid={false}
+              submitFail={false}
+            />
+          </Provider>
+        </Router>
+    );
 
-    emailInput.simulate(`blur`, e);
+    signInComponent.setProps({isValid: false});
 
-    expect(signInComponent.state(`isValid`)).toBe(true);
+    expect(signInComponent.find(`.sign-in__message`).text()).toEqual(`Please enter a valid email address`);
   });
 });

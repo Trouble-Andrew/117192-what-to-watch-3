@@ -19,9 +19,9 @@ class Main extends PureComponent {
       promoMovie,
       movies,
       authorizationStatus,
-      user, visibleMovies,
+      user,
+      visibleMovies,
       handleClickMoreButton,
-      handleClickUser,
       handleClickFavoriteButton
     } = this.props;
 
@@ -56,7 +56,6 @@ class Main extends PureComponent {
                 <div className="user-block__avatar">
                   <Link
                     to={AppRoute.MY_LIST}
-                    onClick={handleClickUser}
                   >
                     <img src={user.avatar} alt="User avatar" width="63" height="63"/>
                   </Link>
@@ -158,7 +157,6 @@ Main.propTypes = {
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
-        genre: PropTypes.array.isRequired,
         poster: PropTypes.string.isRequired,
         posterBig: PropTypes.string.isRequired,
         video: PropTypes.string.isRequired,
@@ -173,7 +171,6 @@ Main.propTypes = {
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
-        genre: PropTypes.array.isRequired,
         poster: PropTypes.string.isRequired,
         posterBig: PropTypes.string.isRequired,
         video: PropTypes.string.isRequired,
@@ -184,15 +181,9 @@ Main.propTypes = {
         preview: PropTypes.string.isRequired,
       })
   ).isRequired,
-  user: PropTypes.shape({
-    avatar: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-  }).isRequired,
+  user: PropTypes.any.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   handleClickMoreButton: PropTypes.func.isRequired,
-  handleClickUser: PropTypes.func.isRequired,
   handleClickFavoriteButton: PropTypes.func.isRequired,
 };
 

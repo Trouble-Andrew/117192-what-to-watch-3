@@ -9,11 +9,14 @@ const AuthorizationStatus = {
 const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   user: {},
+  userFetching: true,
 };
 
 const ActionType = {
   REQUIRED_AUTHORIZATION: `REQUIRED_AUTHORIZATION`,
   LOAD_USER_INFORMATION: `LOAD_USER_INFORMATION`,
+  USER_FETCHING_SUCCESS: `USER_FETCHING_SUCCESS`,
+  USER_FETCHING_START: `USER_FETCHING_START`,
 };
 
 const ActionCreator = {
@@ -29,6 +32,51 @@ const ActionCreator = {
       payload: data,
     };
   },
+  userFetchingSuccess: () => {
+    return {
+      type: ActionType.USER_FETCHING_SUCCESS,
+      payload: false,
+    };
+  },
+  userFetchingStart: () => {
+    return {
+      type: ActionType.USER_FETCHING_START,
+      payload: true,
+    };
+  },
+};
+
+const Operation = {
+  checkAuth: () => (dispatch, getState, api) => {
+    return api.get(`/login`)
+      .then((response) => {
+        dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
+        dispatch(ActionCreator.loadUserInformation(UserInfoAdapter.parseElement(response.data)));
+        dispatch(ActionCreator.userFetchingSuccess());
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+
+  login: (authData, funcFail, funcSuccess) => (dispatch, getState, api) => {
+    return api.post(`/login`, {
+      email: authData.login,
+      password: authData.password,
+    })
+      .then((response) => {
+        dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
+        dispatch(ActionCreator.loadUserInformation(UserInfoAdapter.parseElement(response.data)));
+        dispatch(ActionCreator.userFetchingSuccess());
+        if (response.status === 200) {
+          funcSuccess();
+        }
+      })
+      .catch((err) => {
+        funcFail();
+        throw err;
+      });
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -42,33 +90,17 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         user: action.payload,
       });
+    case ActionType.USER_FETCHING_SUCCESS:
+      return extend(state, {
+        userFetching: action.payload,
+      });
+    case ActionType.USER_FETCHING_START:
+      return extend(state, {
+        userFetching: action.payload,
+      });
   }
 
   return state;
-};
-
-const Operation = {
-  checkAuth: () => (dispatch, getState, api) => {
-    return api.get(`/login`)
-      .then((response) => {
-        dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
-        dispatch(ActionCreator.loadUserInformation(UserInfoAdapter.parseElement(response.data)));
-      })
-      .catch((err) => {
-        throw err;
-      });
-  },
-
-  login: (authData) => (dispatch, getState, api) => {
-    return api.post(`/login`, {
-      email: authData.login,
-      password: authData.password,
-    })
-      .then((response) => {
-        dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
-        dispatch(ActionCreator.loadUserInformation(UserInfoAdapter.parseElement(response.data)));
-      });
-  },
 };
 
 export {

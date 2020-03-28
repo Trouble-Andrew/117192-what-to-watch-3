@@ -8,6 +8,7 @@ const withTogglePlay = (Component) => {
       this._start = this._start.bind(this);
       this._stop = this._stop.bind(this);
       this._toggle = this._toggle.bind(this);
+      this._isMounted = false;
 
       this.state = {
         isPlay: false,

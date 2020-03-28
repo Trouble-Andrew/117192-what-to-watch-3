@@ -9,17 +9,27 @@ import films from "../../mocks/films.js";
 
 const mockStore = configureStore([]);
 
+const user = {
+  id: 1,
+  email: `gg@mail.com`,
+  name: `gg`,
+  avatar: `https://htmlacademy-react-3.appspot.com//wtw/static/avatar/8.jpg`,
+};
+
 it(`Render App`, () => {
   const store = mockStore({
     [NameSpace.DATA]: {
       movies: films,
       promoMovie: films[0],
+      dataFetching: false,
     },
     [NameSpace.MOVIE_LIST_STATE]: {
       activeMovie: {},
+      genre: films[0].genre[0],
     },
     [NameSpace.USER]: {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
+      user,
     },
   });
 

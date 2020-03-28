@@ -21,6 +21,12 @@ class SmallMovieCard extends PureComponent {
     this.timer = null;
   }
 
+  componentWillUnmount() {
+    const {stopPlay} = this.props;
+    stopPlay();
+    this._clearTimer(stopPlay);
+  }
+
   _setTimer(callback) {
     this.timer = setTimeout(() => {
       callback();
@@ -51,7 +57,7 @@ class SmallMovieCard extends PureComponent {
         stopPlay();
       }}
       >
-        <Link to={{pathname: `${AppRoute.MOVIE}/:${movie.id}`}}>
+        <Link to={{pathname: `${AppRoute.MOVIE}/${movie.id}`}}>
           <VideoPlayerWrapped
             isPlaying={isPlay}
             src={movie.video}
