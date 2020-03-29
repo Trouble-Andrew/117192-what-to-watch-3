@@ -47,8 +47,8 @@ it(`AddReview is rendered correctly`, () => {
           <AddReview
             movies={films}
             tab={0}
-            handleChangeInput={() => {}}
-            handleClickSubmit={() => {}}
+            handleInputChange={() => {}}
+            handleSubmitClick={() => {}}
             match={{params}}
             user={user}
             rating={`5`}

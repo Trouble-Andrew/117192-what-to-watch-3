@@ -37,7 +37,7 @@ class App extends PureComponent {
       authorizationStatus,
       user,
       visibleMovies,
-      handleClickMoreButton,
+      handleMoreButtonClick,
       dataFetching,
     } = this.props;
 
@@ -54,7 +54,7 @@ class App extends PureComponent {
                 visibleMovies={visibleMovies}
                 authorizationStatus={authorizationStatus}
                 user={user}
-                handleClickMoreButton={handleClickMoreButton}
+                handleMoreButtonClick={handleMoreButtonClick}
               />
             </Route>
             <Route exact path={AppRoute.SIGN_IN} render={
@@ -72,7 +72,7 @@ class App extends PureComponent {
                     {...routeProps}
                     authorizationStatus={authorizationStatus}
                     user={user}
-                    handleClickMoreButton={handleClickMoreButton}
+                    handleMoreButtonClick={handleMoreButtonClick}
                   />
                 );
               }}
@@ -143,7 +143,7 @@ App.propTypes = {
       email: PropTypes.string.isRequired,
     }),
   ]),
-  handleClickMoreButton: PropTypes.func.isRequired,
+  handleMoreButtonClick: PropTypes.func.isRequired,
   visibleMovies: PropTypes.array.isRequired,
   dataFetching: PropTypes.bool.isRequired,
 };
@@ -160,7 +160,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleClickMoreButton() {
+  handleMoreButtonClick() {
     dispatch(ActionCreator.incrementVisibleMovies());
   },
 });

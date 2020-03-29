@@ -22,7 +22,7 @@ it(`SmallMovieCard is rendered correctly`, () => {
         <Provider store={store}>
           <SmallMovieCard
             movie={films[0]}
-            handleClickCard={() => {}}
+            handleCardClick={() => {}}
             startPlay={() => {}}
             stopPlay={() => {}}
             isPlay={false}

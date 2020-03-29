@@ -12,3 +12,8 @@ export const TabLinks = {
   DETAILS: `Details`,
   REVIEWS: `Reviews`,
 };
+
+export const Errors = {
+  UNAUTHORIZED: 401,
+  SERVER_ERROR: 500,
+};

@@ -30,7 +30,7 @@ it(`Checks that HOC's state comment should return correct text`, () => {
   const ReviewWrapped = withFormValue(Review);
   const wrapper = mount(<ReviewWrapped />);
   const instance = wrapper.instance();
-  instance.handleChangeInput(event);
+  instance.handleInputChange(event);
 
   expect(wrapper.state(`comment`)).toBe(`hello`);
 });
@@ -47,7 +47,7 @@ it(`Checks that HOC's state rating should return true`, () => {
   const ReviewWrapped = withFormValue(Review);
   const wrapper = mount(<ReviewWrapped />);
   const instance = wrapper.instance();
-  instance.handleChangeInput(event);
+  instance.handleInputChange(event);
 
   expect(wrapper.state(`rating`)).toBe(`5`);
 });
@@ -66,7 +66,7 @@ it(`Checks that HOC's state isActive should return true`, () => {
   const instance = wrapper.instance();
   wrapper.setState({rating: `5`});
 
-  instance.handleChangeInput(event);
+  instance.handleInputChange(event);
 
   expect(wrapper.state(`rating`)).toBe(`5`);
 });

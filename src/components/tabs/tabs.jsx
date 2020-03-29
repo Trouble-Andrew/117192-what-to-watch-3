@@ -30,7 +30,7 @@ class Tabs extends PureComponent {
       movie,
       tab,
       toggleTab,
-      handleClickTab,
+      handleTabClick,
     } = this.props;
     const tabs = [TabLinks.OVERVIEW, TabLinks.DETAILS, TabLinks.REVIEWS];
 
@@ -43,7 +43,7 @@ class Tabs extends PureComponent {
                 <a href="#" className="movie-nav__link" onClick={(evt) => {
                   evt.preventDefault();
                   toggleTab(index);
-                  handleClickTab(movie);
+                  handleTabClick(movie);
                 }}>{element}</a>
               </li>
             )}
@@ -58,7 +58,7 @@ class Tabs extends PureComponent {
 Tabs.propTypes = {
   tab: PropTypes.number.isRequired,
   toggleTab: PropTypes.func.isRequired,
-  handleClickTab: PropTypes.func.isRequired,
+  handleTabClick: PropTypes.func.isRequired,
   activeTab: PropTypes.oneOfType([
     PropTypes.shape({
     }),
@@ -108,7 +108,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleClickTab(movie) {
+  handleTabClick(movie) {
     dispatch(DataOperation.loadComments(movie.id));
   },
 });

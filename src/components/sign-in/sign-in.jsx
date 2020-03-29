@@ -14,7 +14,7 @@ class SignIn extends PureComponent {
     this.passwordRef = createRef();
 
     this._handleSubmit = this._handleSubmit.bind(this);
-    this._handleBlurLoginForm = this._handleBlurLoginForm.bind(this);
+    this._handleLoginFormBlur = this._handleLoginFormBlur.bind(this);
     this._handleFormFail = this._handleFormFail.bind(this);
   }
 
@@ -27,7 +27,7 @@ class SignIn extends PureComponent {
     fail();
   }
 
-  _handleBlurLoginForm(evt) {
+  _handleLoginFormBlur(evt) {
     const {valid, invalid} = this.props;
 
     evt.preventDefault();
@@ -80,7 +80,7 @@ class SignIn extends PureComponent {
             }
             <div className="sign-in__fields">
               <div className={isValid ? `sign-in__message` : `sign-in__field sign-in__field--error`} >
-                <input className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" onBlur={this._handleBlurLoginForm} ref={this.loginRef} />
+                <input className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" onBlur={this._handleLoginFormBlur} ref={this.loginRef} />
                 <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
               </div>
               <div className="sign-in__field">
@@ -120,8 +120,8 @@ SignIn.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  login(authData, funcFail, funcSuccess) {
-    dispatch(UserOperation.login(authData, funcFail, funcSuccess));
+  login(authData, onFormFail, onFormSuccess) {
+    dispatch(UserOperation.login(authData, onFormFail, onFormSuccess));
   },
 });
 

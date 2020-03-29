@@ -59,7 +59,7 @@ const Operation = {
       });
   },
 
-  login: (authData, funcFail, funcSuccess) => (dispatch, getState, api) => {
+  login: (authData, onFormFail, onFormSuccess) => (dispatch, getState, api) => {
     return api.post(`/login`, {
       email: authData.login,
       password: authData.password,
@@ -69,11 +69,11 @@ const Operation = {
         dispatch(ActionCreator.loadUserInformation(UserInfoAdapter.parseElement(response.data)));
         dispatch(ActionCreator.userFetchingSuccess());
         if (response.status === 200) {
-          funcSuccess();
+          onFormSuccess();
         }
       })
       .catch((err) => {
-        funcFail();
+        onFormFail();
         throw err;
       });
   },

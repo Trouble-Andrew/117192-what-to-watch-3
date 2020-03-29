@@ -8,7 +8,7 @@ import {getGenre} from "../../reducer/movie-list-state/selectors.js";
 class Filter extends PureComponent {
 
   render() {
-    const {handleClickFilter, toggleTab, movies, genre} = this.props;
+    const {handleFilterClick, toggleTab, movies, genre} = this.props;
 
     const allGenres = getAllGenres(movies);
 
@@ -19,7 +19,7 @@ class Filter extends PureComponent {
             return <li key={index} className={element === genre ? `catalog__genres-item catalog__genres-item--active` : `catalog__genres-item`}>
               <a href="#" className="catalog__genres-link" onClick={(evt) => {
                 evt.preventDefault();
-                handleClickFilter(evt);
+                handleFilterClick(evt);
                 toggleTab(index);
               }}>{element}</a>
             </li>;
@@ -54,7 +54,7 @@ Filter.propTypes = {
         preview: PropTypes.string.isRequired,
       })
   ).isRequired,
-  handleClickFilter: PropTypes.func.isRequired,
+  handleFilterClick: PropTypes.func.isRequired,
   tab: PropTypes.number.isRequired,
   toggleTab: PropTypes.func.isRequired,
   genre: PropTypes.string.isRequired,
@@ -66,7 +66,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleClickFilter(type) {
+  handleFilterClick(type) {
     dispatch(ActionCreator.getSelectedGenre(type.target.innerHTML));
   },
 });

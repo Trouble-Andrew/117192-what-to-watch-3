@@ -43,8 +43,8 @@ class AddReview extends PureComponent {
     const {
       movies,
       user,
-      handleChangeInput,
-      handleClickSubmit,
+      handleInputChange,
+      handleSubmitClick,
       comment,
       rating,
       handleMovieLoad,
@@ -108,24 +108,24 @@ class AddReview extends PureComponent {
           <form action="#" className="add-review__form">
             <div className="rating">
               <div className="rating__stars">
-                <input className="rating__input" id="star-1" type="radio" name="rating" defaultValue={1} onChange={handleChangeInput} />
+                <input className="rating__input" id="star-1" type="radio" name="rating" defaultValue={1} onChange={handleInputChange} />
                 <label className="rating__label" htmlFor="star-1">Rating 1</label>
-                <input className="rating__input" id="star-2" type="radio" name="rating" defaultValue={2} onChange={handleChangeInput} />
+                <input className="rating__input" id="star-2" type="radio" name="rating" defaultValue={2} onChange={handleInputChange} />
                 <label className="rating__label" htmlFor="star-2">Rating 2</label>
-                <input className="rating__input" id="star-3" type="radio" name="rating" defaultValue={3} onChange={handleChangeInput} defaultChecked />
+                <input className="rating__input" id="star-3" type="radio" name="rating" defaultValue={3} onChange={handleInputChange} defaultChecked />
                 <label className="rating__label" htmlFor="star-3">Rating 3</label>
-                <input className="rating__input" id="star-4" type="radio" name="rating" defaultValue={4} onChange={handleChangeInput} />
+                <input className="rating__input" id="star-4" type="radio" name="rating" defaultValue={4} onChange={handleInputChange} />
                 <label className="rating__label" htmlFor="star-4">Rating 4</label>
-                <input className="rating__input" id="star-5" type="radio" name="rating" defaultValue={5} onChange={handleChangeInput} />
+                <input className="rating__input" id="star-5" type="radio" name="rating" defaultValue={5} onChange={handleInputChange} />
                 <label className="rating__label" htmlFor="star-5">Rating 5</label>
               </div>
             </div>
             <div className="add-review__text">
-              <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" defaultValue={``} onChange={handleChangeInput} />
+              <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" defaultValue={``} onChange={handleInputChange} />
               <div className="add-review__submit">
                 <button className="add-review__btn" type="submit" disabled={!isActive} onClick={(evt) => {
                   evt.preventDefault();
-                  handleClickSubmit(movies[movieID], {
+                  handleSubmitClick(movies[movieID], {
                     rating: parseInt(rating, 10),
                     comment,
                   },
@@ -165,8 +165,8 @@ AddReview.propTypes = {
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
   }).isRequired,
-  handleChangeInput: PropTypes.func.isRequired,
-  handleClickSubmit: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  handleSubmitClick: PropTypes.func.isRequired,
   comment: PropTypes.string.isRequired,
   rating: PropTypes.string.isRequired,
   match: PropTypes.any.isRequired,
@@ -179,8 +179,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleClickSubmit(movie, review, funcSubmit, funcSuccess, funcFail) {
-    dispatch(DataOperation.submitReview(movie.id, review, funcSubmit, funcSuccess, funcFail));
+  handleSubmitClick(movie, review, onFormSubmit, onFormSuccess, onFormFail) {
+    dispatch(DataOperation.submitReview(movie.id, review, onFormSubmit, onFormSuccess, onFormFail));
   },
   handleMovieLoad(movies, id) {
     dispatch(ActionCreator.getSelectedMovie(movies[id - 1]));

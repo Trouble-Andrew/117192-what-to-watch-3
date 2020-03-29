@@ -51,8 +51,8 @@ describe(`AddReview component work correctly`, () => {
             <AddReview
               movies={films}
               tab={0}
-              handleChangeInput={() => {}}
-              handleClickSubmit={() => {}}
+              handleInputChange={() => {}}
+              handleSubmitClick={() => {}}
               match={{params}}
               user={user}
               rating={`5`}
@@ -74,8 +74,8 @@ describe(`AddReview component work correctly`, () => {
             <AddReview
               movies={films}
               tab={0}
-              handleChangeInput={() => {}}
-              handleClickSubmit={() => {}}
+              handleInputChange={() => {}}
+              handleSubmitClick={() => {}}
               match={{params}}
               user={user}
               rating={`5`}

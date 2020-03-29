@@ -21,8 +21,8 @@ class Main extends PureComponent {
       authorizationStatus,
       user,
       visibleMovies,
-      handleClickMoreButton,
-      handleClickFavoriteButton
+      handleMoreButtonClick,
+      handleFavoriteButtonClick
     } = this.props;
 
     let showMoreFlag = true;
@@ -99,7 +99,7 @@ class Main extends PureComponent {
                     <span>Play</span>
                   </Link>
                   <button className="btn btn--list movie-card__button" type="button" onClick={() => {
-                    return authorizationStatus === AuthorizationStatus.NO_AUTH ? history.push(AppRoute.SIGN_IN) : handleClickFavoriteButton(promoMovie);
+                    return authorizationStatus === AuthorizationStatus.NO_AUTH ? history.push(AppRoute.SIGN_IN) : handleFavoriteButtonClick(promoMovie);
                   }}>
                     {promoMovie.isFavorite &&
                         <svg viewBox="0 0 18 14" width={18} height={14}>
@@ -128,7 +128,7 @@ class Main extends PureComponent {
             <MovieList movies={visibleMovies} />
 
             {showMoreFlag && <div className="catalog__more">
-              <button className="catalog__button" type="button" onClick={handleClickMoreButton}>Show more</button>
+              <button className="catalog__button" type="button" onClick={handleMoreButtonClick}>Show more</button>
             </div>}
           </section>
 
@@ -183,12 +183,12 @@ Main.propTypes = {
   ).isRequired,
   user: PropTypes.any.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  handleClickMoreButton: PropTypes.func.isRequired,
-  handleClickFavoriteButton: PropTypes.func.isRequired,
+  handleMoreButtonClick: PropTypes.func.isRequired,
+  handleFavoriteButtonClick: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  handleClickFavoriteButton(movie) {
+  handleFavoriteButtonClick(movie) {
     dispatch(DataOperation.changeMovieStatus(movie.id, movie.isFavorite));
   },
 });
