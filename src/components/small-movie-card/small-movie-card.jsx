@@ -41,17 +41,18 @@ class SmallMovieCard extends PureComponent {
   render() {
     const {
       movie,
-      handleClickCard,
+      handleCardClick,
       isPlay,
       startPlay,
-      stopPlay
+      stopPlay,
     } = this.props;
 
     if (isPlay) {
       return <article className="small-movie-card catalog__movies-card" onClick={(evt) => {
         evt.preventDefault();
-        handleClickCard(movie);
+        handleCardClick(movie);
         this._clearTimer(stopPlay);
+        window.scrollTo(0, 0);
       }}
       onMouseLeave={() => {
         stopPlay();
@@ -73,8 +74,9 @@ class SmallMovieCard extends PureComponent {
     return (
       <article className="small-movie-card catalog__movies-card" onClick={(evt) => {
         evt.preventDefault();
-        handleClickCard(movie);
+        handleCardClick(movie);
         this._clearTimer(stopPlay);
+        window.scrollTo(0, 0);
       }}
       onMouseEnter={() => {
         this._setTimer(startPlay);
@@ -111,14 +113,14 @@ SmallMovieCard.propTypes = {
     stars: PropTypes.array.isRequired,
     preview: PropTypes.string.isRequired,
   }).isRequired,
-  handleClickCard: PropTypes.func.isRequired,
+  handleCardClick: PropTypes.func.isRequired,
   startPlay: PropTypes.func.isRequired,
   stopPlay: PropTypes.func.isRequired,
   isPlay: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  handleClickCard(movie) {
+  handleCardClick(movie) {
     dispatch(ActionCreator.getSelectedMovie(movie));
     dispatch(DataOperation.loadComments(movie.id));
   },

@@ -99,16 +99,16 @@ const Operation = {
         dispatch(ActionCreator.changeMovieStatus(Adapter.parseElement(response.data)));
       });
   },
-  submitReview: (id, review, func, funcSuccess, funcFail) => (dispatch, getState, api) => {
+  submitReview: (id, review, func, onFormSuccess, onFormFail) => (dispatch, getState, api) => {
     return api.post(`/comments/${id}`, review)
       .then((response) => {
         dispatch(ActionCreator.loadComments(CommentsAdapter.parseElements(response.data)));
         func();
         if (response.status === 200) {
-          funcSuccess();
+          onFormSuccess();
         }
         if (response.status === 400) {
-          funcFail();
+          onFormFail();
         }
       });
   },

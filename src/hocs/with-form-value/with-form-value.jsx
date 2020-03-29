@@ -5,7 +5,7 @@ const withFormValue = (Component) => {
     constructor(props) {
       super(props);
 
-      this.handleChangeInput = this.handleChangeInput.bind(this);
+      this.handleInputChange = this.handleInputChange.bind(this);
 
       this.state = {
         comment: ``,
@@ -14,7 +14,7 @@ const withFormValue = (Component) => {
       };
     }
 
-    handleChangeInput(evt) {
+    handleInputChange(evt) {
       const target = evt.target;
       let value;
       let name;
@@ -51,7 +51,7 @@ const withFormValue = (Component) => {
           {...this.props}
           comment={comment}
           rating={rating}
-          handleChangeInput={this.handleChangeInput}
+          handleInputChange={this.handleInputChange}
           isActive={isActive}
         >
         </Component>

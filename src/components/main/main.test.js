@@ -43,7 +43,7 @@ describe(`Render Main`, () => {
               visibleMovies={films}
               user={user}
               authorizationStatus={`NO_AUTH`}
-              handleClickMoreButton={() => {}}
+              handleMoreButtonClick={() => {}}
             />
           </Provider>
         </Router>

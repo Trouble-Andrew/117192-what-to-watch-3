@@ -118,9 +118,9 @@ describe(`Operation work correctly`, () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const authData = login;
-    const funcFail = jest.fn();
-    const funcSuccess = jest.fn();
-    const userLoader = Operation.login(authData, funcFail, funcSuccess);
+    const onFormFail = jest.fn();
+    const onFormSuccess = jest.fn();
+    const userLoader = Operation.login(authData, onFormFail, onFormSuccess);
 
     apiMock
       .onPost(`/login`)
@@ -137,7 +137,7 @@ describe(`Operation work correctly`, () => {
           type: ActionType.LOAD_USER_INFORMATION,
           payload: expectedMockUser,
         });
-        expect(funcSuccess).toHaveBeenNthCalledWith(1);
+        expect(onFormSuccess).toHaveBeenNthCalledWith(1);
       });
   });
 });

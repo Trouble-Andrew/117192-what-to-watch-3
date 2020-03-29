@@ -1,8 +1,5 @@
 import axios from "axios";
-
-const Error = {
-  UNAUTHORIZED: 401
-};
+import {Errors} from "./const.js";
 
 export const createAPI = (onUnauthorized) => {
   const api = axios.create({
@@ -11,16 +8,32 @@ export const createAPI = (onUnauthorized) => {
     withCredentials: true,
   });
 
+  const serverError = () => {
+    const div = document.createElement(`div`);
+    const root = document.querySelector(`#root`);
+    div.innerHTML = `ОШИБКА СЕРВЕРА 500`;
+    root.appendChild(div);
+  };
+
   const onSuccess = (response) => {
+
+    if (response.status === Errors.SERVER_ERROR) {
+      serverError();
+    }
+
     return response;
   };
 
   const onFail = (err) => {
     const {response} = err;
 
-    if (response.status === Error.UNAUTHORIZED) {
+    if (response.status === Errors.UNAUTHORIZED) {
       onUnauthorized();
       throw err;
+    }
+
+    if (response.status === Errors.SERVER_ERROR) {
+      serverError();
     }
 
     throw err;

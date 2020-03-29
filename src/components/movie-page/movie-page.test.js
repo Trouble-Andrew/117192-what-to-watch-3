@@ -34,8 +34,8 @@ it(`MoviePage is rendered correctly`, () => {
             movie={films[0]}
             movies={films}
             authorizationStatus={`NO_AUTH`}
-            handleClickMoreButton={() => {}}
-            handleClickFavoriteButton={() => {}}
+            handleMoreButtonClick={() => {}}
+            handleFavoriteButtonClick={() => {}}
             handleMovieLoad={() => {}}
             match={{params}}
           />
