@@ -82,7 +82,7 @@ class AddReview extends PureComponent {
                 <li className="breadcrumbs__item">
                   <a href="movie-page.html" className="breadcrumbs__link" onClick={(evt) => {
                     evt.preventDefault();
-                    return history.goBack();
+                    return history.location.key === undefined ? history.push(`/films/${match.params.number}`) : history.goBack();
                   }}>{movies[movieID].title}</a>
                 </li>
                 <li className="breadcrumbs__item">
@@ -147,13 +147,13 @@ AddReview.propTypes = {
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
-        genre: PropTypes.array.isRequired,
+        genres: PropTypes.array.isRequired,
         poster: PropTypes.string.isRequired,
         posterBig: PropTypes.string.isRequired,
         video: PropTypes.string.isRequired,
         rating: PropTypes.number.isRequired,
         ratingCount: PropTypes.number.isRequired,
-        director: PropTypes.array.isRequired,
+        directors: PropTypes.array.isRequired,
         stars: PropTypes.array.isRequired,
         isFavorite: PropTypes.bool.isRequired,
         id: PropTypes.number.isRequired,

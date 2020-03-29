@@ -8,7 +8,7 @@ const MovieDetails = (props) => {
     <div className="movie-card__text-col">
       <p className="movie-card__details-item">
         <strong className="movie-card__details-name">Director</strong>
-        <span className="movie-card__details-value">{movie.director.map((element) => element) }</span>
+        <span className="movie-card__details-value">{movie.directors.map((element) => element) }</span>
       </p>
       <p className="movie-card__details-item">
         <strong className="movie-card__details-name">Starring</strong>
@@ -30,7 +30,7 @@ const MovieDetails = (props) => {
       </p>
       <p className="movie-card__details-item">
         <strong className="movie-card__details-name">Genre</strong>
-        <span className="movie-card__details-value">{movie.genre.join(`, `) }</span>
+        <span className="movie-card__details-value">{movie.genres.join(`, `) }</span>
       </p>
       <p className="movie-card__details-item">
         <strong className="movie-card__details-name">Released</strong>
@@ -45,14 +45,14 @@ MovieDetails.propTypes = {
   movie: PropTypes.shape({
     title: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
-    genre: PropTypes.array.isRequired,
+    genres: PropTypes.array.isRequired,
     poster: PropTypes.string.isRequired,
     posterBig: PropTypes.string.isRequired,
     video: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
     time: PropTypes.string.isRequired,
     ratingCount: PropTypes.number.isRequired,
-    director: PropTypes.array.isRequired,
+    directors: PropTypes.array.isRequired,
     stars: PropTypes.array.isRequired,
     preview: PropTypes.string.isRequired,
   }).isRequired,

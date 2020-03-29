@@ -30,7 +30,7 @@ class MovieOverview extends PureComponent {
     const {
       rating,
       ratingCount,
-      director,
+      directors,
       stars,
       preview,
     } = movie;
@@ -46,7 +46,7 @@ class MovieOverview extends PureComponent {
         </div>
         <div className="movie-card__text">
           <p>{preview}</p>
-          <p className="movie-card__director"><strong>Director: {director}</strong></p>
+          <p className="movie-card__director"><strong>Director: {directors}</strong></p>
           <p className="movie-card__starring"><strong>Starring: {stars.join(`, `)} and other</strong></p>
         </div>
       </React.Fragment>
@@ -58,14 +58,14 @@ MovieOverview.propTypes = {
   movie: PropTypes.shape({
     title: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
-    genre: PropTypes.array.isRequired,
+    genres: PropTypes.array.isRequired,
     poster: PropTypes.string.isRequired,
     posterBig: PropTypes.string.isRequired,
     video: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
     time: PropTypes.string.isRequired,
     ratingCount: PropTypes.number.isRequired,
-    director: PropTypes.array.isRequired,
+    directors: PropTypes.array.isRequired,
     stars: PropTypes.array.isRequired,
     preview: PropTypes.string.isRequired,
   }).isRequired,

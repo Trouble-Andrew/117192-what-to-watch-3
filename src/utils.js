@@ -3,11 +3,11 @@ const extend = (a, b) => {
 };
 
 const convertMinsToHrsMins = function (mins) {
-  let h = Math.floor(mins / 60);
-  let m = mins % 60;
-  h = h < 10 ? `` + h : h;
-  m = m < 10 ? `0` + m : m;
-  return `${h}h ${m}m`;
+  let hour = Math.floor(mins / 60);
+  let minute = mins % 60;
+  hour = hour < 10 ? `` + hour : hour;
+  minute = minute < 10 ? `0` + minute : minute;
+  return `${hour}h ${minute}m`;
 };
 
 const convertSeconds = function (time) {
@@ -15,15 +15,15 @@ const convertSeconds = function (time) {
   let mins = ~~((time % 3600) / 60);
   let secs = ~~time % 60;
 
-  let ret = ``;
+  let result = ``;
 
   if (hrs > 0) {
-    ret += `` + hrs + `:` + (mins < 10 ? `0` : ``);
+    result += `` + hrs + `:` + (mins < 10 ? `0` : ``);
   }
 
-  ret += `` + mins + `:` + (secs < 10 ? `0` : ``);
-  ret += `` + secs;
-  return ret;
+  result += `` + mins + `:` + (secs < 10 ? `0` : ``);
+  result += `` + secs;
+  return result;
 };
 
 export {extend, convertMinsToHrsMins, convertSeconds};

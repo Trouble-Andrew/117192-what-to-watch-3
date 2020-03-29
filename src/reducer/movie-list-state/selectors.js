@@ -25,8 +25,8 @@ export const getFiltededList = createSelector(
       if (resultTwo === `All genres`) {
         return resultOne;
       }
-      let newArray = resultOne.filter(function (el) {
-        return el.genre.includes(resultTwo);
+      let newArray = resultOne.filter(function (movie) {
+        return movie.genres.includes(resultTwo);
       });
       return newArray;
     }
@@ -50,8 +50,8 @@ export const getSilimarMovies = createSelector(
     getMovies,
     getActiveMovie,
     (resultOne, resultTwo) => {
-      let newArray = resultOne.filter(function (el) {
-        return el.genre[0].includes(resultTwo.genre[0]);
+      let newArray = resultOne.filter(function (movie) {
+        return movie.genres[0].includes(resultTwo.genres[0]);
       });
       return newArray;
     }

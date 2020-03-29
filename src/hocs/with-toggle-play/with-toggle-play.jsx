@@ -1,48 +1,65 @@
 import React, {PureComponent} from "react";
+import {convertSeconds} from "../../utils.js";
 
 const withTogglePlay = (Component) => {
   class WithTogglePlay extends PureComponent {
     constructor(props) {
       super(props);
 
-      this._start = this._start.bind(this);
-      this._stop = this._stop.bind(this);
-      this._toggle = this._toggle.bind(this);
+      this.start = this.start.bind(this);
+      this.stop = this.stop.bind(this);
+      this.toggle = this.toggle.bind(this);
+      this.update = this.update.bind(this);
       this._isMounted = false;
 
       this.state = {
         isPlay: false,
+        progress: 0,
+        duration: 0,
+        timeLeft: 0,
       };
     }
 
-    _start() {
+    start() {
       this.setState({
         isPlay: true,
       });
     }
 
-    _stop() {
+    stop() {
       this.setState({
         isPlay: false,
       });
     }
 
-    _toggle() {
+    toggle() {
       this.setState({
         isPlay: !this.state.isPlay,
       });
     }
 
+    update(video) {
+      this.setState({
+        progress: Math.floor(video.currentTime),
+        timeLeft: convertSeconds(video.duration - Math.floor(video.currentTime)),
+        duration: video.duration,
+      });
+    }
+
     render() {
-      const {isPlay} = this.state;
+      const {isPlay, progress, duration, timeLeft} = this.state;
 
       return (
         <Component
           {...this.props}
-          startPlay={this._start}
-          stopPlay={this._stop}
-          togglePlay={this._toggle}
+          startPlay={this.start}
+          stopPlay={this.stop}
+          togglePlay={this.toggle}
+          update={this.update}
           isPlay={isPlay}
+          progress={progress}
+          duration={duration}
+          timeLeft={timeLeft}
         >
         </Component>
       );

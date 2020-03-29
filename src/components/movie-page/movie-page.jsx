@@ -82,7 +82,7 @@ class MoviePage extends PureComponent {
               <div className="movie-card__desc">
                 <h2 className="movie-card__title">{movies[movieID].title}</h2>
                 <p className="movie-card__meta">
-                  <span className="movie-card__genre">{movies[movieID].genre.join(`, `)}</span>
+                  <span className="movie-card__genre">{movies[movieID].genres.join(`, `)}</span>
                   <span className="movie-card__year">{movies[movieID].date}</span>
                 </p>
                 <div className="movie-card__buttons">
@@ -90,7 +90,6 @@ class MoviePage extends PureComponent {
                     className="btn btn--play movie-card__button"
                     to={{
                       pathname: `${AppRoute.MOVIE}/${movies[movieID].id}${AppRoute.PLAYER}`,
-                      linkProp: {movie},
                     }}
                   >
                     <svg viewBox="0 0 19 19" width="19" height="19">
@@ -147,13 +146,13 @@ MoviePage.propTypes = {
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
-        genre: PropTypes.array.isRequired,
+        genres: PropTypes.array.isRequired,
         poster: PropTypes.string.isRequired,
         posterBig: PropTypes.string.isRequired,
         video: PropTypes.string.isRequired,
         rating: PropTypes.number.isRequired,
         ratingCount: PropTypes.number.isRequired,
-        director: PropTypes.array.isRequired,
+        directors: PropTypes.array.isRequired,
         stars: PropTypes.array.isRequired,
         isFavorite: PropTypes.bool.isRequired,
         id: PropTypes.number.isRequired,

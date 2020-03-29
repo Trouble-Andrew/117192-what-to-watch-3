@@ -33,7 +33,7 @@ class Filter extends PureComponent {
 
 const getAllGenres = function (movies) {
   let newArray = [`All genres`];
-  movies.forEach((movie) => newArray.push(...movie.genre));
+  movies.forEach((movie) => newArray.push(...movie.genres));
 
   let unique = newArray.filter((v, i, a) => a.indexOf(v) === i);
   return unique;
@@ -49,7 +49,7 @@ Filter.propTypes = {
         video: PropTypes.string.isRequired,
         rating: PropTypes.number.isRequired,
         ratingCount: PropTypes.number.isRequired,
-        director: PropTypes.array.isRequired,
+        directors: PropTypes.array.isRequired,
         stars: PropTypes.array.isRequired,
         preview: PropTypes.string.isRequired,
       })

@@ -1,7 +1,11 @@
 import React, {PureComponent, createRef} from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {convertSeconds} from "../../utils.js";
 import history from "../../history.js";
+
+import {ActionCreator} from "../../reducer/movie-list-state/movie-list-state.js";
+import {getMovies} from "../../reducer/data/selectors.js";
+import {getActiveMovie} from "../../reducer/movie-list-state/selectors.js";
 
 class VideoPlayerFull extends PureComponent {
   constructor(props) {
@@ -10,11 +14,6 @@ class VideoPlayerFull extends PureComponent {
     this._videoRef = createRef();
 
     this._fullScreen = this._fullScreen.bind(this);
-
-    this.state = {
-      progress: 0,
-      duration: 0,
-    };
   }
 
   _fullScreen() {
@@ -30,10 +29,14 @@ class VideoPlayerFull extends PureComponent {
   }
 
   componentDidMount() {
-    const {location, startPlay, stopPlay} = this.props;
+    const {match, startPlay, stopPlay, update, movies, handleMovieLoad} = this.props;
     const video = this._videoRef.current;
 
-    video.src = location.linkProp.movie.video;
+    const movieID = match.params.number - 1;
+
+    handleMovieLoad(movies, parseInt(match.params.number, 10));
+
+    video.src = movies[movieID].video;
 
     video.oncanplaythrough = () => startPlay();
 
@@ -41,11 +44,7 @@ class VideoPlayerFull extends PureComponent {
 
     video.onpause = () => stopPlay();
 
-    video.ontimeupdate = () => this.setState({
-      progress: Math.floor(video.currentTime),
-      timeLeft: convertSeconds(video.duration - Math.floor(video.currentTime)),
-      duration: video.duration,
-    });
+    video.ontimeupdate = () => update(video);
   }
 
   componentWillUnmount() {
@@ -59,14 +58,15 @@ class VideoPlayerFull extends PureComponent {
   }
 
   render() {
-    const {togglePlay, isPlay, location} = this.props;
-    const timeLeftInPercent = Number((this.state.progress / Math.floor(this.state.duration) * 100).toFixed(1));
 
+    const {togglePlay, isPlay, match, timeLeft, progress, duration, movies} = this.props;
+    const timeLeftInPercent = Number((progress / Math.floor(duration) * 100).toFixed(1));
+    const movieID = match.params.number - 1;
     return (
       <div className="player">
-        <video ref={this._videoRef} className="player__video" poster={location.linkProp.movie.posterBig} />
+        <video ref={this._videoRef} className="player__video" poster={movies[movieID].posterBig} />
         <button type="button" className="player__exit" onClick={() => {
-          return history.goBack();
+          return history.location.key === undefined ? history.push(`/films/${match.params.number}`) : history.goBack();
         }}>Exit</button>
         <div className="player__controls">
           <div className="player__controls-row">
@@ -74,7 +74,7 @@ class VideoPlayerFull extends PureComponent {
               <progress className="player__progress" value={isNaN(timeLeftInPercent) ? 0 : timeLeftInPercent} max={100} />
               <div className="player__toggler" style={{left: `${isNaN(timeLeftInPercent) ? 0 : timeLeftInPercent}%`}}>Toggler</div>
             </div>
-            <div className="player__time-value">{this.state.timeLeft}</div>
+            <div className="player__time-value">{timeLeft}</div>
           </div>
           <div className="player__controls-row">
             <button type="button" className="player__play" onClick={() => togglePlay()}>
@@ -95,7 +95,7 @@ class VideoPlayerFull extends PureComponent {
                 </React.Fragment>
               }
             </button>
-            <div className="player__name">{location.linkProp.movie.title}</div>
+            <div className="player__name">{movies[movieID].title}</div>
             <button type="button" className="player__full-screen" onClick={this._fullScreen}>
               <svg viewBox="0 0 27 27" width={27} height={27}>
                 <use xlinkHref="#full-screen" />
@@ -124,25 +124,43 @@ VideoPlayerFull.propTypes = {
   startPlay: PropTypes.func.isRequired,
   stopPlay: PropTypes.func.isRequired,
   togglePlay: PropTypes.func.isRequired,
-  location: PropTypes.shape({
-    linkProp: PropTypes.shape({
-      movie: PropTypes.shape({
+  update: PropTypes.func.isRequired,
+  match: PropTypes.any.isRequired,
+  timeLeft: PropTypes.oneOfType([
+    PropTypes.number.isRequired,
+    PropTypes.string.isRequired,
+  ]),
+  movies: PropTypes.arrayOf(
+      PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
-        genre: PropTypes.array.isRequired,
+        genres: PropTypes.array.isRequired,
         poster: PropTypes.string.isRequired,
         posterBig: PropTypes.string.isRequired,
         video: PropTypes.string.isRequired,
         rating: PropTypes.number.isRequired,
-        time: PropTypes.string.isRequired,
         ratingCount: PropTypes.number.isRequired,
-        director: PropTypes.array.isRequired,
+        directors: PropTypes.array.isRequired,
         stars: PropTypes.array.isRequired,
-        preview: PropTypes.string.isRequired,
         isFavorite: PropTypes.bool.isRequired,
-      }).isRequired,
-    }).isRequired,
-  }).isRequired,
+        id: PropTypes.number.isRequired,
+      })
+  ).isRequired,
+  progress: PropTypes.number.isRequired,
+  duration: PropTypes.number.isRequired,
+  handleMovieLoad: PropTypes.func.isRequired,
 };
 
-export default VideoPlayerFull;
+const mapStateToProps = (state) => ({
+  movies: getMovies(state),
+  movie: getActiveMovie(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleMovieLoad(movies, id) {
+    dispatch(ActionCreator.getSelectedMovie(movies[id - 1]));
+  },
+});
+
+export {VideoPlayerFull};
+export default connect(mapStateToProps, mapDispatchToProps)(VideoPlayerFull);

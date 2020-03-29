@@ -1,5 +1,7 @@
 import React, {PureComponent} from "react";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
+import {AppRoute} from "../../const.js";
 import PropTypes from "prop-types";
 import {getSilimarMovies} from "../../reducer/movie-list-state/selectors.js";
 import SmallMovieCard from "../small-movie-card/small-movie-card.jsx";
@@ -31,11 +33,14 @@ class MoreMovies extends PureComponent {
           </section>
           <footer className="page-footer">
             <div className="logo">
-              <a href="main.html" className="logo__link logo__link--light">
+              <Link
+                className="logo__link logo__link--light"
+                to={AppRoute.ROOT}
+              >
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
-              </a>
+              </Link>
             </div>
             <div className="copyright">
               <p>© 2019 What to watch Ltd.</p>
@@ -52,13 +57,13 @@ MoreMovies.propTypes = {
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
-        genre: PropTypes.array.isRequired,
+        genres: PropTypes.array.isRequired,
         poster: PropTypes.string.isRequired,
         posterBig: PropTypes.string.isRequired,
         video: PropTypes.string.isRequired,
         rating: PropTypes.number.isRequired,
         ratingCount: PropTypes.number.isRequired,
-        director: PropTypes.array.isRequired,
+        directors: PropTypes.array.isRequired,
         stars: PropTypes.array.isRequired,
       })
   ).isRequired,

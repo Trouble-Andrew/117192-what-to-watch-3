@@ -121,13 +121,13 @@ App.propTypes = {
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
-        genre: PropTypes.array.isRequired,
+        genres: PropTypes.array.isRequired,
         poster: PropTypes.string.isRequired,
         posterBig: PropTypes.string.isRequired,
         video: PropTypes.string.isRequired,
         rating: PropTypes.number.isRequired,
         ratingCount: PropTypes.number.isRequired,
-        director: PropTypes.array.isRequired,
+        directors: PropTypes.array.isRequired,
         stars: PropTypes.array.isRequired,
       })
   ).isRequired,

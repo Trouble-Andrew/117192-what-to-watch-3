@@ -81,7 +81,7 @@ class Main extends PureComponent {
               <div className="movie-card__desc">
                 <h2 className="movie-card__title">{promoMovie.title}</h2>
                 <p className="movie-card__meta">
-                  <span className="movie-card__genre">{promoMovie.genre}</span>
+                  <span className="movie-card__genre">{promoMovie.genres}</span>
                   <span className="movie-card__year">{promoMovie.date}</span>
                 </p>
 
@@ -90,7 +90,6 @@ class Main extends PureComponent {
                     className="btn btn--play movie-card__button"
                     to={{
                       pathname: `${AppRoute.MOVIE}/${promoMovie.id}${AppRoute.PLAYER}`,
-                      linkProp: {movie: promoMovie},
                     }}
                   >
                     <svg viewBox="0 0 19 19" width="19" height="19">
@@ -162,7 +161,7 @@ Main.propTypes = {
         video: PropTypes.string.isRequired,
         rating: PropTypes.number.isRequired,
         ratingCount: PropTypes.number.isRequired,
-        director: PropTypes.array.isRequired,
+        directors: PropTypes.array.isRequired,
         stars: PropTypes.array.isRequired,
         preview: PropTypes.string.isRequired,
       })
@@ -176,7 +175,7 @@ Main.propTypes = {
         video: PropTypes.string.isRequired,
         rating: PropTypes.number.isRequired,
         ratingCount: PropTypes.number.isRequired,
-        director: PropTypes.array.isRequired,
+        directors: PropTypes.array.isRequired,
         stars: PropTypes.array.isRequired,
         preview: PropTypes.string.isRequired,
       })
