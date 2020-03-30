@@ -11,11 +11,12 @@ class Filter extends PureComponent {
     const {handleFilterClick, toggleTab, movies, genre} = this.props;
 
     const allGenres = getAllGenres(movies);
+    const maxGenres = 9;
 
     return (
       <ul className="catalog__genres-list">
         {allGenres.map((element, index) => {
-          if (index <= 9) {
+          if (index <= maxGenres) {
             return <li key={index} className={element === genre ? `catalog__genres-item catalog__genres-item--active` : `catalog__genres-item`}>
               <a href="#" className="catalog__genres-link" onClick={(evt) => {
                 evt.preventDefault();

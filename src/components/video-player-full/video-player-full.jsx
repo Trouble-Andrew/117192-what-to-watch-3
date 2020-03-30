@@ -17,16 +17,21 @@ class VideoPlayerFull extends PureComponent {
   }
 
   _fullScreen() {
-    const video = this._videoRef.current;
+    const player = document.querySelector(`.player`);
 
-    if (video.requestFullscreen) {
-      video.requestFullscreen();
-    } else if (video.webkitrequestFullscreen) {
-      video.webkitRequestFullscreen();
-    } else if (video.mozRequestFullscreen) {
-      video.mozRequestFullScreen();
+    if (document.fullscreenElement === player) {
+      document.exitFullscreen();
+    }
+
+    if (player.requestFullscreen) {
+      player.requestFullscreen();
+    } else if (player.webkitrequestFullscreen) {
+      player.webkitRequestFullscreen();
+    } else if (player.mozRequestFullscreen) {
+      player.mozRequestFullScreen();
     }
   }
+
 
   componentDidMount() {
     const {match, startPlay, stopPlay, update, movies, handleMovieLoad} = this.props;
@@ -38,13 +43,27 @@ class VideoPlayerFull extends PureComponent {
 
     video.src = movies[movieID].video;
 
-    video.oncanplaythrough = () => startPlay();
+    if (history.location.key !== undefined) {
+      video.oncanplaythrough = () => startPlay();
+    }
 
     video.onplay = () => startPlay();
 
     video.onpause = () => stopPlay();
 
     video.ontimeupdate = () => update(video);
+  }
+
+  componentDidUpdate() {
+    const {isPlay} = this.props;
+
+    const video = this._videoRef.current;
+
+    if (isPlay) {
+      video.play();
+    } else {
+      video.pause();
+    }
   }
 
   componentWillUnmount() {
@@ -58,7 +77,6 @@ class VideoPlayerFull extends PureComponent {
   }
 
   render() {
-
     const {togglePlay, isPlay, match, timeLeft, progress, duration, movies} = this.props;
     const timeLeftInPercent = Number((progress / Math.floor(duration) * 100).toFixed(1));
     const movieID = match.params.number - 1;
@@ -106,16 +124,6 @@ class VideoPlayerFull extends PureComponent {
         </div>
       </div>
     );
-  }
-
-  componentDidUpdate() {
-    const video = this._videoRef.current;
-
-    if (this.props.isPlay) {
-      video.play();
-    } else {
-      video.pause();
-    }
   }
 }
 

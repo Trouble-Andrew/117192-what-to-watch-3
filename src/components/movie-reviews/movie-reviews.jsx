@@ -1,25 +1,20 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {getComments} from "../../reducer/data/selectors.js";
 import MovieReview from "../movie-review/movie-review.jsx";
 
-class MovieReviews extends PureComponent {
+const MovieReviews = (props) => {
+  const {reviews} = props;
 
-  render() {
-    const {reviews} = this.props;
-
-    return (
-      <div className="movie-card__reviews movie-card__row">
-        <div className="movie-card__reviews-col">
-          {reviews.map((review, index) =>
-            <MovieReview review={review} key={index}/>
-          )}
-        </div>
-      </div>
-    );
-  }
-}
+  return <div className="movie-card__reviews movie-card__row">
+    <div className="movie-card__reviews-col">
+      {reviews.map((review, index) =>
+        <MovieReview review={review} key={index}/>
+      )}
+    </div>
+  </div>;
+};
 
 MovieReviews.propTypes = {
   reviews: PropTypes.arrayOf(PropTypes.shape({

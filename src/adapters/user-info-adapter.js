@@ -13,19 +13,6 @@ class UserInfoAdapter {
   static parseElements(pointsData) {
     return pointsData.map(UserInfoAdapter.parseElement);
   }
-
-  toRAW() {
-    return {
-      'id': this.id,
-      'type': this.type.value,
-      'destination': this.destination,
-      'date_from': this.eventTime.from,
-      'date_to': this.eventTime.to,
-      'base_price': this.cost,
-      'is_favorite': this.isFavorite,
-      'offers': this.offers
-    };
-  }
 }
 
 export default UserInfoAdapter;

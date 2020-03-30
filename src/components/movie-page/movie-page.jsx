@@ -1,4 +1,4 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import {AppRoute} from "../../const.js";
@@ -15,131 +15,123 @@ import history from "../../history.js";
 
 const TabsWrapped = withActiveTab(Tabs);
 
-class MoviePage extends PureComponent {
-  constructor(props) {
-    super(props);
+const MoviePage = (props) => {
+  const {
+    movie,
+    movies,
+    authorizationStatus,
+    user,
+    handleMoreButtonClick,
+    handleFavoriteButtonClick,
+    handleMovieLoad,
+    match,
+  } = props;
+
+  const movieID = match.params.number - 1;
+
+  if (Object.keys(movie).length === 0) {
+    handleMovieLoad(movies, parseInt(match.params.number, 10));
   }
 
-  render() {
-    const {
-      movie,
-      movies,
-      authorizationStatus,
-      user,
-      handleMoreButtonClick,
-      handleFavoriteButtonClick,
-      handleMovieLoad,
-      match,
-    } = this.props;
-
-    const movieID = match.params.number - 1;
-
-    if (Object.keys(movie).length === 0) {
-      handleMovieLoad(movies, parseInt(match.params.number, 10));
-    }
-
-    return (
-      <React.Fragment>
-        <section className="movie-card movie-card--full">
-          <div className="movie-card__hero">
-            <div className="movie-card__bg">
-              <img src={movies[movieID].posterBig} alt={movies[movieID].title} />
-            </div>
-            <h1 className="visually-hidden">WTW</h1>
-            <header className="page-header movie-card__head">
-              <div className="logo">
+  return <React.Fragment>
+    <section className="movie-card movie-card--full">
+      <div className="movie-card__hero">
+        <div className="movie-card__bg">
+          <img src={movies[movieID].posterBig} alt={movies[movieID].title} />
+        </div>
+        <h1 className="visually-hidden">WTW</h1>
+        <header className="page-header movie-card__head">
+          <div className="logo">
+            <Link
+              className="logo__link"
+              to={AppRoute.ROOT}
+            >
+              <span className="logo__letter logo__letter--1">W</span>
+              <span className="logo__letter logo__letter--2">T</span>
+              <span className="logo__letter logo__letter--3">W</span>
+            </Link>
+          </div>
+          <div className="user-block">
+            {authorizationStatus === AuthorizationStatus.AUTH &&
+              <div className="user-block__avatar" >
                 <Link
-                  className="logo__link"
-                  to={AppRoute.ROOT}
+                  to={AppRoute.MY_LIST}
                 >
-                  <span className="logo__letter logo__letter--1">W</span>
-                  <span className="logo__letter logo__letter--2">T</span>
-                  <span className="logo__letter logo__letter--3">W</span>
+                  <img src={user.avatar} alt="User avatar" width="63" height="63"/>
                 </Link>
               </div>
-              <div className="user-block">
-                {authorizationStatus === AuthorizationStatus.AUTH &&
-                  <div className="user-block__avatar" >
-                    <Link
-                      to={AppRoute.MY_LIST}
-                    >
-                      <img src={user.avatar} alt="User avatar" width="63" height="63"/>
-                    </Link>
-                  </div>
-                }
-                {authorizationStatus === AuthorizationStatus.NO_AUTH &&
-                  <Link
-                    className="user-block__link"
-                    to={AppRoute.SIGN_IN}
-                    onClick = {handleMoreButtonClick}
-                  >
-                    Sign in
-                  </Link>
-                }
-              </div>
-            </header>
-            <div className="movie-card__wrap">
-              <div className="movie-card__desc">
-                <h2 className="movie-card__title">{movies[movieID].title}</h2>
-                <p className="movie-card__meta">
-                  <span className="movie-card__genre">{movies[movieID].genres.join(`, `)}</span>
-                  <span className="movie-card__year">{movies[movieID].date}</span>
-                </p>
-                <div className="movie-card__buttons">
-                  <Link
-                    className="btn btn--play movie-card__button"
-                    to={{
-                      pathname: `${AppRoute.MOVIE}/${movies[movieID].id}${AppRoute.PLAYER}`,
-                    }}
-                  >
-                    <svg viewBox="0 0 19 19" width="19" height="19">
-                      <use xlinkHref="#play-s"></use>
+            }
+            {authorizationStatus === AuthorizationStatus.NO_AUTH &&
+              <Link
+                className="user-block__link"
+                to={AppRoute.SIGN_IN}
+                onClick = {handleMoreButtonClick}
+              >
+                Sign in
+              </Link>
+            }
+          </div>
+        </header>
+        <div className="movie-card__wrap">
+          <div className="movie-card__desc">
+            <h2 className="movie-card__title">{movies[movieID].title}</h2>
+            <p className="movie-card__meta">
+              <span className="movie-card__genre">{movies[movieID].genres.join(`, `)}</span>
+              <span className="movie-card__year">{movies[movieID].date}</span>
+            </p>
+            <div className="movie-card__buttons">
+              <Link
+                className="btn btn--play movie-card__button"
+                to={{
+                  pathname: `${AppRoute.MOVIE}/${movies[movieID].id}${AppRoute.PLAYER}`,
+                }}
+              >
+                <svg viewBox="0 0 19 19" width="19" height="19">
+                  <use xlinkHref="#play-s"></use>
+                </svg>
+                <span>Play</span>
+              </Link>
+              <button className="btn btn--list movie-card__button" type="button" onClick={() => {
+                return authorizationStatus === AuthorizationStatus.NO_AUTH ? history.push(AppRoute.SIGN_IN) : handleFavoriteButtonClick(movie);
+              }}>
+                {movie.isFavorite &&
+                    <svg viewBox="0 0 18 14" width={18} height={14}>
+                      <use xlinkHref="#in-list"></use>
                     </svg>
-                    <span>Play</span>
-                  </Link>
-                  <button className="btn btn--list movie-card__button" type="button" onClick={() => {
-                    return authorizationStatus === AuthorizationStatus.NO_AUTH ? history.push(AppRoute.SIGN_IN) : handleFavoriteButtonClick(movie);
-                  }}>
-                    {movie.isFavorite &&
-                        <svg viewBox="0 0 18 14" width={18} height={14}>
-                          <use xlinkHref="#in-list"></use>
-                        </svg>
-                    }
-                    {movie.isFavorite ||
-                      <svg viewBox="0 0 19 20" width={19} height={20}>
-                        <use xlinkHref="#add" />
-                      </svg>
-                    }
-                    <span>My list</span>
-                  </button>
-                  {authorizationStatus === AuthorizationStatus.AUTH &&
-                    <Link
-                      className="btn movie-card__button"
-                      to={{pathname: `${AppRoute.MOVIE}/${movies[movieID].id}${AppRoute.ADD_REVIEW}`}}
-                    >
-                      Add review
-                    </Link>
-                  }
-                </div>
-              </div>
+                }
+                {movie.isFavorite ||
+                  <svg viewBox="0 0 19 20" width={19} height={20}>
+                    <use xlinkHref="#add" />
+                  </svg>
+                }
+                <span>My list</span>
+              </button>
+              {authorizationStatus === AuthorizationStatus.AUTH &&
+                <Link
+                  className="btn movie-card__button"
+                  to={{pathname: `${AppRoute.MOVIE}/${movies[movieID].id}${AppRoute.ADD_REVIEW}`}}
+                >
+                  Add review
+                </Link>
+              }
             </div>
           </div>
-          <div className="movie-card__wrap movie-card__translate-top">
-            <div className="movie-card__info">
-              <div className="movie-card__poster movie-card__poster--big">
-                <img src={movies[movieID].poster} alt={movies[movieID].title} width={218} height={327} />
-              </div>
-              <div className="movie-card__desc">
-                <TabsWrapped movie={movies[movieID]} />
-              </div>
-            </div>
+        </div>
+      </div>
+      <div className="movie-card__wrap movie-card__translate-top">
+        <div className="movie-card__info">
+          <div className="movie-card__poster movie-card__poster--big">
+            <img src={movies[movieID].poster} alt={movies[movieID].title} width={218} height={327} />
           </div>
-        </section>
-        <MoreMovies />
-      </React.Fragment>
-    );
-  }
-}
+          <div className="movie-card__desc">
+            <TabsWrapped movie={movies[movieID]} />
+          </div>
+        </div>
+      </div>
+    </section>
+    <MoreMovies />
+  </React.Fragment>;
+};
 
 MoviePage.propTypes = {
   movies: PropTypes.arrayOf(

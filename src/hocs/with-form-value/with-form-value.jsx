@@ -15,6 +15,8 @@ const withFormValue = (Component) => {
     }
 
     handleInputChange(evt) {
+      const minTextLength = 50;
+      const maxTextLength = 400;
       const target = evt.target;
       let value;
       let name;
@@ -31,7 +33,7 @@ const withFormValue = (Component) => {
         [name]: value,
       });
 
-      if (this.state.comment.length > 50 & this.state.comment.length < 400) {
+      if (this.state.comment.length > minTextLength & this.state.comment.length < maxTextLength) {
         this.setState({
           isActive: true,
         });

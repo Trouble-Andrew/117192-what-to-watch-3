@@ -31,7 +31,13 @@ class AddReview extends PureComponent {
   }
 
   _handleFormSuccess() {
-    history.goBack();
+    const {match} = this.props;
+
+    if (history.location.key !== undefined) {
+      history.goBack();
+    } else {
+      history.push(`/films/${match.params.number}`);
+    }
   }
 
   _handleFormFail() {

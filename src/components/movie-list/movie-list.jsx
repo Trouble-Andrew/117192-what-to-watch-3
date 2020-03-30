@@ -1,28 +1,19 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import SmallMovieCard from "../small-movie-card/small-movie-card.jsx";
 import withTogglePlay from "../../hocs/with-toggle-play/with-toggle-play.jsx";
 
 const SmallMovieCardWrapped = withTogglePlay(SmallMovieCard);
 
-class MovieList extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
+const MovieList = (props) => {
+  const {movies} = props;
 
-  render() {
-    const {movies} = this.props;
-
-    return (
-
-      <div className="catalog__movies-list">
-        {movies.map((film, index) => (
-          <SmallMovieCardWrapped movie={film} key={index}/>
-        ))}
-      </div>
-    );
-  }
-}
+  return <div className="catalog__movies-list">
+    {movies.map((film, index) => (
+      <SmallMovieCardWrapped movie={film} key={index}/>
+    ))}
+  </div>;
+};
 
 MovieList.propTypes = {
   movies: PropTypes.arrayOf(

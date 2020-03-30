@@ -34,7 +34,7 @@ describe(`AddReview component work correctly`, () => {
     },
     [NameSpace.MOVIE_LIST_STATE]: {
       activeMovie: {},
-      genre: films[0].genre[0],
+      genre: films[0].genres[0],
     },
     [NameSpace.USER]: {
       authorizationStatus: AuthorizationStatus.NO_AUTH,

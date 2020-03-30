@@ -22,6 +22,16 @@ class VideoPlayer extends PureComponent {
     video.onpause = () => stopPlay();
   }
 
+  componentDidUpdate() {
+    const video = this._videoRef.current;
+
+    if (this.props.isPlaying) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  }
+
   componentWillUnmount() {
     const video = this._videoRef.current;
 
@@ -37,19 +47,9 @@ class VideoPlayer extends PureComponent {
 
     return (
       <Fragment>
-        <video ref={this._videoRef} className="player__video" poster={poster} muted />
+        <video ref={this._videoRef} className="player__video" poster={poster} muted controls />
       </Fragment>
     );
-  }
-
-  componentDidUpdate() {
-    const video = this._videoRef.current;
-
-    if (this.props.isPlaying) {
-      video.play();
-    } else {
-      video.pause();
-    }
   }
 }
 

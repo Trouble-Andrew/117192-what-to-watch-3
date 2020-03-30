@@ -20,6 +20,6 @@ it(`Checks that HOC's callback start should return true`, () => {
   const PlayerWrapped = withTogglePlay(Player);
   const wrapper = mount(<PlayerWrapped />);
   const instance = wrapper.instance();
-  instance._start();
+  instance.start();
   expect(wrapper.state(`isPlay`)).toBe(true);
 });

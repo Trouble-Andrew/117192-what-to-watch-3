@@ -1,89 +1,40 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {Route, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {AppRoute} from "../../const.js";
-import {Operation as UserOperation, ActionCreator, AuthorizationStatus} from "../../reducer/user/user.js";
-import {getAuthorizationStatus, getUserFetchingStatus} from "../../reducer/user/selectors.js";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
+import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
+import {getFetchingStatus} from "../../reducer/data/selectors.js";
 
-class PrivateRoute extends PureComponent {
-  constructor(props) {
-    super(props);
+const PrivateRoute = (props) => {
+  const {render, path, exact, authorizationStatus, dataFetching} = props;
+
+  if (dataFetching === false) {
+    return (
+      <Route
+        path={path}
+        exact={exact}
+        {...props}
+        render={(prop) => {
+          return (
+            authorizationStatus === AuthorizationStatus.AUTH
+              ? render(prop)
+              : <Redirect to={AppRoute.SIGN_IN} />
+          );
+        }}
+      />
+    );
   }
-
-  render() {
-    const {render, path, exact, authorizationStatus, userFetching, handleMoreButtonClick} = this.props;
-
-    if (userFetching === false) {
-      return (
-        <Route
-          path={path}
-          exact={exact}
-          {...this.props}
-          render={(prop) => {
-            return (
-              authorizationStatus === AuthorizationStatus.AUTH
-                ? render(prop)
-                : <Redirect to={AppRoute.SIGN_IN} />
-            );
-          }}
-        />
-      );
-    }
-    return handleMoreButtonClick();
-  // return (
-  //   <Route
-  //     path={path}
-  //     exact={exact}
-  //     {...props}
-  //     render={() => {
-  //       return (<Redirect to={AppRoute.SIGN_IN} />
-  //       );
-  //     }}
-  //   />
-  // );
-  }
-}
-
-// const PrivateRoute = (props) => {
-//   const {render, path, exact, authorizationStatus, userFetching} = props;
-
-//   if (userFetching === false) {
-//     return (
-//       <Route
-//         path={path}
-//         exact={exact}
-//         {...props}
-//         render={(prop) => {
-//           return (
-//             authorizationStatus === AuthorizationStatus.AUTH
-//               ? render(prop)
-//               : <Redirect to={AppRoute.SIGN_IN} />
-//           );
-//         }}
-//       />
-//     );
-//   }
-//   handleMoreButtonClick();
-//   // return (
-//   //   <Route
-//   //     path={path}
-//   //     exact={exact}
-//   //     {...props}
-//   //     render={() => {
-//   //       return (<Redirect to={AppRoute.SIGN_IN} />
-//   //       );
-//   //     }}
-//   //   />
-//   // );
-// };
+  return null;
+};
 
 PrivateRoute.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
   exact: PropTypes.bool.isRequired,
   path: PropTypes.string.isRequired,
   render: PropTypes.func.isRequired,
-  userFetching: PropTypes.oneOfType([
+  dataFetching: PropTypes.oneOfType([
     PropTypes.bool.isRequired,
     PropTypes.any.isRequired,
   ]),
@@ -91,15 +42,9 @@ PrivateRoute.propTypes = {
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
-  userFetching: getUserFetchingStatus(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  handleMoreButtonClick() {
-    dispatch(UserOperation.checkAuth());
-  },
+  dataFetching: getFetchingStatus(state),
 });
 
 
 export {PrivateRoute};
-export default connect(mapStateToProps, mapDispatchToProps)(PrivateRoute);
+export default connect(mapStateToProps)(PrivateRoute);
