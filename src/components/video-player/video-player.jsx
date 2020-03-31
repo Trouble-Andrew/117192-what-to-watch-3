@@ -47,7 +47,7 @@ class VideoPlayer extends PureComponent {
 
     return (
       <Fragment>
-        <video ref={this._videoRef} className="player__video" poster={poster} muted controls />
+        <video ref={this._videoRef} className="player__video" poster={poster} muted />
       </Fragment>
     );
   }
