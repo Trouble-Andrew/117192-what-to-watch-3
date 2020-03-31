@@ -15,7 +15,7 @@ class VideoPlayer extends PureComponent {
 
     video.src = src;
 
-    video.oncanplaythrough = () => startPlay();
+    video.oncanplay = () => startPlay();
 
     video.onplay = () => startPlay();
 

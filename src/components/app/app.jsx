@@ -1,4 +1,4 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import {Switch, Route, Router, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
@@ -25,95 +25,89 @@ const FullVideoPlayerWrapped = withTogglePlay(VideoPlayerFull);
 const AddReviewWrapped = withFormValue(AddReview);
 const SignInwWrapped = withFormValidation(SignIn);
 
-class App extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
+const App = (props) => {
+  const {
+    promoMovie,
+    filteredList,
+    authorizationStatus,
+    user,
+    visibleMovies,
+    handleMoreButtonClick,
+    dataFetching,
+  } = props;
 
-  render() {
-    const {
-      promoMovie,
-      filteredList,
-      authorizationStatus,
-      user,
-      visibleMovies,
-      handleMoreButtonClick,
-      dataFetching,
-    } = this.props;
-
-    if (!dataFetching) {
-      return (
-        <Router history={history}>
-          <Switch>
-            <Route
-              exact
-              path={AppRoute.ROOT}>
-              <Main
-                promoMovie={promoMovie}
-                movies={filteredList}
-                visibleMovies={visibleMovies}
-                authorizationStatus={authorizationStatus}
-                user={user}
-                handleMoreButtonClick={handleMoreButtonClick}
-              />
-            </Route>
-            <Route exact path={AppRoute.SIGN_IN} render={
-              () => {
-                return authorizationStatus === AuthorizationStatus.AUTH ? <Redirect to={AppRoute.ROOT} /> : <SignInwWrapped />;
-              }
-            }>
-            </Route>
-            <Route
-              exact
-              path={`${AppRoute.MOVIE}/:number`}
-              render={(routeProps) => {
-                return (
-                  <MoviePage
-                    {...routeProps}
-                    authorizationStatus={authorizationStatus}
-                    user={user}
-                    handleMoreButtonClick={handleMoreButtonClick}
-                  />
-                );
-              }}
+  if (!dataFetching) {
+    return (
+      <Router history={history}>
+        <Switch>
+          <Route
+            exact
+            path={AppRoute.ROOT}>
+            <Main
+              promoMovie={promoMovie}
+              movies={filteredList}
+              visibleMovies={visibleMovies}
+              authorizationStatus={authorizationStatus}
+              user={user}
+              handleMoreButtonClick={handleMoreButtonClick}
             />
-            <Route
-              exact
-              path={`${AppRoute.MOVIE}/:number${AppRoute.PLAYER}`}
-              render={(routeProps) => (
-                <FullVideoPlayerWrapped
+          </Route>
+          <Route exact path={AppRoute.SIGN_IN} render={
+            () => {
+              return authorizationStatus === AuthorizationStatus.AUTH ? <Redirect to={AppRoute.ROOT} /> : <SignInwWrapped />;
+            }
+          }>
+          </Route>
+          <Route
+            exact
+            path={`${AppRoute.MOVIE}/:number`}
+            render={(routeProps) => {
+              return (
+                <MoviePage
                   {...routeProps}
-                  isPlay={true}
+                  authorizationStatus={authorizationStatus}
+                  user={user}
+                  handleMoreButtonClick={handleMoreButtonClick}
                 />
-              )}
-            />
-            <PrivateRoute
-              exact
-              path={AppRoute.MY_LIST}
-              render={() => {
-                return authorizationStatus === AuthorizationStatus.NO_AUTH ? <Redirect to={AppRoute.SIGN_IN} /> : <MyList user={user} />;
-              }}
-            />
-            <PrivateRoute
-              exact
-              path={`${AppRoute.MOVIE}/:number${AppRoute.ADD_REVIEW}`}
-              render={(routeProps) => {
-                return (
-                  <AddReviewWrapped
-                    {...routeProps}
-                    user={user}
-                  />
-                );
-              }}
-            />
-          </Switch>
-        </Router>
-      );
-    } else {
-      return null;
-    }
+              );
+            }}
+          />
+          <Route
+            exact
+            path={`${AppRoute.MOVIE}/:number${AppRoute.PLAYER}`}
+            render={(routeProps) => (
+              <FullVideoPlayerWrapped
+                {...routeProps}
+                isPlay={true}
+              />
+            )}
+          />
+          <PrivateRoute
+            exact
+            path={AppRoute.MY_LIST}
+            render={() => {
+              return authorizationStatus === AuthorizationStatus.NO_AUTH ? <Redirect to={AppRoute.SIGN_IN} /> : <MyList user={user} />;
+            }}
+          />
+          <PrivateRoute
+            exact
+            path={`${AppRoute.MOVIE}/:number${AppRoute.ADD_REVIEW}`}
+            render={(routeProps) => {
+              return (
+                <AddReviewWrapped
+                  {...routeProps}
+                  user={user}
+                />
+              );
+            }}
+          />
+        </Switch>
+      </Router>
+    );
+  } else {
+    return null;
   }
-}
+};
 
 App.propTypes = {
   promoMovie: PropTypes.object.isRequired,

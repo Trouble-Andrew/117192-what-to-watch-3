@@ -1,4 +1,4 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {Operation as DataOperation} from "../../reducer/data/data.js";
@@ -23,37 +23,33 @@ function TabsContent({activeTab, movie}) {
   return null;
 }
 
-class Tabs extends PureComponent {
+const Tabs = (props) => {
+  const {
+    movie,
+    tab,
+    toggleTab,
+    handleTabClick,
+  } = props;
 
-  render() {
-    const {
-      movie,
-      tab,
-      toggleTab,
-      handleTabClick,
-    } = this.props;
-    const tabs = [TabLinks.OVERVIEW, TabLinks.DETAILS, TabLinks.REVIEWS];
+  const tabs = [TabLinks.OVERVIEW, TabLinks.DETAILS, TabLinks.REVIEWS];
 
-    return (
-      <React.Fragment>
-        <nav className="movie-nav movie-card__nav">
-          <ul className="movie-nav__list" >
-            {tabs.map((element, index) =>
-              <li key={index} className={tab === index ? `movie-nav__item movie-nav__item--active` : `movie-nav__item`}>
-                <a href="#" className="movie-nav__link" onClick={(evt) => {
-                  evt.preventDefault();
-                  toggleTab(index);
-                  handleTabClick(movie);
-                }}>{element}</a>
-              </li>
-            )}
-          </ul>
-        </nav>
-        <TabsContent movie={movie} activeTab={tabs[tab]}/>
-      </React.Fragment>
-    );
-  }
-}
+  return <React.Fragment>
+    <nav className="movie-nav movie-card__nav">
+      <ul className="movie-nav__list" >
+        {tabs.map((element, index) =>
+          <li key={index} className={tab === index ? `movie-nav__item movie-nav__item--active` : `movie-nav__item`}>
+            <a href="#" className="movie-nav__link" onClick={(evt) => {
+              evt.preventDefault();
+              toggleTab(index);
+              handleTabClick(movie);
+            }}>{element}</a>
+          </li>
+        )}
+      </ul>
+    </nav>
+    <TabsContent movie={movie} activeTab={tabs[tab]}/>
+  </React.Fragment>;
+};
 
 Tabs.propTypes = {
   tab: PropTypes.number.isRequired,
